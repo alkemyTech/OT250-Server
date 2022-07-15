@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class SlideEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column(name = "image_url")
@@ -23,11 +23,6 @@ public class SlideEntity {
 
     private String order;
 
-    @ManyToOne(cascade = CascadeType.ALL, targetEntity = OrganizationEntity.class)
-    @JoinTable(
-            name = "slides_organization",
-            joinColumns = @JoinColumn(name = "slide_id"),
-            inverseJoinColumns = @JoinColumn(name = "organization_id")
-    )
-    private OrganizationEntity organization;
+    @Column(name = "organization_id")
+    private Long organizationId;
 }

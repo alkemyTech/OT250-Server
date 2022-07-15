@@ -9,6 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "organizations")
