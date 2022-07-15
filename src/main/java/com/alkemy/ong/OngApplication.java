@@ -7,7 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class OngApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(OngApplication.class, args);
+		//System.out.println("Hola Mundo");
+
 	}
 
 }
