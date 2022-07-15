@@ -43,6 +43,7 @@ public class OrganizationEntity {
     @Column(name = "about_us_text", columnDefinition = "TEXT")
     private String aboutUsText;
 
+    @Column(name = "time_stamp")
     @CreatedDate
     private Timestamp timeStamp;
 
