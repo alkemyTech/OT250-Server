@@ -10,7 +10,6 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//TODO @EntityListeners(AuditingEntityListener.class)
 public class SlideEntity {
 
     @Id
