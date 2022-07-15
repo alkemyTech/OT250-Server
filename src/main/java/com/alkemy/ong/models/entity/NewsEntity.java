@@ -1,10 +1,13 @@
 package com.alkemy.ong.models.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
@@ -23,6 +26,8 @@ public class NewsEntity {
     @Column(name = "news_id")
     private Long id;
     @NotNull(message = "the name can´t be null")
+    @NotBlank(message = "the name can´t be blank")
+    @NotEmpty(message = "the name can´t be empty")
     private String name;
     @NotNull(message = "The content can´t be null")
     @Column(columnDefinition = "TEXT")
@@ -32,6 +37,7 @@ public class NewsEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
+    @CreationTimestamp
     @Column(name = "date_update")
     private Timestamp timestamp;
     @Column(name = "soft_delete")
