@@ -5,10 +5,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.lang.Nullable;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.security.Timestamp;
+import java.sql.Timestamp;
 
 
 @Entity
@@ -26,7 +27,7 @@ public class MemberEntity {
     private Long id;
 
     @Column
-    @NotNull
+    @NotNull(message = "the name can't be null")
     private String name;
 
     @Column
@@ -42,18 +43,22 @@ public class MemberEntity {
     private String linkedinUrl;
 
     @Column
-    @NotNull
+    @NotBlank
+    @NotNull(message = "the image can't be null")
+    @NotEmpty(message = "the image can't be empty")
     private String image;
 
     @Column
     @Nullable
     private String description;
 
+    @Column (name = "time_stamp")
+    @CreationTimestamp
+    private Timestamp timeStamp;
+
     @Column (name = "soft_delete", nullable = false)
     private boolean softDelete;
 
-    @CreationTimestamp
-    @Column (name = "time_stamp" ,nullable = false, updatable = false)
-    private Timestamp timeStamp;
+
 }
 
