@@ -46,7 +46,6 @@ public class OrganizationEntity {
     @CreatedDate
     private Timestamp timeStamp;
 
-    @Column(name = "is_deleted")
+    @Column(name = "soft_delete")
     private boolean softDelete;
-
 }
