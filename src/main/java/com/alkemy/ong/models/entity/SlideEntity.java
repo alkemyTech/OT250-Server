@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "slides")
+@Builder
 @Getter
 @Setter
 @NoArgsConstructor
