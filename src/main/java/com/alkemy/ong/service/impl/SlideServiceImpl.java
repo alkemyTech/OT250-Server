@@ -10,6 +10,8 @@ import com.alkemy.ong.service.ISlideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
+import java.util.Optional;
+
 @Service
 public class SlideServiceImpl implements ISlideService {
 
@@ -23,6 +25,16 @@ public class SlideServiceImpl implements ISlideService {
         SlideEntity slideEntity = slideMapper.slideRequest2SlideEntity(slideRequest);
         slideRepository.save(slideEntity);
         return slideMapper.slideEntity2SlideResponse(slideEntity);
+    }
+
+    public SlideResponse update(Long id, SlideRequest slideRequest) throws IOException {
+        Optional<SlideEntity> entity = slideRepository.findById(id);
+        if (!entity.isPresent())
+            throw new ParamNotFound("Invalid slide id");
+    }
+
+    private void slideExists(SlideEntity slideGot) {
+
     }
 
     private void verifySlideRequest(SlideRequest slideRequest) {
