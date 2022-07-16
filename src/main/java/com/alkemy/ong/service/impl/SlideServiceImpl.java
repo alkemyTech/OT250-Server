@@ -1,5 +1,6 @@
 package com.alkemy.ong.service.impl;
 
+import com.alkemy.ong.exception.SlideNotFoundException;
 import com.alkemy.ong.models.request.SlideRequest;
 import com.alkemy.ong.models.response.SlideResponse;
 import com.alkemy.ong.repository.ISlideRepository;
@@ -17,7 +18,7 @@ public class SlideServiceImpl implements ISlideService {
         return null;
     }
 
-    private void verification(SlideRequest slideRequest) {
+    private void verifySlideRequest(SlideRequest slideRequest) {
         if (slideRequest.getOrder() == null) {
             try {
                 Integer lastOrder = (slideRepository.findAll().get(slideRepository.findAll().size() - 1).getOrder()) + 1;
