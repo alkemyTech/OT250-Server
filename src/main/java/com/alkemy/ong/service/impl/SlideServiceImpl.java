@@ -1,6 +1,8 @@
 package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.exception.SlideNotFoundException;
+import com.alkemy.ong.models.entity.SlideEntity;
+import com.alkemy.ong.models.mapper.SlideMapper;
 import com.alkemy.ong.models.request.SlideRequest;
 import com.alkemy.ong.models.response.SlideResponse;
 import com.alkemy.ong.repository.ISlideRepository;
@@ -13,9 +15,14 @@ public class SlideServiceImpl implements ISlideService {
 
     @Autowired
     private ISlideRepository slideRepository;
+    @Autowired
+    SlideMapper slideMapper;
 
     public SlideResponse create(SlideRequest slideRequest) throws IOException {
-        return null;
+        verifySlideRequest(slideRequest);
+        SlideEntity slideEntity = slideMapper.slideRequest2SlideEntity(slideRequest);
+        slideRepository.save(slideEntity);
+        return slideMapper.slideEntity2SlideResponse(slideEntity);
     }
 
     private void verifySlideRequest(SlideRequest slideRequest) {
