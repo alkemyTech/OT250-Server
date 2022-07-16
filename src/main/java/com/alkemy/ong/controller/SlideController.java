@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("slides")
+@RequestMapping("/slides")
 public class SlideController {
 
     @Autowired
