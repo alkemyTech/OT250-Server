@@ -2,6 +2,7 @@ package com.alkemy.ong.models.mapper;
 
 import com.alkemy.ong.models.entity.SlideEntity;
 import com.alkemy.ong.models.request.SlideRequest;
+import com.alkemy.ong.models.response.SlideResponse;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -17,5 +18,15 @@ public class SlideMapper {
                 .order(slideRequest.getOrder())
                 .organizationId(slideRequest.getOrganizationId())
                 .build();
+    }
+
+    public SlideResponse slideEntity2SlideResponse(SlideEntity slideEntity) {
+        SlideResponse response = new SlideResponse();
+        response.setId(slideEntity.getId());
+        response.setImageUrl(slideEntity.getImageUrl());
+        response.setOrganizationId(slideEntity.getOrganizationId());
+        response.setOrder(slideEntity.getOrder());
+        response.setText(slideEntity.getText());
+        return response;
     }
 }
