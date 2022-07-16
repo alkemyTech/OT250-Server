@@ -1,8 +1,6 @@
 package com.alkemy.ong.models.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,7 +11,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "organizations")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @SQLDelete(sql = "UPDATE organizations SET soft_delete = true WHERE id=?")
@@ -37,11 +36,11 @@ public class OrganizationEntity {
     @NotNull(message = "Email may not be null")
     private String email;
 
-    @Column(name = "welcome_text", columnDefinition = "TEXT")
+    @Column(name = "welcome_text")
     @NotNull(message = "Welcome text may not be null")
     private String welcomeText;
 
-    @Column(name = "about_us_text", columnDefinition = "TEXT")
+    @Column(name = "about_us_text")
     private String aboutUsText;
 
     @Column(name = "time_stamp")
