@@ -34,6 +34,8 @@ public class SlideServiceImpl implements ISlideService {
             throw new ParamNotFound("Invalid slide id");
         verifySlideRequestOrder(slideRequest);
         slideMapper.updateEntity(entity.get(), slideRequest);
+        SlideEntity updatedEntity = slideRepository.save(entity.get());
+        return slideMapper.slideEntity2SlideResponse(updatedEntity);
     }
 
     private void verifySlideRequestOrder(SlideRequest slideRequest) {
