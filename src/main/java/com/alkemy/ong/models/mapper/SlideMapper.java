@@ -12,6 +12,10 @@ public class SlideMapper {
     //TODO  private aswS3Service attribute;
 
     public SlideEntity slideRequest2SlideEntity(SlideRequest slideRequest) throws IOException {
-        return SlideEntity
+        return SlideEntity.builder().imageUrl(slideRequest.getImageUrl()) //TODO awsS3Service to get the image
+                .text(slideRequest.getText())
+                .order(slideRequest.getOrder())
+                .organizationId(slideRequest.getOrganizationId())
+                .build();
     }
 }
