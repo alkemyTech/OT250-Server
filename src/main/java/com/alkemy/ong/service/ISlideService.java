@@ -9,4 +9,5 @@ public interface ISlideService {
 
     SlideResponse create(SlideRequest slideRequest) throws IOException;
 
+    SlideResponse update(Long id, SlideRequest slideRequest) throws IOException;
 }
