@@ -8,6 +8,7 @@ import com.alkemy.ong.models.request.SlideRequest;
 import com.alkemy.ong.models.response.SlideResponse;
 import com.alkemy.ong.repository.ISlideRepository;
 import com.alkemy.ong.service.ISlideService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
@@ -29,9 +30,7 @@ public class SlideServiceImpl implements ISlideService {
     }
 
     public SlideResponse update(Long id, SlideRequest slideRequest) throws IOException {
-        Optional<SlideEntity> entity = slideRepository.findById(id);
-        if (!entity.isPresent())
-            throw new ParamNotFound("Invalid slide id");
+        Optional<SlideEntity> entity = isEntityInDatabase(id);
         verifySlideRequestOrder(slideRequest);
         slideMapper.updateEntity(entity.get(), slideRequest);
     }
@@ -52,5 +51,13 @@ public class SlideServiceImpl implements ISlideService {
                 throw new SlideNotFoundException("Slide list is empty");
             }
         }
+    }
+
+    @NotNull
+    private Optional<SlideEntity> isEntityInDatabase(Long id) {
+        Optional<SlideEntity> entity = slideRepository.findById(id);
+        if (!entity.isPresent())
+            throw new ParamNotFound("Invalid slide id");
+        return entity;
     }
 }

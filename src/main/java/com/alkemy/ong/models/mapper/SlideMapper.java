@@ -30,6 +30,10 @@ public class SlideMapper {
         return response;
     }
 
-    public void updateEntity(SlideEntity slideEntity, SlideRequest slideRequest) {
+    public void updateEntity(SlideEntity slideEntity, SlideRequest slideRequest) throws IOException {
+        slideEntity.setImageUrl(slideRequest.getImageUrl()); //TODO awsS3Service to get the image
+        slideEntity.setText(slideRequest.getText());
+        slideEntity.setOrder(slideRequest.getOrder());
+        slideEntity.setOrganizationId(slideRequest.getOrganizationId());
     }
 }
