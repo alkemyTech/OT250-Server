@@ -12,6 +12,6 @@ import lombok.Setter;
 public class SlideRequest {
     private String imageUrl;
     private String text;
-    private Integer sort;
+    private Integer order;
     private Long organizationId;
 }

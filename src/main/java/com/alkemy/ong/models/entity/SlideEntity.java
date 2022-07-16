@@ -22,7 +22,7 @@ public class SlideEntity {
     private String text;
 
     @Column(name = "ord")
-    private String order;
+    private Integer order;
 
     @Column(name = "organization_id")
     private Long organizationId;
