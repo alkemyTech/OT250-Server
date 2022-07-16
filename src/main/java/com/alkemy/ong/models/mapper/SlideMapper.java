@@ -29,4 +29,7 @@ public class SlideMapper {
         response.setText(slideEntity.getText());
         return response;
     }
+
+    public void updateEntity(SlideEntity slideEntity, SlideRequest slideRequest) {
+    }
 }

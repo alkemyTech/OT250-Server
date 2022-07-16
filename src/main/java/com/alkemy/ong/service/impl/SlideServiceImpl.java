@@ -22,7 +22,7 @@ public class SlideServiceImpl implements ISlideService {
     SlideMapper slideMapper;
 
     public SlideResponse create(SlideRequest slideRequest) throws IOException {
-        verifySlideRequest(slideRequest);
+        verifySlideRequestOrder(slideRequest);
         SlideEntity slideEntity = slideMapper.slideRequest2SlideEntity(slideRequest);
         slideRepository.save(slideEntity);
         return slideMapper.slideEntity2SlideResponse(slideEntity);
@@ -32,13 +32,15 @@ public class SlideServiceImpl implements ISlideService {
         Optional<SlideEntity> entity = slideRepository.findById(id);
         if (!entity.isPresent())
             throw new ParamNotFound("Invalid slide id");
+        verifySlideRequestOrder(slideRequest);
+        slideMapper.updateEntity(entity.get(), slideRequest);
     }
 
     private void slideExists(SlideEntity slideGot) {
 
     }
 
-    private void verifySlideRequest(SlideRequest slideRequest) {
+    private void verifySlideRequestOrder(SlideRequest slideRequest) {
         if (slideRequest.getOrder() == null) {
             try {
                 Integer lastOrder = (slideRepository.findAll().get(slideRepository.findAll().size() - 1).getOrder()) + 1;
