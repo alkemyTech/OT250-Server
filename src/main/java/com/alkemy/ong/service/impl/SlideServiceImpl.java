@@ -1,6 +1,6 @@
 package com.alkemy.ong.service.impl;
 
-import com.alkemy.ong.exception.ParamNotFound;
+import com.alkemy.ong.exception.ParamNotFoundException;
 import com.alkemy.ong.exception.SlideNotFoundException;
 import com.alkemy.ong.models.entity.SlideEntity;
 import com.alkemy.ong.models.mapper.SlideMapper;
@@ -31,7 +31,7 @@ public class SlideServiceImpl implements ISlideService {
     public SlideResponse update(Long id, SlideRequest slideRequest) throws IOException {
         Optional<SlideEntity> entity = slideRepository.findById(id);
         if (!entity.isPresent())
-            throw new ParamNotFound("Invalid slide id");
+            throw new ParamNotFoundException("Invalid slide id");
         verifySlideRequestOrder(slideRequest);
         slideMapper.updateEntity(entity.get(), slideRequest);
         SlideEntity updatedEntity = slideRepository.save(entity.get());
