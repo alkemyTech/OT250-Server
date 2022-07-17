@@ -9,7 +9,6 @@ import com.alkemy.ong.models.response.SlideResponse;
 import com.alkemy.ong.repository.ISlideRepository;
 import com.alkemy.ong.service.ISlideService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
