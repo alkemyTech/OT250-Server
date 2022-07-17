@@ -2,7 +2,9 @@ package com.alkemy.ong.auth.security;
 
 import com.alkemy.ong.auth.filter.JwtRequestFilter;
 import com.alkemy.ong.auth.service.UserDetailsCustomService;
-import com.alkemy.ong.utils.RoleEnum;
+
+import com.alkemy.ong.auth.utility.RoleEnum;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;

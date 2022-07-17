@@ -31,13 +31,15 @@ public class UserDetailsCustomService implements UserDetailsService {
     @SuppressWarnings("unused")
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
         Optional<UserEntity> userDB = userRepository.findByEmail(email);
-        if (!userDB.isPresent()) {
+        if (userDB.isEmpty()) {
             throw new UsernameNotFoundException(email);
         }
         UserEntity user = userDB.get();
 
         return new User(userDB.get().getEmail(), userDB.get().getPassword(), mappRoles(userDB.get().getRoleId()));
+
     }
 
     private Collection<? extends GrantedAuthority> mappRoles(Set<RoleEntity> roles) {
