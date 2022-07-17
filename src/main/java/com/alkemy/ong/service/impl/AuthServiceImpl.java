@@ -21,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Set;
 
 @Service
@@ -57,10 +58,13 @@ public class AuthServiceImpl implements AuthService {
         if (userRepository.findByEmail(userRequest.getEmail()).isPresent()) {
             throw new UsernameNotFoundException("User already exists");
         }
-        Set<RoleEntity> roles = roleRepository.findByName(RoleEnum.USER.getFullRoleName());
-    /*if (roles.isEmpty()) {
-            throw new NullPointerException();
-        }*/
+        Set<RoleEntity> roles = roleRepository.findByName(RoleEnum.USER.getSimpleRoleName());
+        if (roles.isEmpty()) {
+            RoleEntity rol = new RoleEntity();
+            rol.setName(RoleEnum.USER.getSimpleRoleName());
+            rol = roleRepository.save(rol);
+            roles.add(rol);
+        }
         userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         UserEntity userEntity = userMapper.toUserEntity(userRequest, roles);
 

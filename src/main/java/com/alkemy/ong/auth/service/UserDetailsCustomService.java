@@ -38,11 +38,11 @@ public class UserDetailsCustomService implements UserDetailsService {
         }
         UserEntity user = userDB.get();
 
-        return new User(userDB.get().getEmail(), userDB.get().getPassword(), mappRoles(userDB.get().getRoleId()));
+        return new User(userDB.get().getEmail(), userDB.get().getPassword(), mapRoles(userDB.get().getRoleId()));
 
     }
 
-    private Collection<? extends GrantedAuthority> mappRoles(Set<RoleEntity> roles) {
+    private Collection<? extends GrantedAuthority> mapRoles(Set<RoleEntity> roles) {
         return roles.stream().map(rol -> new SimpleGrantedAuthority(rol.getName())).collect(Collectors.toList());
     }
 
