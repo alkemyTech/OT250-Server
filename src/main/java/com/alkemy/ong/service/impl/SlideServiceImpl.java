@@ -32,24 +32,29 @@ public class SlideServiceImpl implements ISlideService {
     public SlideResponse update(Long id, SlideRequest slideRequest) throws IOException {
         Optional<SlideEntity> entity = slideRepository.findById(id);
         if (!entity.isPresent())
-            throw new ParamNotFoundException("Invalid slide id");
-        verifySlideRequestOrder(slideRequest);
+            throw new SlideNotFoundException("Invalid slide id");
+        verifySlideRequestOrder2Update(slideRequest, id);
         slideMapper.updateEntity(entity.get(), slideRequest);
         SlideEntity updatedEntity = slideRepository.save(entity.get());
         return slideMapper.slideEntity2SlideResponse(updatedEntity);
     }
 
+    private void verifySlideRequestOrder2Update(SlideRequest slideRequest, Long id) {
+        if (slideRequest.getOrder() == null)
+            slideRequest.setOrder(slideRepository.getById(id).getOrder());
+        else
+            slideRepository.getById(id).setOrder(slideRequest.getOrder());
+    }
+
     private void verifySlideRequestOrder(SlideRequest slideRequest) {
+        Integer lastOrder = 1;
+        Integer maxOrder = 0;
         if (slideRequest.getOrder() == null) {
-            try {
-                List<SlideEntity> lastOrder = slideRepository.findAllByOrderByOrderDesc();
-                slideRequest.setOrder(lastOrder.get(0).getOrder()+1);
-            } catch (IndexOutOfBoundsException e) {
-                slideRequest.setOrder(1);
-            }
-            catch (SlideNotFoundException ex){
-                throw new SlideNotFoundException("Slide list is empty");
-            }
+            List<SlideEntity> entities = slideRepository.findAllByOrderByOrderDesc();
+            if (entities.isEmpty())
+                slideRequest.setOrder(lastOrder);
+            else
+                slideRequest.setOrder(entities.get(maxOrder).getOrder()+lastOrder);
         }
     }
 }
