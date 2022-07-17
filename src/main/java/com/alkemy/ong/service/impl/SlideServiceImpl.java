@@ -9,8 +9,10 @@ import com.alkemy.ong.models.response.SlideResponse;
 import com.alkemy.ong.repository.ISlideRepository;
 import com.alkemy.ong.service.ISlideService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -41,8 +43,8 @@ public class SlideServiceImpl implements ISlideService {
     private void verifySlideRequestOrder(SlideRequest slideRequest) {
         if (slideRequest.getOrder() == null) {
             try {
-                Integer lastOrder = (slideRepository.findAll().get(slideRepository.findAll().size() - 1).getOrder()) + 1;
-                slideRequest.setOrder(lastOrder);
+                List<SlideEntity> lastOrder = slideRepository.findAllByOrderByOrderDesc();
+                slideRequest.setOrder(lastOrder.get(0).getOrder()+1);
             } catch (IndexOutOfBoundsException e) {
                 slideRequest.setOrder(1);
             }
