@@ -36,11 +36,11 @@ public class OrganizationEntity {
     @NotNull(message = "Email may not be null")
     private String email;
 
-    @Column(name = "welcome_text")
+    @Column(name = "welcome_text", columnDefinition = "TEXT")
     @NotNull(message = "Welcome text may not be null")
     private String welcomeText;
 
-    @Column(name = "about_us_text")
+    @Column(name = "about_us_text", columnDefinition = "TEXT")
     private String aboutUsText;
 
     @Column(name = "time_stamp")
