@@ -96,7 +96,7 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>3.0.0</version>
         </dependency>
-  
+
         <!-- end swagger-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
@@ -117,7 +117,7 @@
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk</artifactId>
             <version>1.11.133</version>
-        </dependency>        
+        </dependency>
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
