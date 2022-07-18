@@ -1,6 +1,5 @@
 package com.alkemy.ong.service.impl;
 
-import com.alkemy.ong.exception.ParamNotFoundException;
 import com.alkemy.ong.exception.SlideNotFoundException;
 import com.alkemy.ong.models.entity.SlideEntity;
 import com.alkemy.ong.models.mapper.SlideMapper;
