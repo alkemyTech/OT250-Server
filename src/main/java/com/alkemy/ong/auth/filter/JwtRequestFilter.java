@@ -1,6 +1,7 @@
 package com.alkemy.ong.auth.filter;
 import com.alkemy.ong.auth.service.UserDetailsCustomService;
 import com.alkemy.ong.auth.utility.JwtUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,7 +23,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private JwtUtils jwtUtils;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+    protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain chain)
             throws ServletException, IOException {
         final String authorizationHeader = request.getHeader("Authorization");
         String username = null;

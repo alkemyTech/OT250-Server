@@ -33,7 +33,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     public List<OrganizationResponseInfo> GetInfo() {
         List<OrganizationEntity> entities = organizationRepository.findAll();
-        List<OrganizationResponseInfo> response = new ArrayList();
+        List<OrganizationResponseInfo> response = new ArrayList<>();
         for (OrganizationEntity entity : entities) {
             response.add(organizationMapper.entityToResponseInfo(entity));
         }
