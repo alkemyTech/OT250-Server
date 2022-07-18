@@ -18,7 +18,6 @@ public class SlideController {
     @Autowired
     private ISlideService slideService;
 
-    //TODO @PreAuthorize(ROLE_ADMIN)
     @PostMapping
     public ResponseEntity<SlideResponse> create(@RequestBody @Valid SlideRequest slideRequest) throws IOException {
         SlideResponse responseSaved = slideService.create(slideRequest);
