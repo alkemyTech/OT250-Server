@@ -1,52 +1,69 @@
 package com.alkemy.ong.models.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-import org.springframework.data.annotation.CreatedDate;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
-import java.util.List;
 
-@Entity
-@Table(name = "organizations")
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import java.sql.Timestamp;
+
 @Getter
 @Setter
-@NoArgsConstructor
+@Entity
+@SQLDelete(sql= "UPDATE organizations SET soft_delete = true WHERE organization_id=?")
+@Where(clause = "soft_delete=false")
+@Table(name = "organizations")
+@Builder
+@NoArgsConstructor 
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE organizations SET soft_delete = true WHERE id=?")
-@Where(clause = "soft_delete = false")
+@Data
 public class OrganizationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "organization_id")
     private Long id;
 
-    @NotNull(message = "Name may not be null")
+    @NonNull
+    @NotEmpty(message = "name can not be null")
+    @NotBlank(message = "name can not be blank")
+    @Column(nullable = false)
     private String name;
 
-    @NotNull(message = "Image may not be null")
+    @NonNull
+    @NotEmpty(message = "image can not be null")
+    @Column(nullable = false)
     private String image;
 
-    private String adress;
-
+    private String address;
     private Integer phone;
 
-    @NotNull(message = "Email may not be null")
+    @NonNull
+    @NotEmpty(message = "email can not be null")
+    @Email(message = "mail is not valid")
+    @Column(nullable = false)
     private String email;
 
-    @Column(name = "welcome_text", columnDefinition = "TEXT")
-    @NotNull(message = "Welcome text may not be null")
+    @NonNull
+    @NotEmpty(message = "welcomeText can not be null")
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String welcomeText;
 
-    @Column(name = "about_us_text", columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     private String aboutUsText;
 
-    @Column(name = "time_stamp")
-    @CreatedDate
-    private Timestamp timeStamp;
-
     @Column(name = "soft_delete")
-    private boolean softDelete;
+    @Builder.Default
+    private boolean deleted = Boolean.FALSE;
+
+    @CreationTimestamp
+    private Timestamp timestamp;
+
+    private String urlFacebook;
+    private String urlInstagram;
+    private String urlLinkedin;
 }
