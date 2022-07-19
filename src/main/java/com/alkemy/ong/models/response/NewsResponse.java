@@ -28,7 +28,8 @@ public class NewsResponse {
 
     private String image;
 
-    private CategoryResponse category;
+    private Long idCategory;
+    //private CategoryResponse category;
 
     private Timestamp timestamp;
 

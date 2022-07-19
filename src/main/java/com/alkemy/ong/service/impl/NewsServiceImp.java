@@ -24,7 +24,7 @@ public class NewsServiceImp implements NewsService {
 
     @Override
     public NewsResponse create(NewsRequest newsRequest) {
-        NewsEntity entity = this.newsMapper.Request2Entity(newsRequest);
+        NewsEntity entity = this.newsMapper.Request2EntityCreatedNews(newsRequest);
         NewsEntity entitySave = this.newsRepository.save(entity);
         NewsResponse newsResponseCreated = this.newsMapper.Entity2Response(entitySave);
 

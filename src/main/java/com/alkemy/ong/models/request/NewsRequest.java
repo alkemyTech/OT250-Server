@@ -30,7 +30,9 @@ public class NewsRequest {
     @NotNull(message = "The image can´t be null")
     private String image;
 
-    private CategoryRequest category;
+    private Long idCategory;
+
+    //private CategoryRequest category;
 
 
 
