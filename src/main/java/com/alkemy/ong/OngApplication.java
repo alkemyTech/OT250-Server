@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 public class OngApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(OngApplication.class, args);
 	}
 
