@@ -1,6 +1,5 @@
 package com.alkemy.ong.service.impl;
 
-import com.alkemy.ong.aws.config.ActivitySeeder;
 import com.alkemy.ong.exception.ActivityNotFoundException;
 import com.alkemy.ong.exception.NameOrContentAreNull;
 import com.alkemy.ong.models.entity.ActivityEntity;

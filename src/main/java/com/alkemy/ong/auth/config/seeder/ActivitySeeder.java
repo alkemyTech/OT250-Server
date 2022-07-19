@@ -1,4 +1,4 @@
-package com.alkemy.ong.aws.config;
+package com.alkemy.ong.auth.config.seeder;
 
 import com.alkemy.ong.models.entity.ActivityEntity;
 import com.alkemy.ong.repository.ActivityRepository;

@@ -13,5 +13,7 @@ public interface ActivityService {
 
     ActivityResponse upDate(Long id, ActivityRequestUpDate request);
 
+    boolean isNull(ActivityRequest request);
+
 
 }
