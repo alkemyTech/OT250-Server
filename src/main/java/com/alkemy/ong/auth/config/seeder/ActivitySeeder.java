@@ -30,5 +30,6 @@ public class ActivitySeeder implements CommandLineRunner {
             activityRepository.save(new ActivityEntity("act-5","conte-5", "image-5",new Timestamp(System.currentTimeMillis()), false));
         }
 
+
     }
 }

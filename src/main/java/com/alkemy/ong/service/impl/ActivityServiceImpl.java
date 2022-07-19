@@ -59,8 +59,12 @@ public class ActivityServiceImpl implements ActivityService {
 
             if (activityRepository.findById(id).isPresent()) {
 
-                ActivityEntity entitySave = activityMapper.requestUpDate2Entity(request);
+                ActivityEntity entityFound = activityRepository.findById(id).orElseThrow();
+
+                ActivityEntity entitySave = activityMapper.requestUpDate2Entity(entityFound, request);
+
                 activityRepository.save(entitySave);
+
                 ActivityResponse response = activityMapper.entity2Response(entitySave);
 
                 return response;
