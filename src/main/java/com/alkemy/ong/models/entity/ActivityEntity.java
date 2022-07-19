@@ -1,8 +1,6 @@
 package com.alkemy.ong.models.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -13,7 +11,8 @@ import javax.validation.constraints.Pattern;
 import java.sql.Timestamp;
 
 @Entity
-@Data
+@Getter
+@Setter
 @SQLDelete(sql = "UPDATE categories SET soft_delete = true WHERE id = ?")
 @Where(clause = "soft_delete = false")
 @AllArgsConstructor
@@ -27,7 +26,6 @@ public class ActivityEntity {
     private Long id;
 
     @NotNull(message = "the name can't be null")
-    @Pattern(regexp = "^[a-zA-Z]+$", message = "The name has to contain only letters")
     private String name;
 
     @NotNull(message = "the content can't be null")
@@ -42,5 +40,12 @@ public class ActivityEntity {
     @Column(name = "soft_delete")
     private boolean softDelete = false;
 
+    public ActivityEntity(String name, String content, String image, Timestamp timestamp, boolean softDelete) {
+        this.name = name;
+        this.content = content;
+        this.image = image;
+        this.timestamp = timestamp;
+        this.softDelete = softDelete;
+    }
 }
 
