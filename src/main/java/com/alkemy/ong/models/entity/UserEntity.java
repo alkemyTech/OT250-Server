@@ -39,7 +39,7 @@ public class UserEntity {
     private String lastName;
 
     @NotNull
-    @Email(message = "the password can't be null")
+   @Email(message = "the password can't be null")
     @Column(unique = true, nullable = false)
     private String email;
 

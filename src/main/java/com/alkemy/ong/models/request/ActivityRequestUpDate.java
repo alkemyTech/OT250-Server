@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 @Data
 public class ActivityRequestUpDate {
 
-    @NotNull(message = "the id can't be null")
+//    @NotNull(message = "the id can't be null")
     private Long id;
 
     @NotNull(message = "the name can't be null")
