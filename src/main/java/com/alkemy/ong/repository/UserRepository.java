@@ -16,6 +16,6 @@ public interface UserRepository extends JpaRepository <UserEntity, Long> {
     @Query(value = "SELECT * from users WHERE users.email LIKE %:email%", nativeQuery = true)
    Optional<UserEntity> findByEmail(String email);
 
-    @Query("SELECT u FROM UserEntity u WHERE u.deleted = false")
-    List<UserEntity> findBySoftDelete();
+    @Query(value = "SELECT *  FROM users WHERE deleted = false", nativeQuery = true)
+    List<UserEntity> findActiveUsers();
 }

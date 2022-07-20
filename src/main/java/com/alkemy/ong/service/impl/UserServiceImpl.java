@@ -51,10 +51,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUser(Long id, UserUpdateRequest request) {
         UserEntity user = getById(id);
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setPhoto(request.getPhoto());
+
+        if(request.getFirstName() != null && !request.getFirstName().isEmpty() && !request.getFirstName().isBlank() ){
+            user.setFirstName(request.getFirstName());}
+        if(request.getLastName() != null && !request.getLastName().isEmpty() && !request.getLastName().isBlank()){
+            user.setLastName(request.getLastName());}
+        if(request.getPassword() != null && !request.getPassword().isEmpty() && !request.getLastName().isBlank()){
+            user.setPassword(passwordEncoder.encode(request.getPassword()));}
+        if(request.getPhoto() != null && !request.getPhoto().isEmpty() && !request.getPhoto().isBlank()){
+            user.setPhoto(request.getPhoto());}
         userRepository.save(user);
 
     }
@@ -82,4 +87,5 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(user.getId());
 
     }
+
 }

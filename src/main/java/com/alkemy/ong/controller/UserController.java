@@ -26,7 +26,7 @@ public class UserController {
 
     }
 
-    @PatchMapping("/:{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable("id") @Valid @NotNull Long id,
                                            @RequestBody @Valid UserUpdateRequest request){
         userService.updateUser(id, request);
@@ -34,7 +34,7 @@ public class UserController {
 
     }
 
-    @DeleteMapping("/:{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id")@Valid @NotNull Long id){
         userService.deleteUser(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
