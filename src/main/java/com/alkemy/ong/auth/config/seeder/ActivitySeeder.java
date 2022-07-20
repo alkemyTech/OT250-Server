@@ -20,7 +20,7 @@ public class ActivitySeeder implements CommandLineRunner {
 
     }
 
-    private void loadActivity() {
+    private void loadActivity() { 
 
         if(activityRepository.findAll().isEmpty()){
             activityRepository.save(new ActivityEntity("act-1","conte-1", "image-1",new Timestamp(System.currentTimeMillis()), false));
