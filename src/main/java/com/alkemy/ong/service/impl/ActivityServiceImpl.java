@@ -84,9 +84,5 @@ public class ActivityServiceImpl implements ActivityService {
 
     }
 
-    public String encode(String str){
-        Base64 b64 = new Base64.getEncoder(str);
-        return b64;
-    }
 
 }
