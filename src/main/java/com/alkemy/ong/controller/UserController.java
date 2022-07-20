@@ -27,10 +27,10 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updateUser(@PathVariable("id") @Valid @NotNull Long id,
+    public ResponseEntity<UserDetailsResponse> updateUser(@PathVariable("id") @Valid @NotNull Long id,
                                            @RequestBody @Valid UserUpdateRequest request){
-        userService.updateUser(id, request);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+       UserDetailsResponse update = userService.updateUser(id, request);
+        return ResponseEntity.ok().body(update);
 
     }
 

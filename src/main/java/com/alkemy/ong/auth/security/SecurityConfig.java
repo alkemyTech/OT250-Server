@@ -50,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/auth/me").hasAuthority(RoleEnum.USER.getSimpleRoleName())
                 // Users
                 .antMatchers(HttpMethod.GET,"/users").hasAuthority(RoleEnum.ADMIN.getSimpleRoleName())
-                //.antMatchers(HttpMethod.GET,"/users").hasAuthority(RoleEnum.USER.getSimpleRoleName())
+                .antMatchers(HttpMethod.GET,"/users").hasAuthority(RoleEnum.USER.getSimpleRoleName())
                 .antMatchers(HttpMethod.PATCH,"/users/**").permitAll()
                 .antMatchers(HttpMethod.DELETE,"/users/**").hasAuthority(RoleEnum.USER.getSimpleRoleName())
                 // Activity

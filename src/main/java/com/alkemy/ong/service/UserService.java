@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserService {
 
     //void deleteUser(Long id);
-    void updateUser(Long id, UserUpdateRequest request);
+    UserDetailsResponse updateUser(Long id, UserUpdateRequest request);
     List<UserDetailsResponse> getUsers();
     UsersPaginationResponse getPaginationUsers(Integer page);
 

@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateUser(Long id, UserUpdateRequest request) {
+    public UserDetailsResponse updateUser(Long id, UserUpdateRequest request) {
         UserEntity user = getById(id);
 
         if(request.getFirstName() != null && !request.getFirstName().isEmpty() && !request.getFirstName().isBlank() ){
@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
         if(request.getPhoto() != null && !request.getPhoto().isEmpty() && !request.getPhoto().isBlank()){
             user.setPhoto(request.getPhoto());}
         userRepository.save(user);
+        return userMapper.userToUserDetail(user);
 
     }
 
