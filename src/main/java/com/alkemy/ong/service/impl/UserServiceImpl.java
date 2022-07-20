@@ -8,14 +8,11 @@ import com.alkemy.ong.models.request.UserUpdateRequest;
 import com.alkemy.ong.models.response.AuthResponse;
 import com.alkemy.ong.models.response.UserDetailsResponse;
 import com.alkemy.ong.models.response.UserResponse;
-import com.alkemy.ong.models.response.UsersPaginationResponse;
 import com.alkemy.ong.repository.UserRepository;
-import com.alkemy.ong.service.AuthService;
 import com.alkemy.ong.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -77,10 +74,10 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
+    /*@Override
     public UsersPaginationResponse getPaginationUsers(Integer page) {
         return null;
-    }
+    }*/
 
     @Override
     public void deleteUser(Long id) {
