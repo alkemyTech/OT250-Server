@@ -17,8 +17,8 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "news")
-@SQLDelete(sql= "UPDATE news SET deleted=true WHERE id=?")
-@Where(clause="deleted=false")
+@SQLDelete(sql= "UPDATE news SET soft_delete=true WHERE news_id=?")
+@Where(clause="soft_delete=false")
 public class NewsEntity {
 
     @Id

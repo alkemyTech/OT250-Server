@@ -44,4 +44,12 @@ public class CategoryEntity implements Serializable {
     @Column(name = "soft_delete")
     private boolean softDelete = false;
 
+    public CategoryEntity(String name, String description, String image, Timestamp timestamp, boolean softDelete) {
+        this.name = name;
+        this.description = description;
+        this.image = image;
+        this.timestamp = timestamp;
+        this.softDelete = softDelete;
+    }
+
 }
