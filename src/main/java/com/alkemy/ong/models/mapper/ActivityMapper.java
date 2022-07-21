@@ -39,19 +39,16 @@ public class ActivityMapper {
 
     }
 
-    public ActivityEntity requestUpDate2Entity(ActivityRequestUpDate request){
+    public ActivityEntity requestUpDate2Entity(ActivityEntity entityFound, ActivityRequestUpDate request){
 
-        ActivityEntity entity = new ActivityEntity();
-
-        entity.setId(request.getId());
-        entity.setContent(request.getContent());
-        entity.setImage(request.getImage());
-        entity.setName(request.getName());
+        entityFound.setContent(request.getContent());
+        entityFound.setImage(request.getImage());
+        entityFound.setName(request.getName());
         Long datetime = System.currentTimeMillis();
         Timestamp timestamp = new Timestamp(datetime);
-        entity.setTimestamp(timestamp);
+        entityFound.setTimestamp(timestamp);
 
-        return entity;
+        return entityFound;
 
     }
 

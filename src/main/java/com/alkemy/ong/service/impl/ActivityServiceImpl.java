@@ -12,6 +12,8 @@ import com.alkemy.ong.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
+
 @Service
 public class ActivityServiceImpl implements ActivityService {
 
@@ -59,8 +61,12 @@ public class ActivityServiceImpl implements ActivityService {
 
             if (activityRepository.findById(id).isPresent()) {
 
-                ActivityEntity entitySave = activityMapper.requestUpDate2Entity(request);
+                ActivityEntity entityFound = activityRepository.findById(id).orElseThrow();
+
+                ActivityEntity entitySave = activityMapper.requestUpDate2Entity(entityFound, request);
+
                 activityRepository.save(entitySave);
+
                 ActivityResponse response = activityMapper.entity2Response(entitySave);
 
                 return response;
@@ -77,5 +83,6 @@ public class ActivityServiceImpl implements ActivityService {
         }
 
     }
+
 
 }
