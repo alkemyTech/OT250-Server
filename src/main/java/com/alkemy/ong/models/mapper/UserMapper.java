@@ -24,6 +24,7 @@ public class UserMapper {
                 .password(userRequest.getPassword())
                 .roleId(roles)
                 .timestamp(new Timestamp(System.currentTimeMillis()))
+                .deleted(Boolean.FALSE)
                 .build();
     }
 
