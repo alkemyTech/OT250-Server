@@ -50,4 +50,13 @@ public class NewsMapper {
 
     }
 
+    public NewsEntity EntityRefreshValues (NewsEntity entity, NewsRequest request){
+        entity.setName(request.getName());
+        entity.setContent(request.getContent());
+        entity.setImage(request.getImage());
+        entity.setCategory(categoryRepository.getById(request.getIdCategory()));
+
+      return entity;
+    }
+
 }

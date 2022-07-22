@@ -7,4 +7,5 @@ public interface NewsService {
 
     NewsResponse create (NewsRequest newsRequest);
     void delete (Long id);
+    NewsResponse update (Long id, NewsRequest newsRequest);
 }
