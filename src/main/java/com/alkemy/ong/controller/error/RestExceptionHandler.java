@@ -1,4 +1,4 @@
-package com.alkemy.ong.controller;
+package com.alkemy.ong.controller.error;
 
 import com.alkemy.ong.exception.ParamNotFoundException;
 import com.alkemy.ong.exception.SlideNotFoundException;
