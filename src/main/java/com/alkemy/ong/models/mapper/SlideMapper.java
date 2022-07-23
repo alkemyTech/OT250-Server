@@ -3,6 +3,8 @@ package com.alkemy.ong.models.mapper;
 import com.alkemy.ong.models.entity.SlideEntity;
 import com.alkemy.ong.models.request.SlideRequest;
 import com.alkemy.ong.models.response.SlideResponse;
+import com.alkemy.ong.service.AwsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -10,13 +12,16 @@ import java.io.IOException;
 @Component
 public class SlideMapper {
 
-    //TODO  private aswS3Service attribute;
+
+    @Autowired
+    private AwsService awsService;
 
     public SlideEntity slideRequest2SlideEntity(SlideRequest slideRequest) throws IOException {
-        return SlideEntity.builder().imageUrl(slideRequest.getImageUrl()) //TODO awsS3Service to get the image
+        return SlideEntity.builder()
                 .text(slideRequest.getText())
                 .order(slideRequest.getOrder())
                 .organizationId(slideRequest.getOrganizationId())
+                .imageUrl(awsService.file2Base64(slideRequest.getImageUrl()))
                 .build();
     }
 
@@ -31,7 +36,7 @@ public class SlideMapper {
     }
 
     public void updateEntity(SlideEntity slideEntity, SlideRequest slideRequest) throws IOException {
-        slideEntity.setImageUrl(slideRequest.getImageUrl()); //TODO awsS3Service to get the image
+        slideEntity.setImageUrl(awsService.file2Base64(slideRequest.getImageUrl()));
         slideEntity.setText(slideRequest.getText());
         slideEntity.setOrder(slideRequest.getOrder());
         slideEntity.setOrganizationId(slideRequest.getOrganizationId());

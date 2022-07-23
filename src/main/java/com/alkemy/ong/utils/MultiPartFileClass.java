@@ -3,12 +3,28 @@ package com.alkemy.ong.utils;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Path;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+
 
 public class MultiPartFileClass implements MultipartFile {
+
+    private final byte[] FILE_CONTENT;
+    private final String EXTENSION;
+    private final String TYPE;
+
+    public MultiPartFileClass (String header,String contents){
+
+        this.FILE_CONTENT = Base64.getDecoder().decode(contents.getBytes(StandardCharsets.UTF_8));
+        this.EXTENSION = header.split(";")[0].split("/")[1];
+        this.TYPE = header.split(";")[0].split(":")[1];
+    }
+
+
     @Override
     public String getName() {
         return null;
@@ -36,12 +52,12 @@ public class MultiPartFileClass implements MultipartFile {
 
     @Override
     public byte[] getBytes() throws IOException {
-        return new byte[0];
+        return FILE_CONTENT;
     }
 
     @Override
     public InputStream getInputStream() throws IOException {
-        return null;
+        return new ByteArrayInputStream(FILE_CONTENT);
     }
 
     @Override
@@ -54,8 +70,5 @@ public class MultiPartFileClass implements MultipartFile {
 
     }
 
-    @Override
-    public void transferTo(Path dest) throws IOException, IllegalStateException {
-        MultipartFile.super.transferTo(dest);
-    }
+
 }
