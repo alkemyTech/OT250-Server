@@ -39,11 +39,21 @@ public class NewsController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<NewsResponse> updateNews (@PathVariable Long id, @RequestBody NewsRequest newsRequest) {
+    public ResponseEntity<NewsResponse> updateNews (@PathVariable Long id,
+                                                    @RequestBody NewsRequest newsRequest) {
 
         NewsResponse newsResponse = this.newsService.update(id, newsRequest);
 
         return ResponseEntity.status(HttpStatus.OK).body(newsResponse);
+
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<NewsResponse> getById (@PathVariable Long id){
+
+        NewsResponse response = this.newsService.getById(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
 }
