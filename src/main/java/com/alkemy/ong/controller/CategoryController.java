@@ -1,13 +1,14 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.models.response.CategoryNameResponse;
+import com.alkemy.ong.models.response.CategoryResponse;
 import com.alkemy.ong.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 
 @RestController
@@ -21,5 +22,11 @@ public class CategoryController {
     public ResponseEntity<List<CategoryNameResponse>> getAllCategories() {
         List<CategoryNameResponse> categories = categoryService.getAllCategories();
         return ResponseEntity.ok().body(categories);
+    }
+
+    @GetMapping("/id")
+    public ResponseEntity<CategoryResponse> getDetailsById(@PathVariable Long id) {
+        CategoryResponse response = categoryService.getCategoryDetails(id);
+        return ResponseEntity.ok(response);
     }
 }
