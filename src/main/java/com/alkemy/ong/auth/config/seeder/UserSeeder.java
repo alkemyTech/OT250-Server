@@ -17,13 +17,17 @@ public class UserSeeder implements CommandLineRunner {
 
     @Autowired
     private AuthService authService;
+    @Autowired
+    private UserRepository userRepository;
     @Override
     public void run(String... args) throws Exception {
             this.createUserAdmin();
     }
 
     private void createUserAdmin() {
-        UserRequest userRequest = new UserRequest("user1", "surname1", "email@mail.com", "admin");
-        authService.registerAdmin(userRequest);
+        if (userRepository.findAll().isEmpty()){
+            UserRequest userRequest = new UserRequest("user1", "surname1", "email@mail.com", "admin");
+            authService.registerAdmin(userRequest);
+        }
     }
 }
