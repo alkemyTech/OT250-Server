@@ -10,6 +10,7 @@ import com.alkemy.ong.service.ISlideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,5 +56,12 @@ public class SlideServiceImpl implements ISlideService {
             else
                 slideRequest.setOrder(entities.get(maxOrder).getOrder()+lastOrder);
         }
+    }
+
+    public List<SlideResponse> graphicalList() {
+        List<SlideResponse> slideResponses = new ArrayList<>();
+        List<SlideEntity> slideEntities = slideRepository.findAllByOrderByOrderAsc();
+        slideResponses = slideMapper.slideList2ResponseGraphicalList(slideEntities);
+        return slideResponses;
     }
 }

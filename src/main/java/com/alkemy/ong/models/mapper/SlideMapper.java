@@ -6,6 +6,8 @@ import com.alkemy.ong.models.response.SlideResponse;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class SlideMapper {
@@ -35,5 +37,23 @@ public class SlideMapper {
         slideEntity.setText(slideRequest.getText());
         slideEntity.setOrder(slideRequest.getOrder());
         slideEntity.setOrganizationId(slideRequest.getOrganizationId());
+    }
+
+    public SlideResponse slide2ResponseGraphical(SlideEntity slide) {
+        SlideResponse slideResponse = new SlideResponse(
+                slide.getId(),
+                slide.getImageUrl(),
+                null,
+                slide.getOrder(),
+                null);
+        return slideResponse;
+    }
+
+    public List<SlideResponse> slideList2ResponseGraphicalList(List<SlideEntity> slides) {
+        List<SlideResponse> slideResponses = new ArrayList<>();
+        for (SlideEntity slide : slides) {
+            slideResponses.add(slide2ResponseGraphical(slide));
+        }
+        return slideResponses;
     }
 }
