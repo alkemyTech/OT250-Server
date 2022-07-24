@@ -21,7 +21,7 @@ public class SlideMapper {
                 .text(slideRequest.getText())
                 .order(slideRequest.getOrder())
                 .organizationId(slideRequest.getOrganizationId())
-                .imageUrl(awsService.file2Base64(slideRequest.getImageUrl()))
+                .imageUrl(awsService.uploadFileFromBase64(slideRequest.getImageUrl()))
                 .build();
     }
 
@@ -36,7 +36,7 @@ public class SlideMapper {
     }
 
     public void updateEntity(SlideEntity slideEntity, SlideRequest slideRequest) throws IOException {
-        slideEntity.setImageUrl(awsService.file2Base64(slideRequest.getImageUrl()));
+        slideEntity.setImageUrl(awsService.uploadFileFromBase64(slideRequest.getImageUrl()));
         slideEntity.setText(slideRequest.getText());
         slideEntity.setOrder(slideRequest.getOrder());
         slideEntity.setOrganizationId(slideRequest.getOrganizationId());

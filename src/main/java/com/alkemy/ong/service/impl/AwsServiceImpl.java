@@ -29,21 +29,30 @@ public class AwsServiceImpl implements AwsService {
     @Autowired
     private AwsUtils awsUtils;
 
+    private void uploadFile2S3Bucket(String fileName, File file) {
+        amazonS3.putObject(new PutObjectRequest(bucket, fileName, file)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+    }
 
-    @Override
-    public String uploadFile(MultipartFile multipartFile) throws IOException {
+    private void uploadFile2Asw3 (String fileName, File file){
 
-        File fileCreated = awsUtils.multiPartFile2File(multipartFile); //TODO AwsUtils crear método para convertir MultipartFile a File
-        String fileName = awsUtils.fileNameGenerator(multipartFile); //TODO AwsUtils crear método para generar el nombre del File
-        this.uploadFile2Asw3(fileName,fileCreated);
+        this.amazonS3.putObject(new PutObjectRequest(bucket,fileName,file)
+                .withCannedAcl(CannedAccessControlList.PublicRead));
+
+    }
+
+    private String uploadFile(MultipartFile multipartFile) throws IOException {
+
+        File fileCreated = awsUtils.convertMultiPartToFile(multipartFile);
+        String fileName = multipartFile.getOriginalFilename();
+        uploadFile2Asw3(fileName,fileCreated);
         fileCreated.delete();
-        String url = awsUtils.getUrlFile(endPoint, bucket, fileName); //TODO AwsUtils crear método para generar el url
-
-        return url;
+        String fileURL = endPoint + "/" + bucket + "/" + fileName;
+        return fileURL;
     }
 
     @Override
-    public String file2Base64(String base64) throws IOException {
+    public String uploadFileFromBase64(String base64) throws IOException {
 
         String[] parts = base64.split(",");
         String header = parts[0];
@@ -51,12 +60,5 @@ public class AwsServiceImpl implements AwsService {
         MultipartFile multipartFile = new MultiPartFileClass(header, contents);
 
         return uploadFile(multipartFile);
-    }
-
-    public void uploadFile2Asw3 (String fileName, File file){
-
-        this.amazonS3.putObject(new PutObjectRequest(bucket,fileName,file)
-                                .withCannedAcl(CannedAccessControlList.PublicRead));
-
     }
 }
