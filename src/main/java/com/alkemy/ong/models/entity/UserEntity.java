@@ -1,5 +1,6 @@
 package com.alkemy.ong.models.entity;
 
+import com.amazonaws.services.dynamodbv2.xspec.S;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -22,6 +23,7 @@ import java.util.Set;
 @SQLDelete(sql = "UPDATE users SET deleted = true Where id=?")
 @Where(clause = "deleted=false")
 public class UserEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -60,5 +62,12 @@ public class UserEntity {
 
     private Boolean deleted = Boolean.FALSE;
 
+    public UserEntity(String firstName, String lastName, String email, String password, Set<RoleEntity> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.roleId = roles;
+    }
 
 }
