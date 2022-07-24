@@ -95,7 +95,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // Organization
                 .antMatchers(HttpMethod.GET, "/organization/public").hasAuthority(RoleEnum.USER.getSimpleRoleName())
                 .antMatchers(HttpMethod.POST, "/organization").hasAuthority(RoleEnum.ADMIN.getSimpleRoleName())
-                .antMatchers(HttpMethod.POST, "/organization").hasAuthority(RoleEnum.USER.getSimpleRoleName())
                 // Slides
                 .antMatchers(HttpMethod.GET, "/slides", "slides/**").hasAuthority(RoleEnum.ADMIN.getSimpleRoleName())
                 .antMatchers(HttpMethod.GET, "/slides", "slides/**").hasAuthority(RoleEnum.USER.getSimpleRoleName())
