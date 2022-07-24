@@ -13,4 +13,5 @@ public interface AuthService {
     UserResponse register(UserRequest userRequest) throws UsernameNotFoundException, IOException;
     AuthResponse login(AuthRequest authRequest);
     UserDetailsResponse getPersonalInformation(String token);
+    void registerAdmin(UserRequest userRequest);
 }
