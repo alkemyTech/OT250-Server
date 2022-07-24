@@ -20,20 +20,16 @@ public class OrganizationController {
 
     @Autowired
     private OrganizationService organizationService;
-    
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<OrganizationResponse> save (@RequestBody @Valid OrganizationRequest organization){
         return ResponseEntity.status(HttpStatus.CREATED).body(organizationService.save(organization));
     }
-    
-    @PreAuthorize("hasRole('ROLE_USER') OR hasRole('ROLE_ADMIN')")
+
     @GetMapping("/public")
     public ResponseEntity<List<OrganizationResponseInfo>> dataOrganization(){
         return ResponseEntity.ok(organizationService.GetInfo());
     }
-    
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+
     @PutMapping("/public/{id}")
     public ResponseEntity<Object> update(@PathVariable("id") @Valid @NotNull Long id, @Valid @RequestBody OrganizationRequest request){
         OrganizationResponse response = null;
