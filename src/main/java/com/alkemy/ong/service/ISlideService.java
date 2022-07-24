@@ -13,4 +13,6 @@ public interface ISlideService {
     SlideResponse update(Long id, SlideRequest slideRequest) throws IOException;
 
     public List<SlideResponse> graphicalList();
+
+    public SlideResponse detailsOfSlide(Long id);
 }

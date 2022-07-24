@@ -1,5 +1,6 @@
 package com.alkemy.ong.service.impl;
 
+import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.exception.SlideNotFoundException;
 import com.alkemy.ong.models.entity.SlideEntity;
 import com.alkemy.ong.models.mapper.SlideMapper;
@@ -63,5 +64,14 @@ public class SlideServiceImpl implements ISlideService {
         List<SlideEntity> slideEntities = slideRepository.findAllByOrderByOrderAsc();
         slideResponses = slideMapper.slideList2ResponseGraphicalList(slideEntities);
         return slideResponses;
+    }
+
+    public SlideResponse detailsOfSlide(Long id){
+        Optional<SlideEntity> slide = slideRepository.findById(id);
+        if (slide.isEmpty()) {
+            throw new NotFoundException("The Slide with id "+id+" has not be found");
+        }
+        SlideResponse slideResponse = slideMapper.slideEntity2SlideResponse(slide.get());
+        return slideResponse;
     }
 }

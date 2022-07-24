@@ -1,5 +1,6 @@
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.exception.ParamNotFoundException;
 import com.alkemy.ong.exception.SlideNotFoundException;
 import com.alkemy.ong.models.response.ApiErrorResponse;
@@ -34,5 +35,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 Arrays.asList("Slide Not Found")
         );
         return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(value = {NotFoundException.class})
+    protected ResponseEntity<Object> handleNotFound(RuntimeException ex, WebRequest request) {
+        ApiErrorResponse error = new ApiErrorResponse(
+                HttpStatus.NOT_FOUND,
+                ex.getMessage(), null
+        );
+        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 }

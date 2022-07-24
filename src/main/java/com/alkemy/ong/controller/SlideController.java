@@ -37,4 +37,10 @@ public class SlideController {
         return ResponseEntity.status(HttpStatus.OK).body(slideResponses);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<SlideResponse> slideDetails(@PathVariable Long id) {
+        SlideResponse slideResponse = slideService.detailsOfSlide(id);
+        return ResponseEntity.status(HttpStatus.OK).body(slideResponse);
+    }
+
 }
