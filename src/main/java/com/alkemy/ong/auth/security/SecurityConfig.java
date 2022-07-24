@@ -102,7 +102,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/slides/**").hasAuthority(RoleEnum.ADMIN.getSimpleRoleName())
                 .antMatchers(HttpMethod.PUT, "/slides/**").hasAuthority(RoleEnum.USER.getSimpleRoleName())
                 .antMatchers(HttpMethod.POST, "/slides").hasAuthority(RoleEnum.ADMIN.getSimpleRoleName())
-                .antMatchers(HttpMethod.POST, "/slides").hasAuthority(RoleEnum.USER.getSimpleRoleName())
                 .antMatchers(HttpMethod.DELETE, "/slides/**").hasAuthority(RoleEnum.ADMIN.getSimpleRoleName())
                 .antMatchers(HttpMethod.DELETE, "/slides/**").hasAuthority(RoleEnum.USER.getSimpleRoleName())
                 // Testimonials
