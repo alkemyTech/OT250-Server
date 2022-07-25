@@ -5,17 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
-
 @Builder
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class CategoryResponse {
-
+@AllArgsConstructor
+public class CategoryNameResponse {
     private String name;
-    private String description;
-    private String image;
-    private Timestamp timestamp;
-
 }
