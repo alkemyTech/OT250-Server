@@ -1,7 +1,6 @@
 package com.alkemy.ong.models.request;
 
 import lombok.Data;
-import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.validation.constraints.NotNull;

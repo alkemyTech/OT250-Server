@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.nio.file.Path;
 
 public class MultiPartFileClass implements MultipartFile {
+
     @Override
     public String getName() {
         return null;
@@ -58,4 +59,6 @@ public class MultiPartFileClass implements MultipartFile {
     public void transferTo(Path dest) throws IOException, IllegalStateException {
         MultipartFile.super.transferTo(dest);
     }
+
+
 }
