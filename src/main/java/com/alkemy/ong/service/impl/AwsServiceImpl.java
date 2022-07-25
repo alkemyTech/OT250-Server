@@ -29,11 +29,6 @@ public class AwsServiceImpl implements AwsService {
     @Autowired
     private AwsUtils awsUtils;
 
-    private void uploadFile2S3Bucket(String fileName, File file) {
-        amazonS3.putObject(new PutObjectRequest(bucket, fileName, file)
-                .withCannedAcl(CannedAccessControlList.PublicRead));
-    }
-
     private void uploadFile2Asw3 (String fileName, File file){
 
         this.amazonS3.putObject(new PutObjectRequest(bucket,fileName,file)

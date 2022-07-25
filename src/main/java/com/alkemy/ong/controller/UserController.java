@@ -18,6 +18,7 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+
     @GetMapping
     public ResponseEntity<List<UserDetailsResponse>> getAll(){
         List<UserDetailsResponse> users = userService.getUsers();
