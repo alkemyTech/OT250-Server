@@ -66,13 +66,10 @@ public class AuthServiceImpl implements AuthService {
         }
         userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         UserEntity userEntity = userMapper.toUserEntity(userRequest, roles);
-
-
         userRepository.save(userEntity);
 
         String token = generateToken(userRequest.getEmail());
-
-        return userMapper.toUserResponse(userEntity, token);
+        return userMapper.toUserResponse(userEntity);
     }
 
     public AuthResponse login(AuthRequest authRequest) {
@@ -99,5 +96,19 @@ public class AuthServiceImpl implements AuthService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with the email: " + email));
 
         return userMapper.userToUserDetail(user);
+    }
+
+    public void registerAdmin(UserRequest userRequest) throws IOException {
+        if (userRepository.findByEmail(userRequest.getEmail()).isPresent())
+            throw new UsernameNotFoundException("User already exists");
+        Set<RoleEntity> roles = roleRepository.findByName(RoleEnum.ADMIN.getSimpleRoleName());
+        RoleEntity rol = new RoleEntity();
+        rol.setName(RoleEnum.ADMIN.getSimpleRoleName());
+        rol = roleRepository.save(rol);
+        roles.add(rol);
+        userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
+        UserEntity userEntity = userMapper.toUserEntity(userRequest, roles);
+        userRepository.save(userEntity);
+        String token = generateToken(userRequest.getEmail());
     }
 }

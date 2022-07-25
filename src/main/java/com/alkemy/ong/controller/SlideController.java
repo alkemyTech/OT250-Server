@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/slides")
@@ -28,6 +29,18 @@ public class SlideController {
             @PathVariable Long id, @RequestBody @Valid SlideRequest slideRequest) throws IOException {
         SlideResponse slideUpdated = slideService.update(id, slideRequest);
         return ResponseEntity.status(HttpStatus.OK).body(slideUpdated);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<SlideResponse>> graphicalList() {
+        List<SlideResponse> slideResponses = slideService.graphicalList();
+        return ResponseEntity.status(HttpStatus.OK).body(slideResponses);
+    }
+
+    @GetMapping("{id}")
+    public ResponseEntity<SlideResponse> slideDetails(@PathVariable Long id) {
+        SlideResponse slideResponse = slideService.detailsOfSlide(id);
+        return ResponseEntity.status(HttpStatus.OK).body(slideResponse);
     }
 
 }

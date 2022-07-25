@@ -36,13 +36,15 @@ public class UserMapper {
                 .build();
     }
 
-    public UserResponse toUserResponse(UserEntity userEntity, String token) {
+    public UserResponse toUserResponse(UserEntity userEntity) {
+        String hello = "Thanks for register!!!";
         return UserResponse.builder()
+
                 .firstName(userEntity.getFirstName())
                 .lastName(userEntity.getLastName())
                 .email(userEntity.getEmail())
-                .token(token)
                 .urlPhoto(userEntity.getPhoto())
+                .message(hello)
                 .build();
     }
 

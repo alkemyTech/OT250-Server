@@ -8,6 +8,8 @@ import com.alkemy.ong.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+
 @Component
 public class NewsMapper {
     @Autowired
@@ -48,6 +50,16 @@ public class NewsMapper {
 
         return newsResponse;
 
+    }
+
+    public NewsEntity EntityRefreshValues (NewsEntity entity, NewsRequest request){
+        entity.setName(request.getName());
+        entity.setContent(request.getContent());
+        entity.setImage(request.getImage());
+        entity.setCategory(categoryRepository.getById(request.getIdCategory()));
+        entity.setTimestamp(new Timestamp(System.currentTimeMillis()));
+
+      return entity;
     }
 
 }
