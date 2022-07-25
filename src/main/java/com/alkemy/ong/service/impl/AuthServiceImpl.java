@@ -66,13 +66,10 @@ public class AuthServiceImpl implements AuthService {
         }
         userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         UserEntity userEntity = userMapper.toUserEntity(userRequest, roles);
-
-
         userRepository.save(userEntity);
 
         String token = generateToken(userRequest.getEmail());
-
-        return userMapper.toUserResponse(userEntity, token);
+        return userMapper.toUserResponse(userEntity);
     }
 
     public AuthResponse login(AuthRequest authRequest) {
