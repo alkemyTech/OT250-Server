@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface ISlideRepository extends JpaRepository<SlideEntity, Long> {
     List<SlideEntity> findAllByOrderByOrderDesc();
+
+    List<SlideEntity> findAllByOrderByOrderAsc();
 }
