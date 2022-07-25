@@ -23,6 +23,7 @@ public class NewsServiceImp implements NewsService {
 
 
     @Override
+    @Transactional
     public NewsResponse create(NewsRequest newsRequest) {
         NewsEntity entity = this.newsMapper.Request2EntityCreatedNews(newsRequest);
         NewsEntity entitySave = this.newsRepository.save(entity);
@@ -45,5 +46,41 @@ public class NewsServiceImp implements NewsService {
 
         this.newsRepository.delete(entity.get());
 
+    }
+
+    @Override
+    @Transactional
+    public NewsResponse update(Long id, NewsRequest newsRequest) {
+
+        Optional<NewsEntity> entity = this.newsRepository.findById(id);
+
+        if (!entity.isPresent()){
+
+            throw new NotFoundException("the id "+id+" does not belong to a news");
+        }
+
+         NewsEntity entityUpdate = this.newsMapper.EntityRefreshValues(entity.get(), newsRequest);
+
+         NewsEntity entitySave = this.newsRepository.save(entityUpdate);
+
+         NewsResponse response = this.newsMapper.Entity2Response(entitySave);
+
+         return response;
+    }
+
+    @Override
+    @Transactional
+    public NewsResponse getById(Long id) {
+
+       Optional<NewsEntity> entity = this.newsRepository.findById(id);
+
+        if (!entity.isPresent()){
+
+            throw new NotFoundException("the id "+id+" does not belong to a news");
+        }
+
+        NewsResponse response = this.newsMapper.Entity2Response(entity.get());
+
+        return response;
     }
 }
