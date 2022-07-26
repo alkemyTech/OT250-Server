@@ -21,6 +21,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "categories")
+@Builder
 public class CategoryEntity implements Serializable {
 
     @Id
