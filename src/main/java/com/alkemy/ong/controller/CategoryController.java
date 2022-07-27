@@ -1,16 +1,15 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.models.request.CategoryRequest;
-import com.alkemy.ong.models.request.NewsRequest;
 import com.alkemy.ong.models.response.CategoryNameResponse;
 import com.alkemy.ong.models.response.CategoryResponse;
-import com.alkemy.ong.models.response.NewsResponse;
 import com.alkemy.ong.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -42,7 +41,7 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryResponse> createCategory (@RequestBody CategoryRequest categoryRequest){
+    public ResponseEntity<CategoryResponse> createCategory (@Valid @RequestBody CategoryRequest categoryRequest){
 
         CategoryResponse categoryResponseCreate = categoryService.create(categoryRequest);
 
