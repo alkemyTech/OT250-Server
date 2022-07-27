@@ -1,6 +1,8 @@
 package com.alkemy.ong.models.entity;
 
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -11,6 +13,8 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SQLDelete(sql = "UPDATE users SET deleted = true Where id=?")
+@Where(clause = "deleted=false")
 public class SlideEntity {
 
     @Id
@@ -27,4 +31,7 @@ public class SlideEntity {
 
     @Column(name = "organization_id")
     private Long organizationId;
+
+    private Boolean deleted = Boolean.FALSE;
+
 }

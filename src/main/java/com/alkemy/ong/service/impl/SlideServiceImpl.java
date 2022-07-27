@@ -82,4 +82,15 @@ public class SlideServiceImpl implements ISlideService {
         SlideResponse slideResponse = slideMapper.slideEntity2SlideResponse(slide.get());
         return slideResponse;
     }
+
+    @Override
+    public void deleteById(Long id) {
+        Optional<SlideEntity> slide = slideRepository.findById(id);
+        if (slide.isEmpty()) {
+            throw new NotFoundException("The Slide with id "+id+" has not be found");
+        }
+        slideRepository.deleteById(id);
+
+
+    }
 }
