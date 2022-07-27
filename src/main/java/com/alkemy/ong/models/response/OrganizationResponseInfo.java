@@ -18,6 +18,6 @@ public class OrganizationResponseInfo {
     private String image;
     private String address;
     private Integer phone;
-    private List<SlideEntity> slides;
+    private List<SlideResponse> slides;
 
 }

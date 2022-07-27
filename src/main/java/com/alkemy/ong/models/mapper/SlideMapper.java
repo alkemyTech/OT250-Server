@@ -43,9 +43,9 @@ public class SlideMapper {
         SlideResponse slideResponse = new SlideResponse(
                 slide.getId(),
                 slide.getImageUrl(),
-                null,
+                slide.getText(),
                 slide.getOrder(),
-                null);
+                slide.getOrganizationId());
         return slideResponse;
     }
 

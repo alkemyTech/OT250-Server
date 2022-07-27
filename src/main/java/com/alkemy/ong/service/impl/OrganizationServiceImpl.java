@@ -2,7 +2,9 @@ package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.exception.OrgNotFoundException;
 import com.alkemy.ong.models.entity.OrganizationEntity;
+import com.alkemy.ong.models.entity.SlideEntity;
 import com.alkemy.ong.models.mapper.OrganizationMapper;
+import com.alkemy.ong.models.mapper.SlideMapper;
 import com.alkemy.ong.models.request.OrganizationRequest;
 import com.alkemy.ong.models.response.OrganizationResponse;
 import com.alkemy.ong.models.response.OrganizationResponseInfo;
@@ -26,6 +28,9 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Autowired
     private ISlideRepository slideRepository;
+
+    @Autowired
+    private SlideMapper slideMapper;
     
     @Override
     public OrganizationResponse save(OrganizationRequest request) {
@@ -39,9 +44,10 @@ public class OrganizationServiceImpl implements OrganizationService {
         List<OrganizationEntity> entities = organizationRepository.findAll();
         List<OrganizationResponseInfo> responses = new ArrayList<>();
         for (OrganizationEntity entity : entities) {
-           OrganizationResponseInfo response;
+            OrganizationResponseInfo response;
             response = organizationMapper.entityToResponseInfo(entity);
-            response.setSlides(slideRepository.findAllByOrganizationIdOrderByOrderAsc(entity.getId()));
+            List<SlideEntity> slides = slideRepository.listSlide(entity.getId());
+            response.setSlides(slideMapper.slideList2ResponseGraphicalList(slides));
             responses.add(response);
 
         }
