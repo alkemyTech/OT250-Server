@@ -40,4 +40,11 @@ public class CategoryMapper {
                 .build();
 
     }
+
+    public CategoryEntity updateCategoryEntityFromRequest(CategoryEntity updatedCategory, CategoryRequest category) {
+        updatedCategory.setName(category.getName());
+        updatedCategory.setDescription(category.getDescription());
+        updatedCategory.setImage(category.getImage());
+        return updatedCategory;
+    }
 }
