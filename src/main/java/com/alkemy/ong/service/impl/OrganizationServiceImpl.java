@@ -6,6 +6,7 @@ import com.alkemy.ong.models.mapper.OrganizationMapper;
 import com.alkemy.ong.models.request.OrganizationRequest;
 import com.alkemy.ong.models.response.OrganizationResponse;
 import com.alkemy.ong.models.response.OrganizationResponseInfo;
+import com.alkemy.ong.repository.ISlideRepository;
 import com.alkemy.ong.repository.OrganizationRepository;
 import com.alkemy.ong.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class OrganizationServiceImpl implements OrganizationService {
     
     @Autowired
     private OrganizationMapper organizationMapper;
+
+    @Autowired
+    private ISlideRepository slideRepository;
     
     @Override
     public OrganizationResponse save(OrganizationRequest request) {
@@ -33,11 +37,15 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     public List<OrganizationResponseInfo> GetInfo() {
         List<OrganizationEntity> entities = organizationRepository.findAll();
-        List<OrganizationResponseInfo> response = new ArrayList<>();
+        List<OrganizationResponseInfo> responses = new ArrayList<>();
         for (OrganizationEntity entity : entities) {
-            response.add(organizationMapper.entityToResponseInfo(entity));
+           OrganizationResponseInfo response;
+            response = organizationMapper.entityToResponseInfo(entity);
+            response.setSlides(slideRepository.findAllByOrganizationIdOrderByOrderAsc(entity.getId()));
+            responses.add(response);
+
         }
-        return response;
+        return responses;
     }
 
     @Override
