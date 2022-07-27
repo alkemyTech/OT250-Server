@@ -12,7 +12,7 @@ import java.util.Date;
 public class AwsUtils {
 
     public static File convertMultiPartToFile(MultipartFile file) throws IOException {
-        // aqui obtenemos el nombre del archivo
+
         File convFile = new File(file.getOriginalFilename());
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
