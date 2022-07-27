@@ -4,15 +4,22 @@ import com.alkemy.ong.models.entity.OrganizationEntity;
 import com.alkemy.ong.models.request.OrganizationRequest;
 import com.alkemy.ong.models.response.OrganizationResponse;
 import com.alkemy.ong.models.response.OrganizationResponseInfo;
+import com.alkemy.ong.service.AwsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 @Component
 public class OrganizationMapper {
 
-    public OrganizationEntity requestToEntity(OrganizationRequest request){
+    @Autowired
+    private AwsService awsService;
+
+    public OrganizationEntity requestToEntity(OrganizationRequest request) throws IOException {
         OrganizationEntity entity = new OrganizationEntity();
         entity.setName(request.getName());
-        entity.setImage(request.getImage());
+        entity.setImage(awsService.uploadFileFromBase64(request.getImage()));
         entity.setAddress(request.getAddress());
         entity.setPhone(request.getPhone());
         entity.setEmail(request.getEmail());
@@ -21,6 +28,7 @@ public class OrganizationMapper {
         entity.setUrlFacebook(request.getUrlFacebook());
         entity.setUrlInstagram(request.getUrlInstagram());
         entity.setUrlLinkedin(request.getUrlLinkedin());
+
         return entity;
     }
     
@@ -49,14 +57,14 @@ public class OrganizationMapper {
         return response;
     }
     
-    public OrganizationEntity updateEntity(OrganizationEntity entity, OrganizationRequest request){
+    public OrganizationEntity updateEntity(OrganizationEntity entity, OrganizationRequest request) throws IOException {
         
          if(!request.getName().isEmpty()){
             entity.setName(request.getName());
         }
 
         if(!request.getImage().isEmpty()){
-            entity.setImage(request.getImage());
+            entity.setImage(awsService.uploadFileFromBase64(request.getImage()));
         }
 
         if (request.getAddress()!=null && !request.getAddress().isEmpty()){
