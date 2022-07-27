@@ -57,3 +57,4 @@ public class AwsServiceImpl implements AwsService {
         return uploadFile(multipartFile);
     }
 }
+
