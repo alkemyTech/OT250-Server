@@ -1,5 +1,6 @@
 package com.alkemy.ong.service.impl;
 
+import com.alkemy.ong.auth.utility.JwtUtils;
 import com.alkemy.ong.models.entity.UserEntity;
 import com.alkemy.ong.models.mapper.UserMapper;
 import com.alkemy.ong.models.request.AuthRequest;
@@ -29,6 +30,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtUtils jwtUtils;
 
 
     public UserResponse register(UserRequest userRequest) throws UsernameNotFoundException, IOException {
@@ -46,7 +49,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetailsResponse updateUser(Long id, UserUpdateRequest request) {
+    public UserDetailsResponse updateBasicUser(UserUpdateRequest request, String token) {
+        UserEntity user = userRepository.findByEmail( jwtUtils.extractUsername(token)).get();
+
+        if(request.getFirstName() != null && !request.getFirstName().isEmpty() && !request.getFirstName().isBlank() ){
+            user.setFirstName(request.getFirstName());}
+        if(request.getLastName() != null && !request.getLastName().isEmpty() && !request.getLastName().isBlank()){
+            user.setLastName(request.getLastName());}
+        if(request.getPassword() != null && !request.getPassword().isEmpty() && !request.getLastName().isBlank()){
+            user.setPassword(passwordEncoder.encode(request.getPassword()));}
+        if(request.getPhoto() != null && !request.getPhoto().isEmpty() && !request.getPhoto().isBlank()){
+            user.setPhoto(request.getPhoto());}
+        userRepository.save(user);
+        return userMapper.userToUserDetail(user);
+
+    }
+
+    public UserDetailsResponse updateUserForAdmin(Long id, UserUpdateRequest request) {
+
         UserEntity user = getById(id);
 
         if(request.getFirstName() != null && !request.getFirstName().isEmpty() && !request.getFirstName().isBlank() ){
@@ -80,10 +100,14 @@ public class UserServiceImpl implements UserService {
     }*/
 
     @Override
-    public void deleteUser(Long id) {
+    public void deleteUserForAdmin(Long id) {
         UserEntity user = getById(id);
         userRepository.deleteById(user.getId());
+    }
 
+    public void deleteBasicUser(String token){
+        UserEntity user = userRepository.findByEmail( jwtUtils.extractUsername(token)).get();
+        userRepository.deleteById(user.getId());
     }
 
 }

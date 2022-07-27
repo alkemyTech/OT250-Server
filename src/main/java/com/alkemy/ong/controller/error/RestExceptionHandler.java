@@ -1,9 +1,6 @@
 package com.alkemy.ong.controller.error;
 
-import com.alkemy.ong.exception.CategoryNotFoundException;
-import com.alkemy.ong.exception.OrgNotFoundException;
-import com.alkemy.ong.exception.ParamNotFoundException;
-import com.alkemy.ong.exception.SlideNotFoundException;
+import com.alkemy.ong.exception.*;
 import com.alkemy.ong.models.response.ApiErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

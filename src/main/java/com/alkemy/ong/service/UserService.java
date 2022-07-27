@@ -7,10 +7,13 @@ import java.util.List;
 
 public interface UserService {
 
-    UserDetailsResponse updateUser(Long id, UserUpdateRequest request);
+    UserDetailsResponse updateBasicUser(UserUpdateRequest request, String token);
+    UserDetailsResponse updateUserForAdmin(Long id, UserUpdateRequest request);
     List<UserDetailsResponse> getUsers();
 
     //UsersPaginationResponse getPaginationUsers(Integer page);
-    void deleteUser(Long id);
+    void deleteUserForAdmin(Long id);
+
+    void deleteBasicUser(String token);
 
 }
