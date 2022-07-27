@@ -5,7 +5,6 @@ import com.alkemy.ong.models.request.CategoryRequest;
 import com.alkemy.ong.models.response.CategoryNameResponse;
 import com.alkemy.ong.models.response.CategoryResponse;
 import org.springframework.stereotype.Component;
-
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
