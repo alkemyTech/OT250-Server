@@ -98,7 +98,7 @@ public class AuthServiceImpl implements AuthService {
         return userMapper.userToUserDetail(user);
     }
 
-    public void registerAdmin(UserRequest userRequest) {
+    public void registerAdmin(UserRequest userRequest) throws IOException {
         if (userRepository.findByEmail(userRequest.getEmail()).isPresent())
             throw new UsernameNotFoundException("User already exists");
         Set<RoleEntity> roles = roleRepository.findByName(RoleEnum.ADMIN.getSimpleRoleName());
