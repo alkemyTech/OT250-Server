@@ -13,4 +13,5 @@ public interface ICategoryService {
     CategoryResponse getCategoryDetails(Long id);
     void delete (Long id);
     CategoryResponse create (CategoryRequest categoryRequest);
+    CategoryResponse updateCategory(Long id, CategoryRequest category);
 }

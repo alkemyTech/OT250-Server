@@ -66,5 +66,9 @@ public class CategoryServiceImpl implements ICategoryService {
         return categoryResponseCreated;
     }
 
+    public CategoryResponse updateCategory(Long id, CategoryRequest category) {
+        return null;
+    }
+
 
 }
