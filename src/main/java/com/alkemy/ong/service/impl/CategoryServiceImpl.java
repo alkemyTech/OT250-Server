@@ -61,7 +61,7 @@ public class CategoryServiceImpl implements ICategoryService {
     public CategoryResponse updateCategory(Long id, CategoryRequest category) {
         CategoryEntity categoryEntity = categoryRepository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+        CategoryEntity updatedCategory = categoryMapper.updateCategoryEntityFromRequest(categoryEntity, category);
+        return categoryMapper.categoryEntity2CategoryResponse(categoryRepository.save(updatedCategory));
     }
-
-
 }
