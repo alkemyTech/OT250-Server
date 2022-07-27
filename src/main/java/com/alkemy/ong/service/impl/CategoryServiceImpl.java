@@ -48,12 +48,10 @@ public class CategoryServiceImpl implements ICategoryService {
         this.categoryRepository.delete(entity.get());
     }
 
-    @Transactional
     public CategoryResponse create(CategoryRequest categoryRequest) {
         CategoryEntity entity = this.categoryMapper.Request2Entity(categoryRequest);
         CategoryEntity entitySave = this.categoryRepository.save(entity);
         CategoryResponse categoryResponseCreated = this.categoryMapper.categoryEntity2CategoryResponse(entitySave);
-
         return categoryResponseCreated;
     }
 
