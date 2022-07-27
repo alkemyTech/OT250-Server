@@ -42,7 +42,7 @@ public class CategoryEntity implements Serializable {
     @Nullable
     private String image;
 
-    @CreationTimestamp
+    //@CreationTimestamp
     private Timestamp timestamp;
 
     @Column(name = "soft_delete")

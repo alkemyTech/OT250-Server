@@ -6,6 +6,7 @@ import com.alkemy.ong.models.response.CategoryNameResponse;
 import com.alkemy.ong.models.response.CategoryResponse;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,7 @@ public class CategoryMapper {
        return CategoryEntity.builder().name(categoryRequest.getName())
                 .description(categoryRequest.getDescription())
                 .image(categoryRequest.getImage())
+                .timestamp(new Timestamp(System.currentTimeMillis()))
                 .build();
 
     }
