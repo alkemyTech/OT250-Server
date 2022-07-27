@@ -32,7 +32,6 @@ public class CategoryServiceImpl implements ICategoryService {
         return responsesList;
     }
 
-    @Override
     public CategoryResponse getCategoryDetails(Long id) {
         Optional<CategoryEntity> entity = categoryRepository.findById(id);
         if (!entity.isPresent())
@@ -41,30 +40,26 @@ public class CategoryServiceImpl implements ICategoryService {
         return response;
     }
 
-    @Override
     @Transactional
     public void delete(Long id) {
-
         Optional<CategoryEntity> entity = this.categoryRepository.findById(id);
-
-        if (!entity.isPresent()){
-
-            throw new NotFoundException("the id "+id+" does not belong to a category");
-
-        }
-
+        if (!entity.isPresent())
+            throw new CategoryNotFoundException("the id "+id+" does not belong to a category");
         this.categoryRepository.delete(entity.get());
     }
 
-    @Override
-    @Transactional
     public CategoryResponse create(CategoryRequest categoryRequest) {
         CategoryEntity entity = this.categoryMapper.Request2Entity(categoryRequest);
         CategoryEntity entitySave = this.categoryRepository.save(entity);
         CategoryResponse categoryResponseCreated = this.categoryMapper.categoryEntity2CategoryResponse(entitySave);
-
         return categoryResponseCreated;
     }
 
-
+    @Transactional
+    public CategoryResponse updateCategory(Long id, CategoryRequest category) {
+        CategoryEntity categoryEntity = categoryRepository.findById(id)
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+        CategoryEntity updatedCategory = categoryMapper.updateCategoryEntityFromRequest(categoryEntity, category);
+        return categoryMapper.categoryEntity2CategoryResponse(categoryRepository.save(updatedCategory));
+    }
 }

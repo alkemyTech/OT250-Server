@@ -11,6 +11,7 @@ import com.alkemy.ong.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     private OrganizationMapper organizationMapper;
     
     @Override
-    public OrganizationResponse save(OrganizationRequest request) {
+    public OrganizationResponse save(OrganizationRequest request) throws IOException {
         OrganizationEntity entity = organizationMapper.requestToEntity(request);
         organizationRepository.save(entity);
         return organizationMapper.entityToResponse(entity);
@@ -41,7 +42,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public OrganizationResponse update(Long id, OrganizationRequest request) throws OrgNotFoundException{
+    public OrganizationResponse update(Long id, OrganizationRequest request) throws OrgNotFoundException, IOException {
         OrganizationEntity entity = organizationRepository.findById(id).orElse(null);
         
         if(entity==null){

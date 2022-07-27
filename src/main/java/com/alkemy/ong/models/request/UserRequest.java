@@ -32,4 +32,7 @@ public class UserRequest {
     @NotNull
     @NotEmpty(message = "the password can't be null")
     private String password;
+
+    private String photo;
+
 }
