@@ -1,14 +1,15 @@
 package com.alkemy.ong.controller;
 
+import com.alkemy.ong.models.request.CategoryRequest;
 import com.alkemy.ong.models.response.CategoryNameResponse;
 import com.alkemy.ong.models.response.CategoryResponse;
 import com.alkemy.ong.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,5 +29,28 @@ public class CategoryController {
     public ResponseEntity<CategoryResponse> getDetailsById(@PathVariable Long id) {
         CategoryResponse response = categoryService.getCategoryDetails(id);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteCategory (@PathVariable Long id){
+
+        this.categoryService.delete(id);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+    }
+
+    @PostMapping
+    public ResponseEntity<CategoryResponse> createCategory (@Valid @RequestBody CategoryRequest categoryRequest){
+
+        CategoryResponse categoryResponseCreate = categoryService.create(categoryRequest);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryResponseCreate);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryResponse> updateCategory(
+            @PathVariable Long id, @RequestBody @Valid CategoryRequest category){
+        return new ResponseEntity<>(categoryService.updateCategory(id, category), HttpStatus.OK);
     }
 }
