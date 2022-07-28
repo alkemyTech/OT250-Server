@@ -13,6 +13,8 @@ import com.alkemy.ong.repository.OrganizationRepository;
 import com.alkemy.ong.service.ISlideService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,8 +91,7 @@ public class SlideServiceImpl implements ISlideService {
         if (slide.isEmpty()) {
             throw new NotFoundException("The Slide with id "+id+" has not be found");
         }
-        slideRepository.deleteById(id);
-
+        slideRepository.deleteById(slide.get().getId());
 
     }
 }

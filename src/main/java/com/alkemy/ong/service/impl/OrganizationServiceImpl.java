@@ -46,7 +46,7 @@ public class OrganizationServiceImpl implements OrganizationService {
         for (OrganizationEntity entity : entities) {
             OrganizationResponseInfo response;
             response = organizationMapper.entityToResponseInfo(entity);
-            List<SlideEntity> slides = slideRepository.listSlide(entity.getId());
+            List<SlideEntity> slides = slideRepository.findAllByOrganizationIdOrderByOrderAsc(entity.getId());
             response.setSlides(slideMapper.slideList2ResponseGraphicalList(slides));
             responses.add(response);
 

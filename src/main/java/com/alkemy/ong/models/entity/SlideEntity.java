@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SQLDelete(sql = "UPDATE users SET deleted = true Where id=?")
+@SQLDelete(sql = "UPDATE slides SET deleted = true Where id=?")
 @Where(clause = "deleted=false")
 public class SlideEntity {
 

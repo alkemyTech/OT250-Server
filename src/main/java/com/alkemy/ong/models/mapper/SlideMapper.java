@@ -19,6 +19,7 @@ public class SlideMapper {
                 .text(slideRequest.getText())
                 .order(slideRequest.getOrder())
                 .organizationId(slideRequest.getOrganizationId())
+                //.deleted(Boolean.FALSE)
                 .build();
     }
 

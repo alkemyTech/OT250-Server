@@ -50,7 +50,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetailsResponse updateBasicUser(UserUpdateRequest request, String token) {
-        UserEntity user = userRepository.findByEmail( jwtUtils.extractUsername(token)).get();
+        String userToken = rebuildToken(token);
+        UserEntity user = userRepository.findByEmail( jwtUtils.extractUsername(userToken)).get();
 
         if(request.getFirstName() != null && !request.getFirstName().isEmpty() && !request.getFirstName().isBlank() ){
             user.setFirstName(request.getFirstName());}
@@ -106,8 +107,15 @@ public class UserServiceImpl implements UserService {
     }
 
     public void deleteBasicUser(String token){
-        UserEntity user = userRepository.findByEmail( jwtUtils.extractUsername(token)).get();
+        String userToken = rebuildToken(token);
+        UserEntity user = userRepository.findByEmail( jwtUtils.extractUsername(userToken)).get();
         userRepository.deleteById(user.getId());
+    }
+
+    public String rebuildToken(String token){
+        String [] part = token.split(" ");
+        String token2 = part[1];
+        return token2;
     }
 
 }
