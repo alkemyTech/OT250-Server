@@ -55,7 +55,7 @@ public class CategoryServiceImpl implements ICategoryService {
         return categoryResponseCreated;
     }
 
-    @Transactional
+
     public CategoryResponse updateCategory(Long id, CategoryRequest category) {
         CategoryEntity categoryEntity = categoryRepository.findById(id)
                 .orElseThrow(() -> new CategoryNotFoundException("Category not found"));

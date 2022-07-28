@@ -23,8 +23,7 @@ public class UserSeeder implements CommandLineRunner {
     private AuthService authService;
     @Autowired
     private UserRepository userRepository;
-    @Value("${BASE64IMG}")
-    String base64;
+
     @Override
 
     public void run(String... args) throws Exception {
@@ -34,7 +33,10 @@ public class UserSeeder implements CommandLineRunner {
     private void createUserAdmin() throws IOException {
 
         if (userRepository.findAll().isEmpty()){
-            UserRequest userRequest = new UserRequest("user1", "surname1", "email@mail.com", "admin", base64);
+
+
+            UserRequest userRequest = new UserRequest("user1", "surname1", "email@mail.com", "admin", "prueba.jpg");
+
             authService.registerAdmin(userRequest);
         }
     }

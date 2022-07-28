@@ -46,6 +46,7 @@ public class CategoryMapper {
         updatedCategory.setName(category.getName());
         updatedCategory.setDescription(category.getDescription());
         updatedCategory.setImage(category.getImage());
+        updatedCategory.setTimestamp(new Timestamp(System.currentTimeMillis()));
         return updatedCategory;
     }
 }
