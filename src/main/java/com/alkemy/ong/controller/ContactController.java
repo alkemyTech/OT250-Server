@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("contacts")
@@ -22,7 +23,7 @@ public class ContactController {
     private ContactService contactService;
 
     @PostMapping
-    public ResponseEntity<ContactResponse> create(@Valid @RequestBody ContactRequest request){
+    public ResponseEntity<ContactResponse> create(@Valid @RequestBody ContactRequest request) throws IOException {
 
         ContactResponse response = new ContactResponse();
 
