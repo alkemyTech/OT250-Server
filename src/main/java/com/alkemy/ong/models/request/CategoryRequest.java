@@ -20,6 +20,7 @@ public class CategoryRequest {
     @NotNull
     @NotEmpty(message = "the name can't be null")
     @NotBlank(message = "the name can't be blank")
+    @Pattern(regexp = "^[a-zA-Z0\s]+$", message = "The name has to contain only letters")
     private String name;
     @Nullable
     private String description;
