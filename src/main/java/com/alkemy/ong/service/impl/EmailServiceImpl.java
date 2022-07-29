@@ -37,13 +37,12 @@ public class EmailServiceImpl implements IEmailService {
         Email toEmail = new Email(to);
         Content content = new Content("text/html", contentValue);
         Mail mail = new Mail(fromEmail, subject, toEmail, content);
-        mail.setTemplateId(template);
         sendEmail(mail);
     }
 
     public void checkFromRequest(String to, String from) throws IOException {
-        if (from.toLowerCase().equals("userRegistered"))
-            getEmailReady(to, templateId, EmailUtils.content("Bienvenido!", "Gracias por registrarse!"), "Organization Name");
+        if (from.toLowerCase().equals("userRegistered".toLowerCase()))
+            getEmailReady(to, templateId, EmailUtils.content("Bienvenido!", "Gracias por registrarse!"), "ALKEMY ONG");
         else
             getEmailReady(to, templateContactId, EmailUtils.content("Solicitud recibida",
                     "Muchas gracias por \n " + "contactarte con nosotros \n " +
