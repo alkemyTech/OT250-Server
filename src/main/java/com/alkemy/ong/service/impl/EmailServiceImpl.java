@@ -4,6 +4,7 @@ import com.alkemy.ong.service.IEmailService;
 import com.alkemy.ong.utils.EmailUtils;
 import com.sendgrid.Content;
 import com.sendgrid.Email;
+import com.sendgrid.Mail;
 
 public class EmailServiceImpl implements IEmailService {
 
@@ -13,7 +14,7 @@ public class EmailServiceImpl implements IEmailService {
     private String templateContactId;
 
 
-    public void sendEmail(Email email) {
+    public void sendEmail(Mail email) {
 
     }
 
@@ -21,6 +22,9 @@ public class EmailServiceImpl implements IEmailService {
         Email fromEmail = new Email(organizationId);
         Email toEmail = new Email(to);
         Content content = new Content("text/html", contentValue);
+        Mail mail = new Mail(fromEmail, subject, toEmail, content);
+        mail.setTemplateId(template);
+        sendEmail(mail);
     }
 
     public void checkFromRequest(String to, String from) {
