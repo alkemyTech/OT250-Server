@@ -4,9 +4,11 @@ import com.alkemy.ong.service.IEmailService;
 import com.alkemy.ong.utils.EmailUtils;
 import com.sendgrid.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+@Service
 public class EmailServiceImpl implements IEmailService {
     @Value("${alkemy.ong.email.templateid}")
     private String templateId;
