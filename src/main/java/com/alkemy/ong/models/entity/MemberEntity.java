@@ -28,6 +28,8 @@ public class MemberEntity {
 
     @Column
     @NotNull(message = "the name can't be null")
+    @NotEmpty
+    @NotBlank(message = "the name can't be blank")
     private String name;
 
     @Column
