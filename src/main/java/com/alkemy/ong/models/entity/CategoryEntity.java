@@ -7,6 +7,7 @@ import org.hibernate.annotations.Where;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -16,11 +17,12 @@ import java.sql.Timestamp;
 @Entity
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE categories SET soft_delete = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE categories SET soft_delete = true WHERE category_id = ?")
 @Where(clause = "soft_delete = false")
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "categories")
+@Builder
 public class CategoryEntity implements Serializable {
 
     @Id
@@ -28,7 +30,9 @@ public class CategoryEntity implements Serializable {
     @Column(name = "category_id")
     private Long id;
 
-    @NotNull(message = "the name can't be null")
+    @NotNull
+    @NotEmpty(message = "the name can't be null")
+    @NotBlank(message = "the name can't be blank")
     @Pattern(regexp = "^[a-zA-Z]+$", message = "The name has to contain only letters")
     private String name;
 
@@ -39,17 +43,12 @@ public class CategoryEntity implements Serializable {
     private String image;
 
     @CreationTimestamp
+    @Column(name = "time_stamp")
     private Timestamp timestamp;
 
     @Column(name = "soft_delete")
     private boolean softDelete = false;
 
-    public CategoryEntity(String name, String description, String image, Timestamp timestamp, boolean softDelete) {
-        this.name = name;
-        this.description = description;
-        this.image = image;
-        this.timestamp = timestamp;
-        this.softDelete = softDelete;
-    }
+
 
 }

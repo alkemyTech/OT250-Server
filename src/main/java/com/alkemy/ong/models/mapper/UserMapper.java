@@ -6,8 +6,11 @@ import com.alkemy.ong.models.request.UserRequest;
 import com.alkemy.ong.models.response.UserDetailsResponse;
 import com.alkemy.ong.models.response.UserResponse;
 import com.alkemy.ong.models.response.UsersPaginationResponse;
+import com.alkemy.ong.service.AwsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +19,11 @@ import java.util.stream.Collectors;
 
 @Component
 public class UserMapper {
-    public UserEntity toUserEntity(UserRequest userRequest, Set<RoleEntity> roles) {
+
+    @Autowired
+    private AwsService awsService;
+
+    public UserEntity toUserEntity(UserRequest userRequest, Set<RoleEntity> roles) throws IOException {
         return UserEntity.builder()
                 .firstName(userRequest.getFirstName())
                 .lastName(userRequest.getLastName())
@@ -25,12 +32,18 @@ public class UserMapper {
                 .roleId(roles)
                 .timestamp(new Timestamp(System.currentTimeMillis()))
                 .deleted(Boolean.FALSE)
+                .photo(awsService.uploadFileFromBase64(userRequest.getPhoto()))
                 .build();
     }
 
     public UserResponse toUserResponse(UserEntity userEntity) {
         String hello = "Thanks for register!!!";
         return UserResponse.builder()
+
+                .firstName(userEntity.getFirstName())
+                .lastName(userEntity.getLastName())
+                .email(userEntity.getEmail())
+                .urlPhoto(userEntity.getPhoto())
                 .message(hello)
                 .build();
     }

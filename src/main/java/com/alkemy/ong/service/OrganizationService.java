@@ -5,13 +5,14 @@ import com.alkemy.ong.models.request.OrganizationRequest;
 import com.alkemy.ong.models.response.OrganizationResponse;
 import com.alkemy.ong.models.response.OrganizationResponseInfo;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface OrganizationService {
 
-    public OrganizationResponse save(OrganizationRequest request);
+    public OrganizationResponse save(OrganizationRequest request) throws IOException;
     
     public List<OrganizationResponseInfo> GetInfo();
     
-    public OrganizationResponse update(Long id, OrganizationRequest request) throws OrgNotFoundException; 
+    public OrganizationResponse update(Long id, OrganizationRequest request) throws OrgNotFoundException, IOException;
 }
