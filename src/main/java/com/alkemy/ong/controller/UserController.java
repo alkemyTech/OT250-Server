@@ -26,17 +26,32 @@ public class UserController {
 
     }
 
+    @PatchMapping("/me")
+    public ResponseEntity<UserDetailsResponse> updateUser(@RequestHeader(name = "Authorization") String token,
+                                                          @RequestBody @Valid UserUpdateRequest request){
+       UserDetailsResponse update = userService.updateBasicUser(request, token);
+        return ResponseEntity.ok().body(update);
+
+    }
+
     @PatchMapping("/{id}")
-    public ResponseEntity<UserDetailsResponse> updateUser(@PathVariable("id") @Valid @NotNull Long id,
-                                           @RequestBody @Valid UserUpdateRequest request){
-       UserDetailsResponse update = userService.updateUser(id, request);
+    public ResponseEntity<UserDetailsResponse> updateUserForAdmin(
+                                                          @PathVariable("id") @Valid @NotNull Long id,
+                                                          @RequestBody @Valid UserUpdateRequest request){
+        UserDetailsResponse update = userService.updateUserForAdmin(id, request);
         return ResponseEntity.ok().body(update);
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("id")@Valid @NotNull Long id){
-        userService.deleteUser(id);
+    public ResponseEntity<Void> deleteUserForAdmin(@PathVariable("id")@Valid @NotNull Long id){
+        userService.deleteUserForAdmin(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @DeleteMapping("/me")
+    public ResponseEntity<Void> deleteBasicUser(@RequestHeader(name = "Authorization") String token){
+        userService.deleteBasicUser(token);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

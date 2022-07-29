@@ -15,4 +15,6 @@ public interface ISlideService {
     public List<SlideResponse> graphicalList();
 
     public SlideResponse detailsOfSlide(Long id);
+
+    void deleteById(Long id);
 }

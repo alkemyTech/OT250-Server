@@ -1,9 +1,6 @@
 package com.alkemy.ong.auth.config.seeder;
 
-import com.alkemy.ong.models.entity.RoleEntity;
-import com.alkemy.ong.models.entity.UserEntity;
 import com.alkemy.ong.models.request.UserRequest;
-import com.alkemy.ong.repository.RoleRepository;
 import com.alkemy.ong.repository.UserRepository;
 import com.alkemy.ong.service.AuthService;
 import org.hibernate.cfg.Environment;
@@ -15,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 
 @Component
 public class UserSeeder implements CommandLineRunner {

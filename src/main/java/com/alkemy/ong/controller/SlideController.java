@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
 
@@ -42,5 +43,12 @@ public class SlideController {
         SlideResponse slideResponse = slideService.detailsOfSlide(id);
         return ResponseEntity.status(HttpStatus.OK).body(slideResponse);
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteSlide(@PathVariable("id") @Valid @NotNull Long id){
+        slideService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
 
 }

@@ -23,6 +23,7 @@ public class SlideMapper {
                 .text(slideRequest.getText())
                 .order(slideRequest.getOrder())
                 .organizationId(slideRequest.getOrganizationId())
+                .deleted(Boolean.FALSE)
                 .imageUrl(awsService.uploadFileFromBase64(slideRequest.getImageUrl()))
                 .build();
     }
@@ -48,9 +49,9 @@ public class SlideMapper {
         SlideResponse slideResponse = new SlideResponse(
                 slide.getId(),
                 slide.getImageUrl(),
-                null,
+                slide.getText(),
                 slide.getOrder(),
-                null);
+                slide.getOrganizationId());
         return slideResponse;
     }
 

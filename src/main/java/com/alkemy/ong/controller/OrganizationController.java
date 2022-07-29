@@ -28,8 +28,11 @@ public class OrganizationController {
 
     @GetMapping("/public")
     public ResponseEntity<List<OrganizationResponseInfo>> dataOrganization(){
-        return ResponseEntity.ok(organizationService.GetInfo());
+        List<OrganizationResponseInfo>responses = organizationService.GetInfo();
+        return ResponseEntity.ok().body(responses);
     }
+
+
 
     @PutMapping("/public/{id}")
     public ResponseEntity<Object> update(@PathVariable("id") @Valid @NotNull Long id, @Valid @RequestBody OrganizationRequest request){
