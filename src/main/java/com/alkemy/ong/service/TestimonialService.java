@@ -9,7 +9,7 @@ public interface TestimonialService {
 
     TestimonialResponse save(TestimonialRequest request);
 
-    TestimonialResponse upDate(TestimonialRequest request);
+    TestimonialResponse upDate(TestimonialRequest request, Long id);
 
     TestimonialResponse delete(Long id);
 
