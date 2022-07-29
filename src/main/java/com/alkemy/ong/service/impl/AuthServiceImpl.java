@@ -57,10 +57,10 @@ public class AuthServiceImpl implements AuthService {
         if (userRepository.findByEmail(userRequest.getEmail()).isPresent()) {
             throw new UsernameNotFoundException("User already exists");
         }
-        Set<RoleEntity> roles = roleRepository.findByName(RoleEnum.USER.getSimpleRoleName());
+        Set<RoleEntity> roles = roleRepository.findByName(RoleEnum.ADMIN.getSimpleRoleName());
         if (roles.isEmpty()) {
             RoleEntity rol = new RoleEntity();
-            rol.setName(RoleEnum.USER.getSimpleRoleName());
+            rol.setName(RoleEnum.ADMIN.getSimpleRoleName());
             rol = roleRepository.save(rol);
             roles.add(rol);
         }
@@ -98,12 +98,12 @@ public class AuthServiceImpl implements AuthService {
         return userMapper.userToUserDetail(user);
     }
 
-    public void registerAdmin(UserRequest userRequest) {
+    public void registerAdmin(UserRequest userRequest) throws IOException {
         if (userRepository.findByEmail(userRequest.getEmail()).isPresent())
             throw new UsernameNotFoundException("User already exists");
-        Set<RoleEntity> roles = roleRepository.findByName(RoleEnum.ADMIN.getSimpleRoleName());
+        Set<RoleEntity> roles = roleRepository.findByName(RoleEnum.USER.getSimpleRoleName());
         RoleEntity rol = new RoleEntity();
-        rol.setName(RoleEnum.ADMIN.getSimpleRoleName());
+        rol.setName(RoleEnum.USER.getSimpleRoleName());
         rol = roleRepository.save(rol);
         roles.add(rol);
         userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));

@@ -2,15 +2,19 @@ package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.exception.OrgNotFoundException;
 import com.alkemy.ong.models.entity.OrganizationEntity;
+import com.alkemy.ong.models.entity.SlideEntity;
 import com.alkemy.ong.models.mapper.OrganizationMapper;
+import com.alkemy.ong.models.mapper.SlideMapper;
 import com.alkemy.ong.models.request.OrganizationRequest;
 import com.alkemy.ong.models.response.OrganizationResponse;
 import com.alkemy.ong.models.response.OrganizationResponseInfo;
+import com.alkemy.ong.repository.ISlideRepository;
 import com.alkemy.ong.repository.OrganizationRepository;
 import com.alkemy.ong.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +26,15 @@ public class OrganizationServiceImpl implements OrganizationService {
     
     @Autowired
     private OrganizationMapper organizationMapper;
+
+    @Autowired
+    private ISlideRepository slideRepository;
+
+    @Autowired
+    private SlideMapper slideMapper;
     
     @Override
-    public OrganizationResponse save(OrganizationRequest request) {
+    public OrganizationResponse save(OrganizationRequest request) throws IOException {
         OrganizationEntity entity = organizationMapper.requestToEntity(request);
         organizationRepository.save(entity);
         return organizationMapper.entityToResponse(entity);
@@ -33,15 +43,20 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     public List<OrganizationResponseInfo> GetInfo() {
         List<OrganizationEntity> entities = organizationRepository.findAll();
-        List<OrganizationResponseInfo> response = new ArrayList<>();
+        List<OrganizationResponseInfo> responses = new ArrayList<>();
         for (OrganizationEntity entity : entities) {
-            response.add(organizationMapper.entityToResponseInfo(entity));
+            OrganizationResponseInfo response;
+            response = organizationMapper.entityToResponseInfo(entity);
+            List<SlideEntity> slides = slideRepository.findAllByOrganizationIdOrderByOrderAsc(entity.getId());
+            response.setSlides(slideMapper.slideList2ResponseGraphicalList(slides));
+            responses.add(response);
+
         }
-        return response;
+        return responses;
     }
 
     @Override
-    public OrganizationResponse update(Long id, OrganizationRequest request) throws OrgNotFoundException{
+    public OrganizationResponse update(Long id, OrganizationRequest request) throws OrgNotFoundException, IOException {
         OrganizationEntity entity = organizationRepository.findById(id).orElse(null);
         
         if(entity==null){

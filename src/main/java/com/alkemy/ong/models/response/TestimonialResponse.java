@@ -1,19 +1,13 @@
 package com.alkemy.ong.models.response;
 
-import lombok.*;
-
 import java.sql.Timestamp;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class CategoryResponse {
+public class TestimonialResponse {
 
     private String name;
-    private String description;
     private String image;
+    private String content;
     private Timestamp timestamp;
+    private boolean softDelete;
 
 }

@@ -48,4 +48,9 @@ public class AuthController {
     public ResponseEntity<UserDetailsResponse> getPersonalInformation(@RequestHeader(name = "Authorization") String token) {
         return ResponseEntity.status(HttpStatus.OK).body(authService.getPersonalInformation(token));
     }
+
+   /* @PatchMapping("/user")
+    public ResponseEntity<UserDetailsResponse> updateUser(@RequestHeader(name = "Authorization") String token) {
+        return ResponseEntity.status(HttpStatus.OK).body(authService.getPersonalInformation(token));
+    }*/
 }
