@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class MemberMapper {
@@ -41,6 +43,17 @@ public class MemberMapper {
                 .build();
     }
 
+    public List<MemberResponse> entityList2ResponseList (List<MemberEntity> entityList){
+
+        List<MemberResponse> responseList= new ArrayList<>();
+        for (MemberEntity entity: entityList) {
+
+            responseList.add(entity2Response(entity));
+
+        }
+
+        return responseList;
+    }
 
 
 
