@@ -58,4 +58,25 @@ public class MemberServiceImpl implements MemberService {
         List<MemberResponse> responseList = memberMapper.entityList2ResponseList(memberList);
         return responseList;
     }
+
+    @Override
+    public MemberResponse update(Long id, MemberRequest memberRequest) throws IOException {
+
+        Optional<MemberEntity> entity = this.memberRepository.findById(id);
+
+        if (!entity.isPresent()){
+
+            throw new NotFoundException("the id "+id+" does not belong to a news");
+        }
+
+        MemberEntity entityUpdate = this.memberMapper.entityRefreshValues(entity.get(), memberRequest);
+
+        MemberEntity entitySave = this.memberRepository.save(entityUpdate);
+
+        MemberResponse response = this.memberMapper.entity2Response(entitySave);
+
+        return response;
+
+
+    }
 }
