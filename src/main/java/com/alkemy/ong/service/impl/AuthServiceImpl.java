@@ -48,10 +48,10 @@ public class AuthServiceImpl implements AuthService {
         if (userRepository.findByEmail(userRequest.getEmail()).isPresent())
             throw new UsernameNotFoundException("User already exists");
 
-        Set<RoleEntity> roles = roleRepository.findByName(RoleEnum.ADMIN.getSimpleRoleName());
+        Set<RoleEntity> roles = roleRepository.findByName(RoleEnum.USER.getSimpleRoleName());
         if (roles.isEmpty()) {
             RoleEntity rol = new RoleEntity();
-            rol.setName(RoleEnum.ADMIN.getSimpleRoleName());
+            rol.setName(RoleEnum.USER.getSimpleRoleName());
             rol = roleRepository.save(rol);
             roles.add(rol);
         }
@@ -91,9 +91,9 @@ public class AuthServiceImpl implements AuthService {
     public void registerAdmin(UserRequest userRequest) throws IOException {
         if (userRepository.findByEmail(userRequest.getEmail()).isPresent())
             throw new UsernameNotFoundException("User already exists");
-        Set<RoleEntity> roles = roleRepository.findByName(RoleEnum.USER.getSimpleRoleName());
+        Set<RoleEntity> roles = roleRepository.findByName(RoleEnum.ADMIN.getSimpleRoleName());
         RoleEntity rol = new RoleEntity();
-        rol.setName(RoleEnum.USER.getSimpleRoleName());
+        rol.setName(RoleEnum.ADMIN.getSimpleRoleName());
         rol = roleRepository.save(rol);
         roles.add(rol);
         userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
