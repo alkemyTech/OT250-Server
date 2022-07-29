@@ -41,7 +41,7 @@ public class EmailServiceImpl implements IEmailService {
     }
 
     public void checkFromRequest(String to, String from) throws IOException {
-        if (from.toLowerCase().equals("userRegistered".toLowerCase()))
+        if (from.equalsIgnoreCase("userRegistered"))
             getEmailReady(to, templateId, EmailUtils.content("Bienvenido!", "Gracias por registrarse!"), "ALKEMY ONG");
         else
             getEmailReady(to, templateContactId, EmailUtils.content("Solicitud recibida",
