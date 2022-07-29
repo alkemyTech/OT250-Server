@@ -13,6 +13,7 @@ import com.alkemy.ong.models.response.UserResponse;
 import com.alkemy.ong.repository.RoleRepository;
 import com.alkemy.ong.repository.UserRepository;
 import com.alkemy.ong.service.AuthService;
+import com.alkemy.ong.service.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,35 +29,25 @@ public class AuthServiceImpl implements AuthService {
 
     @Autowired
     private UserRepository userRepository;
-
-
     @Autowired
     private RoleRepository roleRepository;
-
     @Autowired
     private UserMapper userMapper;
-
     @Autowired
     private AuthenticationManager authenticationManager;
-
-
     @Autowired
     private UserDetailsCustomService userDetailsCustomService;
-
     @Autowired
     private JwtUtils jwtUtils;
-
-
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private IEmailService emailService;
 
-
-
-    @Override
     public UserResponse register(UserRequest userRequest) throws UsernameNotFoundException, IOException {
-        if (userRepository.findByEmail(userRequest.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(userRequest.getEmail()).isPresent())
             throw new UsernameNotFoundException("User already exists");
-        }
+
         Set<RoleEntity> roles = roleRepository.findByName(RoleEnum.USER.getSimpleRoleName());
         if (roles.isEmpty()) {
             RoleEntity rol = new RoleEntity();
@@ -67,7 +58,7 @@ public class AuthServiceImpl implements AuthService {
         userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         UserEntity userEntity = userMapper.toUserEntity(userRequest, roles);
         userRepository.save(userEntity);
-
+        emailService.checkFromRequest(userEntity.getEmail(), "userRegistered");
         String token = generateToken(userRequest.getEmail());
         return userMapper.toUserResponse(userEntity);
     }
@@ -89,7 +80,6 @@ public class AuthServiceImpl implements AuthService {
         return jwtUtils.generateToken(userDetailsCustomService.loadUserByUsername(userRequest));
     }
 
-    @Override
     public UserDetailsResponse getPersonalInformation(String token) {
         String email = jwtUtils.extractUsername(token.substring(7));
         UserEntity user = userRepository.findByEmail(email)
