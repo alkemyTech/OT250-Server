@@ -3,6 +3,7 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.models.request.TestimonialRequest;
 import com.alkemy.ong.models.response.TestimonialResponse;
 import com.alkemy.ong.service.TestimonialService;
+import com.alkemy.ong.service.impl.TestimonialServiceImpl;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/testimonials")
@@ -19,13 +21,12 @@ public class TestimonialController {
     @Autowired
     private TestimonialService testimonialService;
 
+    @Autowired
+    private TestimonialServiceImpl testimonialServiceImpl;
+
     @Transactional
     @PostMapping
-    public ResponseEntity<TestimonialResponse> create(@Valid @RequestBody TestimonialRequest request) throws NotFoundException {
-
-        if(testimonialService.areNull(request)){
-            throw new NotFoundException("nome or content are null or empty");
-        }
+    public ResponseEntity<TestimonialResponse> create(@Valid @RequestBody TestimonialRequest request) throws IOException {
 
         TestimonialResponse response = testimonialService.save(request);
 
@@ -34,7 +35,7 @@ public class TestimonialController {
     }
 
     @Transactional
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<TestimonialResponse> upDate(@Valid @RequestBody TestimonialRequest request,
                                                       @PathVariable Long id ){
 
@@ -45,7 +46,7 @@ public class TestimonialController {
     }
 
     @Transactional
-    @PutMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<TestimonialResponse> delete(@PathVariable Long id ){
 
         TestimonialResponse response = testimonialService.delete(id);
@@ -53,13 +54,5 @@ public class TestimonialController {
         return ResponseEntity.ok(response);
 
     }
-
-    /*
-    private String name;
-    private String image;
-    private String content;
-    private Timestamp timestamp;
-    private boolean softDelete;
-     */
 
 }

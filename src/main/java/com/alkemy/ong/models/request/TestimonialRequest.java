@@ -26,8 +26,7 @@ public class TestimonialRequest {
     @Nullable
     private String content;
 
-    @Column(name = "timeStamp")
-    @CreationTimestamp
     private Timestamp timestamp;
+
 
 }

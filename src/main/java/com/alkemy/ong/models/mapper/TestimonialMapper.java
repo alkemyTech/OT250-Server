@@ -3,49 +3,46 @@ package com.alkemy.ong.models.mapper;
 import com.alkemy.ong.models.entity.TestimonialEntity;
 import com.alkemy.ong.models.request.TestimonialRequest;
 import com.alkemy.ong.models.response.TestimonialResponse;
+import com.alkemy.ong.service.AwsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 
+@Component
 public class TestimonialMapper {
 
-    public TestimonialEntity request2Entity(TestimonialRequest request){
+    @Autowired
+    private AwsService awsService;
 
-        Long datetime = System.currentTimeMillis();
-        Timestamp timestamp = new Timestamp(datetime);
+    public TestimonialEntity request2Entity(TestimonialRequest request) throws IOException {
 
-        return TestimonialEntity.builder()
-                .name(request.getName())
-                .content(request.getContent())
-                .image(request.getImage())
-                .timestamp(timestamp)
-                .build();
+         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+         TestimonialEntity entity = new TestimonialEntity();
+
+         entity.setName(request.getName());
+         entity.setImage(awsService.uploadFileFromBase64(request.getImage()));
+         entity.setContent(request.getContent());
+         entity.setTimestamp(timestamp);
+
+         return entity;
+
     }
 
     public TestimonialResponse entity2Response(TestimonialEntity entity){
 
-        TestimonialResponse response = new TestimonialResponse(
-                entity.getName(),
-                entity.getContent(),
-                entity.getImage(),
-                entity.getTimestamp());
+        TestimonialResponse response = new TestimonialResponse();
+
+        response.setName(entity.getName());
+        response.setContent(entity.getContent());
+        response.setImage(entity.getImage());
+        response.setTimestamp(entity.getTimestamp());
 
         return response;
 
     }
 
-    public TestimonialEntity request2EntityUpDate(TestimonialEntity entityFound, TestimonialRequest request){
-
-        Long datetime = System.currentTimeMillis();
-        Timestamp timestamp = new Timestamp(datetime);
-
-        return entityFound.builder()
-                .name(request.getName())
-                .content(request.getContent())
-                .image(request.getImage())
-                .timestamp(timestamp)
-                .build();
-    }
-
-
-
+    
 }
