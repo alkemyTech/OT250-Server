@@ -67,12 +67,22 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(value = {ForbiddenException.class})
-    protected ResponseEntity<Object> ForbiddenException(RuntimeException ex, WebRequest request) {
+    protected ResponseEntity<Object> ForbiddenExceptionHandler(RuntimeException ex, WebRequest request) {
         ApiErrorResponse error = new ApiErrorResponse(
                 HttpStatus.FORBIDDEN,
                 ex.getMessage(), null
         );
         return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.FORBIDDEN, request);
+    }
+
+    @ExceptionHandler(value = {NotFoundException.class})
+    protected ResponseEntity<Object> NotFoundExceptionHandler(RuntimeException ex, WebRequest request) {
+        ApiErrorResponse error = new ApiErrorResponse(
+                HttpStatus.NOT_FOUND,
+                ex.getMessage(), null
+        );
+        ex.printStackTrace();
+        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
 }

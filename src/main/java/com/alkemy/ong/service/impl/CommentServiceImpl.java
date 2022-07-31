@@ -2,6 +2,7 @@ package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.auth.service.UserDetailsCustomService;
 import com.alkemy.ong.auth.utility.JwtUtils;
+import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.exception.ParamNotFoundException;
 import com.alkemy.ong.models.entity.CommentEntity;
 import com.alkemy.ong.models.entity.RoleEntity;
@@ -52,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
 
     public void delete(Long id, String token) {
         if (! commentRepository.existsById(id)){
-            throw new ParamNotFoundException("Comment (id = "+id+") not found");
+            throw new NotFoundException("Comment (id = "+id+") not found");
         }
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
