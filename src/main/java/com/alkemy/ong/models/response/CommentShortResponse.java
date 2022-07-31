@@ -11,5 +11,4 @@ import java.sql.Timestamp;
 @Builder
 public class CommentShortResponse {
     String body;
-    Timestamp creationDate;
 }

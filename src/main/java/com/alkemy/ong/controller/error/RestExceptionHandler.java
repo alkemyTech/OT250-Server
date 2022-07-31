@@ -2,6 +2,7 @@ package com.alkemy.ong.controller.error;
 
 import com.alkemy.ong.exception.*;
 import com.alkemy.ong.models.response.ApiErrorResponse;
+import com.amazonaws.services.pinpoint.model.ForbiddenException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,5 +66,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
+    @ExceptionHandler(value = {ForbiddenException.class})
+    protected ResponseEntity<Object> ForbiddenException(RuntimeException ex, WebRequest request) {
+        ApiErrorResponse error = new ApiErrorResponse(
+                HttpStatus.FORBIDDEN,
+                ex.getMessage(), null
+        );
+        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.FORBIDDEN, request);
+    }
 
 }

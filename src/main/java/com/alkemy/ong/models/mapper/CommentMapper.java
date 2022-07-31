@@ -21,9 +21,9 @@ import java.util.Optional;
 @Component
 public class CommentMapper {
     @Autowired
-    NewsRepository newsRepository;
+    private NewsRepository newsRepository;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     public CommentEntity toEntity(CommentRequest request) {
         Optional<NewsEntity> newsEntity = newsRepository.findById(request.getNewsID());
@@ -54,7 +54,6 @@ public class CommentMapper {
     public CommentShortResponse toShortResponse(CommentEntity entity) {
         return CommentShortResponse.builder()
                 .body(entity.getBody())
-                .creationDate(entity.getTimestamp())
                 .build();
     }
 
