@@ -13,4 +13,6 @@ public interface CommentService {
 
     void delete(Long id, String token);
 
+    List<CommentShortResponse> readCommentsByNewsID(Long newsID);
+
 }
