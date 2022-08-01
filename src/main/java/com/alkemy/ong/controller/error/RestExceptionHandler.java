@@ -65,5 +65,34 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
+    @ExceptionHandler(value = {ActivityNotFoundException.class})
+    protected ResponseEntity<Object> activityNotFound(RuntimeException ex, WebRequest request) {
+        ApiErrorResponse error = new ApiErrorResponse(
+                HttpStatus.NOT_FOUND,
+                ex.getMessage(),
+                Arrays.asList("Activity Not Found")
+        );
+        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(value = {NameOrEmailAreNull.class})
+    protected ResponseEntity<Object> nameOrEmailAreNull(RuntimeException ex, WebRequest request) {
+        ApiErrorResponse error = new ApiErrorResponse(
+                HttpStatus.NOT_FOUND,
+                ex.getMessage(),
+                Arrays.asList("name or email are Null")
+        );
+        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(value = {NameOrContentAreNull.class})
+    protected ResponseEntity<Object> nameOrContentAreNull(RuntimeException ex, WebRequest request) {
+        ApiErrorResponse error = new ApiErrorResponse(
+                HttpStatus.NOT_FOUND,
+                ex.getMessage(),
+                Arrays.asList("name or content are Null")
+        );
+        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
 
 }

@@ -6,10 +6,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-
 @Service
 public class AwsUtils {
-
 
     public File convertMultiPartToFile(MultipartFile file) throws IOException {
 
