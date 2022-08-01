@@ -2,9 +2,10 @@ package com.alkemy.ong.exception;
 
 public class NameOrEmailAreNull extends RuntimeException{
 
-    public NameOrEmailAreNull(String error){
+    private static final String DESCRIPTION = "NAME OR EMAIL ARE NULL OR EMPTY";
 
-        super(error);
-
+    public NameOrEmailAreNull(String detail) {
+        super(DESCRIPTION + " : " + detail);
     }
+
 }
