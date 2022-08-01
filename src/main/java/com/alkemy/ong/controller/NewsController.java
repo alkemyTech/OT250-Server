@@ -3,6 +3,7 @@ package com.alkemy.ong.controller;
 
 import com.alkemy.ong.models.request.NewsRequest;
 import com.alkemy.ong.models.response.CommentShortResponse;
+import com.alkemy.ong.models.response.CommentsByNewsResponse;
 import com.alkemy.ong.models.response.NewsResponse;
 import com.alkemy.ong.repository.NewsRepository;
 import com.alkemy.ong.service.CommentService;
@@ -63,8 +64,8 @@ public class NewsController {
     }
 
     @GetMapping("{newsID}/comments")
-    public ResponseEntity<List<CommentShortResponse>> commentsByNewsID(@PathVariable Long newsID) {
-        List<CommentShortResponse> commentShortResponses = commentService.readCommentsByNewsID(newsID);
-        return ResponseEntity.status(HttpStatus.OK).body(commentShortResponses);
+    public ResponseEntity<List<CommentsByNewsResponse>> commentsByNewsID(@PathVariable Long newsID) {
+        List<CommentsByNewsResponse> response = commentService.readCommentsByNewsID(newsID);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

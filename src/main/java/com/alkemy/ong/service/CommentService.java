@@ -4,6 +4,7 @@ import com.alkemy.ong.models.request.CommentRequest;
 import com.alkemy.ong.models.request.CommentRequestUpDate;
 import com.alkemy.ong.models.response.CommentResponse;
 import com.alkemy.ong.models.response.CommentShortResponse;
+import com.alkemy.ong.models.response.CommentsByNewsResponse;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface CommentService {
 
     void delete(Long id, String token);
 
-    List<CommentShortResponse> readCommentsByNewsID(Long newsID);
+    List<CommentsByNewsResponse> readCommentsByNewsID(Long newsID);
 
     CommentResponse upDate(Long id, String token, CommentRequestUpDate request) throws Exception;
 

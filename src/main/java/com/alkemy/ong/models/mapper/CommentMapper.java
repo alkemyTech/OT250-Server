@@ -7,6 +7,7 @@ import com.alkemy.ong.models.entity.UserEntity;
 import com.alkemy.ong.models.request.CommentRequest;
 import com.alkemy.ong.models.response.CommentResponse;
 import com.alkemy.ong.models.response.CommentShortResponse;
+import com.alkemy.ong.models.response.CommentsByNewsResponse;
 import com.alkemy.ong.repository.NewsRepository;
 import com.alkemy.ong.repository.UserRepository;
 import com.amazonaws.services.simplesystemsmanagement.model.ParameterAlreadyExistsException;
@@ -61,6 +62,23 @@ public class CommentMapper {
         List<CommentShortResponse> responseList = new ArrayList<>();
         for (CommentEntity entity : entities) {
             responseList.add(toShortResponse(entity));
+        }
+        return responseList;
+    }
+
+    public CommentsByNewsResponse toCommentsByNewsResponse(CommentEntity entity) {
+        return CommentsByNewsResponse.builder()
+                .id(entity.getId())
+                .body(entity.getBody())
+                .userID(entity.getUser().getId())
+                .creationDate(entity.getTimestamp())
+                .build();
+    }
+
+    public List<CommentsByNewsResponse> toCommentsByNewsResponseList(List<CommentEntity> entities) {
+        List<CommentsByNewsResponse> responseList = new ArrayList<>();
+        for (CommentEntity entity : entities) {
+            responseList.add(toCommentsByNewsResponse(entity));
         }
         return responseList;
     }
