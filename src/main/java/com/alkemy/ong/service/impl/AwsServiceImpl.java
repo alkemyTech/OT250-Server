@@ -48,24 +48,17 @@ public class AwsServiceImpl implements AwsService {
 
     @Override
     public String uploadFileFromBase64(String base64) throws IOException {
-
+        if (base64  == null)
+            return null;
         if (base64.contains("data:image/")) {
-
         String[] parts = base64.split(",");
         String header = parts[0];
         String contents = parts[1];
-
-
-            MultipartFile multipartFile = new MultiPartFileClass(header, contents);
-
-            return uploadFile(multipartFile);
-        }else {
-
-            String fileURL = endPoint + "/" + bucket + "/" + base64;
-
-            return fileURL;
-
+        MultipartFile multipartFile = new MultiPartFileClass(header, contents);
+        return uploadFile(multipartFile);
         }
+        else
+            return endPoint + "/" + bucket + "/" + base64;
     }
 }
 
