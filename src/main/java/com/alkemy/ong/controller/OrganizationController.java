@@ -1,16 +1,13 @@
 package com.alkemy.ong.controller;
 
-import com.alkemy.ong.models.request.OrganizationPartialRequest;
+import com.alkemy.ong.models.request.OrganizationUpdatelRequest;
 import com.alkemy.ong.models.request.OrganizationRequest;
-import com.alkemy.ong.models.request.UserUpdateRequest;
 import com.alkemy.ong.models.response.OrganizationResponse;
 import com.alkemy.ong.models.response.OrganizationResponseInfo;
-import com.alkemy.ong.models.response.UserDetailsResponse;
 import com.alkemy.ong.service.OrganizationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -51,7 +48,7 @@ public class OrganizationController {
     @PatchMapping("/{id}")
     public ResponseEntity<OrganizationResponse> updateOrg(
             @PathVariable("id") @Valid @NotNull Long id,
-            @RequestBody @Valid OrganizationPartialRequest request) throws IOException {
+            @RequestBody @Valid OrganizationUpdatelRequest request) throws IOException {
         OrganizationResponse update = organizationService.basicUpdate(id, request);
         return ResponseEntity.ok().body(update);
     }

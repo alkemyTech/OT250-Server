@@ -3,16 +3,15 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.models.entity.ContactEntity;
 import com.alkemy.ong.models.request.ContactRequest;
 import com.alkemy.ong.models.response.ContactResponse;
+import com.alkemy.ong.models.response.UserDetailsResponse;
 import com.alkemy.ong.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("contacts")
@@ -36,6 +35,12 @@ public class ContactController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
 
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ContactResponse>> getAll(){
+        List<ContactResponse> contacts = contactService.getAll();
+        return ResponseEntity.ok().body(contacts);
     }
 
 }

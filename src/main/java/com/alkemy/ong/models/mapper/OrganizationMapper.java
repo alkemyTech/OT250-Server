@@ -1,7 +1,7 @@
 package com.alkemy.ong.models.mapper;
 
 import com.alkemy.ong.models.entity.OrganizationEntity;
-import com.alkemy.ong.models.request.OrganizationPartialRequest;
+import com.alkemy.ong.models.request.OrganizationUpdatelRequest;
 import com.alkemy.ong.models.request.OrganizationRequest;
 import com.alkemy.ong.models.response.OrganizationResponse;
 import com.alkemy.ong.models.response.OrganizationResponseInfo;
@@ -91,7 +91,7 @@ public class OrganizationMapper {
         return entity;
     }
 
-    public OrganizationEntity basicUpdateEntity(OrganizationEntity entity, OrganizationPartialRequest request) throws IOException {
+    public OrganizationEntity basicUpdateEntity(OrganizationEntity entity, OrganizationUpdatelRequest request) throws IOException {
 
         if(request.getName() != null && !request.getName().isEmpty() && !request.getName().isBlank()){
             entity.setName(request.getName());

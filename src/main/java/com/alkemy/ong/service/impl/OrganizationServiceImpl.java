@@ -5,7 +5,7 @@ import com.alkemy.ong.models.entity.OrganizationEntity;
 import com.alkemy.ong.models.entity.SlideEntity;
 import com.alkemy.ong.models.mapper.OrganizationMapper;
 import com.alkemy.ong.models.mapper.SlideMapper;
-import com.alkemy.ong.models.request.OrganizationPartialRequest;
+import com.alkemy.ong.models.request.OrganizationUpdatelRequest;
 import com.alkemy.ong.models.request.OrganizationRequest;
 import com.alkemy.ong.models.response.OrganizationResponse;
 import com.alkemy.ong.models.response.OrganizationResponseInfo;
@@ -76,7 +76,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public OrganizationResponse basicUpdate(Long id, OrganizationPartialRequest request) throws IOException {
+    public OrganizationResponse basicUpdate(Long id, OrganizationUpdatelRequest request) throws IOException {
 
          OrganizationEntity entity = organizationRepository.findById(id).orElse(null);
          if(entity == null){ throw new OrgNotFoundException("No organization found with that id");

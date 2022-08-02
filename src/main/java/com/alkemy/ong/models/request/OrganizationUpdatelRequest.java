@@ -2,14 +2,11 @@ package com.alkemy.ong.models.request;
 
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrganizationPartialRequest {
+public class OrganizationUpdatelRequest {
     
 
     private String name;

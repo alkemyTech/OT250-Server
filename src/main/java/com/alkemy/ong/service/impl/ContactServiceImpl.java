@@ -10,6 +10,8 @@ import com.alkemy.ong.service.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContactServiceImpl implements ContactService {
 
@@ -45,6 +47,13 @@ public class ContactServiceImpl implements ContactService {
         ContactResponse response = contactMapper.entity2Response(entitySave);
 
         return response;
+    }
+
+    @Override
+    public List<ContactResponse> getAll() {
+        List<ContactEntity> contacts = contactRepository.findAll();
+        List <ContactResponse> responses = contactMapper.entityList2Response(contacts);
+        return responses;
     }
 
 
