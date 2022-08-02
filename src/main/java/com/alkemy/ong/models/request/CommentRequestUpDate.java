@@ -17,7 +17,6 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentRequestUpDate {
-
     @NotNull(message = "the body can´t be null")
     @NotBlank(message = "the body can´t be blank")
     @NotEmpty(message = "the body can´t be empty")

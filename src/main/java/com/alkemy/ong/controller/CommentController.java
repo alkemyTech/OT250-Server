@@ -41,7 +41,7 @@ public class CommentController {
     @PutMapping("{id}")
     public ResponseEntity<CommentResponse> upDate(@PathVariable("id") @NotNull Long id,
                                        @RequestHeader(name="Authorization") String token,
-                                       @RequestBody CommentRequestUpDate request) throws Exception {
+                                       @Valid @RequestBody CommentRequestUpDate request) throws Exception {
 
         CommentResponse response = commentService.upDate(id, token, request);
         return ResponseEntity.ok(response);
