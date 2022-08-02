@@ -29,11 +29,11 @@ public class CommentMapper {
     public CommentEntity toEntity(CommentRequest request) {
         Optional<NewsEntity> newsEntity = newsRepository.findById(request.getNewsID());
         if (newsEntity.isEmpty()) {
-            throw new ParameterNotFoundException("news (id = "+request.getNewsID()+") not found");
+            throw new NotFoundException("news (id = "+request.getNewsID()+") not found");
         }
         Optional<UserEntity> userEntity = userRepository.findById(request.getUserID());
         if (userEntity.isEmpty()) {
-            throw new ParameterNotFoundException("user (id = "+request.getUserID()+") not found");
+            throw new NotFoundException("user (id = "+request.getUserID()+") not found");
         }
         return CommentEntity.builder()
                 .body(request.getBody())
