@@ -117,6 +117,17 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
+    @ExceptionHandler(value = {BadRequestException.class})
+    protected ResponseEntity<Object> BadRequestExceptionHandler(RuntimeException ex, WebRequest request) {
+        ApiErrorResponse error = new ApiErrorResponse(
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage(), null
+        );
+        ex.printStackTrace();
+
+        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
     @ExceptionHandler(value = {BodyIsNullException.class})
     protected ResponseEntity<Object> BodyIsNullException(RuntimeException ex, WebRequest request) {
         ApiErrorResponse error = new ApiErrorResponse(

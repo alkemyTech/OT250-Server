@@ -1,6 +1,7 @@
 package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.auth.utility.JwtUtils;
+import com.alkemy.ong.exception.BadRequestException;
 import com.alkemy.ong.exception.BodyIsNullException;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.models.entity.CommentEntity;
@@ -38,8 +39,16 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private NewsRepository newsRepository;
 
-    public CommentResponse create(CommentRequest request) {
-        CommentEntity commentEntity = commentMapper.toEntity(request);
+    public CommentResponse create(CommentRequest request, String token) {
+        token = token.substring(7);
+        String username = jwtUtils.extractUsername(token);
+        UserEntity userEntity = userRepository.findByEmail(username).get();
+        Set<RoleEntity> roleEntities = userEntity.getRoleId();
+        List<String> roles = roleEntities.stream().map(RoleEntity::getName).collect(Collectors.toList());
+        if (roleEntities.contains("ADMIN")) {
+            throw new ForbiddenException("Only Users with USER role can comment");
+        }
+        CommentEntity commentEntity = commentMapper.toEntity(request, userEntity.getId());
         commentEntity = commentRepository.save(commentEntity);
         return commentMapper.toResponse(commentEntity);
     }

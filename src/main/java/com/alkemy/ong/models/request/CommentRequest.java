@@ -16,8 +16,6 @@ import javax.validation.constraints.NotNull;
 public class CommentRequest {
     @NotNull(message = "the newsID can´t be null")
     Long newsID;
-    @NotNull(message = "the UserID can´t be null")
-    Long userID;
     @NotNull(message = "the body can´t be null")
     @NotBlank(message = "the body can´t be blank")
     @NotEmpty(message = "the body can´t be empty")

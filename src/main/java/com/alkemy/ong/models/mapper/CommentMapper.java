@@ -26,14 +26,14 @@ public class CommentMapper {
     @Autowired
     private UserRepository userRepository;
 
-    public CommentEntity toEntity(CommentRequest request) {
+    public CommentEntity toEntity(CommentRequest request, Long userID) {
         Optional<NewsEntity> newsEntity = newsRepository.findById(request.getNewsID());
         if (newsEntity.isEmpty()) {
             throw new NotFoundException("news (id = "+request.getNewsID()+") not found");
         }
-        Optional<UserEntity> userEntity = userRepository.findById(request.getUserID());
+        Optional<UserEntity> userEntity = userRepository.findById(userID);
         if (userEntity.isEmpty()) {
-            throw new NotFoundException("user (id = "+request.getUserID()+") not found");
+            throw new NotFoundException("user (id = "+userID+") not found");
         }
         return CommentEntity.builder()
                 .body(request.getBody())
