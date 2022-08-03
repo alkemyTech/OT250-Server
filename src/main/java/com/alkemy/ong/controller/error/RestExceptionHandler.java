@@ -2,7 +2,6 @@ package com.alkemy.ong.controller.error;
 
 import com.alkemy.ong.exception.*;
 import com.alkemy.ong.models.response.ApiErrorResponse;
-import com.amazonaws.services.pinpoint.model.ForbiddenException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
