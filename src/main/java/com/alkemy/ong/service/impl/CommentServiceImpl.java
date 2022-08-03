@@ -84,8 +84,9 @@ public class CommentServiceImpl implements CommentService {
 
         token = token.substring(7);
         String username = jwtUtils.extractUsername(token);
-        UserEntity userEntity = userRepository.findByEmail(username).get();
-        Set<RoleEntity> roleEntities = userEntity.getRoleId();
+        UserEntity entityLogin = userRepository.findByEmail(username).get();
+
+        Set<RoleEntity> roleEntities = entityLogin.getRoleId();
         List<String> roles = roleEntities.stream().map(RoleEntity::getName).collect(Collectors.toList());
 
         CommentEntity entityFound = commentRepository.getById(id);
@@ -94,7 +95,7 @@ public class CommentServiceImpl implements CommentService {
             throw new ForbiddenException("ADMIN NOT AUTHORIZED");
         }
         else {
-            if (entityFound.getUser() != userEntity) {
+            if (entityFound.getUser() != entityLogin) {
                 throw new ForbiddenException("NOT AUTHORIZED");
             }
 
