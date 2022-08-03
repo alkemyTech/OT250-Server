@@ -11,6 +11,7 @@ import com.alkemy.ong.models.request.CommentRequest;
 import com.alkemy.ong.models.request.CommentRequestUpDate;
 import com.alkemy.ong.models.response.CommentResponse;
 import com.alkemy.ong.models.response.CommentShortResponse;
+import com.alkemy.ong.models.response.CommentsByNewsResponse;
 import com.alkemy.ong.repository.CommentRepository;
 import com.alkemy.ong.repository.NewsRepository;
 import com.alkemy.ong.repository.UserRepository;
@@ -70,9 +71,9 @@ public class CommentServiceImpl implements CommentService {
         }
     }
 
-    public List<CommentShortResponse> readCommentsByNewsID(Long newsID) {
+    public List<CommentsByNewsResponse> readCommentsByNewsID(Long newsID) {
         List<CommentEntity> commentEntities = commentRepository.findCommentsByNewsID(newsID);
-        return commentMapper.toShortResponseList(commentEntities);
+        return commentMapper.toCommentsByNewsResponseList(commentEntities);
     }
 
     @Override
