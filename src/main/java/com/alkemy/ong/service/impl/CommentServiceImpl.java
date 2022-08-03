@@ -91,14 +91,7 @@ public class CommentServiceImpl implements CommentService {
         CommentEntity entityFound = commentRepository.getById(id);
 
         if (roleEntities.contains("ADMIN")) {
-            if(request.getBody().isBlank() || request.getBody().isEmpty() || request.getBody() ==null){
-                throw new BodyIsNullException("BODY IS NULL OR EMPTY");
-            }
-            else{
-                entityFound.setBody(request.getBody());
-                Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-                entityFound.setTimestamp(timestamp);
-            }
+            throw new ForbiddenException("ADMIN NOT AUTHORIZED");
         }
         else {
             if (entityFound.getUser() != userEntity) {

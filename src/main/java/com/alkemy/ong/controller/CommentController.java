@@ -39,7 +39,7 @@ public class CommentController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<CommentResponse> upDate(@PathVariable("id") @NotNull Long id,
+    public ResponseEntity<CommentResponse> upDate(@Valid @PathVariable("id") @NotNull Long id,
                                        @RequestHeader(name="Authorization") String token,
                                        @RequestBody CommentRequestUpDate request) throws Exception {
 

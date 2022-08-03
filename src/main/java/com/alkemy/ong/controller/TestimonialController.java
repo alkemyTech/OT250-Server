@@ -46,7 +46,7 @@ public class TestimonialController {
 
     @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<TestimonialResponse> delete(@PathVariable Long id ){
+    public ResponseEntity<TestimonialResponse> delete(@Valid @PathVariable Long id ){
 
         TestimonialResponse response = testimonialService.delete(id);
 
