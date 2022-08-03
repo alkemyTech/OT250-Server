@@ -5,6 +5,9 @@ import com.alkemy.ong.models.request.ContactRequest;
 import com.alkemy.ong.models.response.ContactResponse;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class ContactMapper {
 
@@ -32,5 +35,14 @@ public class ContactMapper {
         return response;
 
 
+    }
+
+    public List<ContactResponse> entityList2Response(List<ContactEntity> contacts){
+        List<ContactResponse> responses = new ArrayList<>();
+        for ( ContactEntity contact: contacts){
+           responses.add(entity2Response(contact));
+        }
+
+        return responses;
     }
 }

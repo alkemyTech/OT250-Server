@@ -1,6 +1,7 @@
 package com.alkemy.ong.models.mapper;
 
 import com.alkemy.ong.models.entity.OrganizationEntity;
+import com.alkemy.ong.models.request.OrganizationUpdatelRequest;
 import com.alkemy.ong.models.request.OrganizationRequest;
 import com.alkemy.ong.models.response.OrganizationResponse;
 import com.alkemy.ong.models.response.OrganizationResponseInfo;
@@ -86,6 +87,39 @@ public class OrganizationMapper {
         if (request.getAboutUsText()!=null && !request.getAboutUsText().isEmpty()){
             entity.setAboutUsText(request.getAboutUsText());
         }
+
+        return entity;
+    }
+
+    public OrganizationEntity basicUpdateEntity(OrganizationEntity entity, OrganizationUpdatelRequest request) throws IOException {
+
+        if(request.getName() != null && !request.getName().isEmpty() && !request.getName().isBlank()){
+            entity.setName(request.getName());
+        }
+
+        if(request.getImage() != null && !request.getImage().isEmpty() && !request.getImage().isBlank() ){
+            entity.setImage(awsService.uploadFileFromBase64(request.getImage()));
+        }
+
+        if (request.getAddress()!=null && !request.getAddress().isEmpty() && !request.getAddress().isBlank()){
+            entity.setAddress(request.getAddress());
+        }
+
+        if (request.getPhone()!= null){
+            entity.setPhone(request.getPhone());
+        }
+
+        if ( request.getEmail() != null &&!request.getEmail().isEmpty() && !request.getEmail().isBlank()){
+        entity.setEmail(request.getEmail());
+    }
+
+        if (request.getWelcomeText() != null && !request.getWelcomeText().isEmpty() && !request.getWelcomeText().isBlank()){
+        entity.setWelcomeText(request.getWelcomeText());
+    }
+
+        if (request.getAboutUsText()!= null && !request.getAboutUsText().isEmpty() && !request.getAboutUsText().isBlank() ){
+        entity.setAboutUsText(request.getAboutUsText());
+    }
 
         return entity;
     }
