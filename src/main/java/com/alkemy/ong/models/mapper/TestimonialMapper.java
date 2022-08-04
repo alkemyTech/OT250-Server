@@ -2,37 +2,47 @@ package com.alkemy.ong.models.mapper;
 
 import com.alkemy.ong.models.entity.TestimonialEntity;
 import com.alkemy.ong.models.request.TestimonialRequest;
+import com.alkemy.ong.models.response.TestimonialResponse;
+import com.alkemy.ong.service.AwsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 
+@Component
 public class TestimonialMapper {
 
-//    public TestimonialEntity request2Entity(TestimonialRequest request){
-//
-//        TestimonialEntity entity = new TestimonialEntity();
-//
-//        entity.setContent(request.getContent());
-//        entity.setName(request.getName());
-//        entity.setImage(request.getImage());
-//        Long datetime = System.currentTimeMillis();
-//        Timestamp timestamp = new Timestamp(datetime);
-//        entity.setTimestamp(timestamp);
-//
-//        return entity;
-//
-//    }
+    @Autowired
+    private AwsService awsService;
 
-    public TestimonialEntity request2Entity(TestimonialRequest request){
-        Long datetime = System.currentTimeMillis();
-        Timestamp timestamp = new Timestamp(datetime);
-           return TestimonialEntity.builder()
-                .content(request.getContent())
-                .name(request.getName())
-                .image(request.getImage())
-                .timestamp(timestamp)
-                .build();
+    public TestimonialEntity request2Entity(TestimonialRequest request) throws IOException {
+
+         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+         TestimonialEntity entity = new TestimonialEntity();
+
+         entity.setName(request.getName());
+         entity.setImage(awsService.uploadFileFromBase64(request.getImage()));
+         entity.setContent(request.getContent());
+         entity.setTimestamp(timestamp);
+
+         return entity;
+
     }
 
+    public TestimonialResponse entity2Response(TestimonialEntity entity){
+
+        TestimonialResponse response = new TestimonialResponse();
+
+        response.setName(entity.getName());
+        response.setContent(entity.getContent());
+        response.setImage(entity.getImage());
+        response.setTimestamp(entity.getTimestamp());
+
+        return response;
+
+    }
 
 
 

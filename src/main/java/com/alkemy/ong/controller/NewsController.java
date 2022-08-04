@@ -2,13 +2,19 @@ package com.alkemy.ong.controller;
 
 
 import com.alkemy.ong.models.request.NewsRequest;
+import com.alkemy.ong.models.response.CommentShortResponse;
+import com.alkemy.ong.models.response.CommentsByNewsResponse;
 import com.alkemy.ong.models.response.NewsResponse;
 import com.alkemy.ong.repository.NewsRepository;
+import com.alkemy.ong.service.CommentService;
 import com.alkemy.ong.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("news")
@@ -18,6 +24,8 @@ public class NewsController {
     private NewsRepository newsRepository;
     @Autowired
     private NewsService newsService;
+    @Autowired
+    private CommentService commentService;
 
     @PostMapping
     public ResponseEntity<NewsResponse> createNews (@RequestBody NewsRequest newsRequest){
@@ -54,5 +62,11 @@ public class NewsController {
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
 
+    }
+
+    @GetMapping("{newsID}/comments")
+    public ResponseEntity<List<CommentsByNewsResponse>> commentsByNewsID(@PathVariable Long newsID) {
+        List<CommentsByNewsResponse> response = commentService.readCommentsByNewsID(newsID);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

@@ -7,15 +7,20 @@ import com.alkemy.ong.models.request.ContactRequest;
 import com.alkemy.ong.models.response.ContactResponse;
 import com.alkemy.ong.repository.ContactRepository;
 import com.alkemy.ong.service.ContactService;
+import com.alkemy.ong.service.IEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
+import java.io.IOException;
+
 
 @Service
 public class ContactServiceImpl implements ContactService {
 
     @Autowired
     private ContactMapper contactMapper;
-
+    @Autowired
+    private IEmailService emailService;
     @Autowired
     private ContactRepository contactRepository;
 
@@ -36,15 +41,22 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public ContactResponse save(ContactRequest request) {
+    public ContactResponse save(ContactRequest request) throws IOException {
 
         ContactEntity entitySave = contactMapper.request2Entity(request);
 
         contactRepository.save(entitySave);
-
+        emailService.checkFromRequest(request.getEmail(), "Contact");
         ContactResponse response = contactMapper.entity2Response(entitySave);
 
         return response;
+    }
+
+    @Override
+    public List<ContactResponse> getAll() {
+        List<ContactEntity> contacts = contactRepository.findAll();
+        List <ContactResponse> responses = contactMapper.entityList2Response(contacts);
+        return responses;
     }
 
 

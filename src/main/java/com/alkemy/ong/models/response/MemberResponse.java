@@ -4,17 +4,25 @@ import lombok.*;
 
 import java.sql.Timestamp;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TestimonialResponse {
+public class MemberResponse {
 
     private String name;
+
+    private String facebookUrl;
+
+    private String instagramUrl;
+
+    private String linkedinUrl;
+
     private String image;
-    private String content;
-    private Timestamp timestamp;
 
+    private String description;
 
+    private Timestamp timeStamp;
 }
