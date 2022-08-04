@@ -65,6 +65,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
+
     @ExceptionHandler(value = {ActivityNotFoundException.class})
     protected ResponseEntity<Object> activityNotFound(RuntimeException ex, WebRequest request) {
         ApiErrorResponse error = new ApiErrorResponse(
@@ -78,21 +79,64 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {NameOrEmailAreNull.class})
     protected ResponseEntity<Object> nameOrEmailAreNull(RuntimeException ex, WebRequest request) {
         ApiErrorResponse error = new ApiErrorResponse(
-                HttpStatus.NOT_FOUND,
+                HttpStatus.NO_CONTENT,
                 ex.getMessage(),
                 Arrays.asList("name or email are Null")
         );
-        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NO_CONTENT, request);
     }
 
     @ExceptionHandler(value = {NameOrContentAreNull.class})
     protected ResponseEntity<Object> nameOrContentAreNull(RuntimeException ex, WebRequest request) {
         ApiErrorResponse error = new ApiErrorResponse(
-                HttpStatus.NOT_FOUND,
+                HttpStatus.NO_CONTENT,
                 ex.getMessage(),
                 Arrays.asList("name or content are Null")
         );
+        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NO_CONTENT, request);
+    }
+
+    @ExceptionHandler(value = {ForbiddenException.class})
+    protected ResponseEntity<Object> ForbiddenExceptionHandler(RuntimeException ex, WebRequest request) {
+        ApiErrorResponse error = new ApiErrorResponse(
+                HttpStatus.FORBIDDEN,
+                ex.getMessage(), null
+        );
+        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.FORBIDDEN, request);
+    }
+
+    @ExceptionHandler(value = {NotFoundException.class})
+    protected ResponseEntity<Object> NotFoundExceptionHandler(RuntimeException ex, WebRequest request) {
+        ApiErrorResponse error = new ApiErrorResponse(
+                HttpStatus.NOT_FOUND,
+                ex.getMessage(), null
+        );
+        ex.printStackTrace();
+
         return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(value = {BadRequestException.class})
+    protected ResponseEntity<Object> BadRequestExceptionHandler(RuntimeException ex, WebRequest request) {
+        ApiErrorResponse error = new ApiErrorResponse(
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage(), null
+        );
+        ex.printStackTrace();
+
+        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(value = {BodyIsNullException.class})
+    protected ResponseEntity<Object> BodyIsNullException(RuntimeException ex, WebRequest request) {
+        ApiErrorResponse error = new ApiErrorResponse(
+                HttpStatus.NO_CONTENT,
+                ex.getMessage(),
+                Arrays.asList("body is empty or Null")
+        );
+        ex.printStackTrace();
+
+        return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NO_CONTENT, request);
     }
 
 }

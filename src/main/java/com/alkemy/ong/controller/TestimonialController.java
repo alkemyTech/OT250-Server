@@ -4,7 +4,6 @@ import com.alkemy.ong.models.request.TestimonialRequest;
 import com.alkemy.ong.models.response.TestimonialResponse;
 import com.alkemy.ong.service.TestimonialService;
 import com.alkemy.ong.service.impl.TestimonialServiceImpl;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,7 +46,7 @@ public class TestimonialController {
 
     @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<TestimonialResponse> delete(@PathVariable Long id ){
+    public ResponseEntity<TestimonialResponse> delete(@Valid @PathVariable Long id ){
 
         TestimonialResponse response = testimonialService.delete(id);
 

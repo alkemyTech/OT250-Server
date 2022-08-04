@@ -13,11 +13,12 @@ import java.sql.Timestamp;
 @Data
 public class TestimonialRequest {
 
-    @NotNull(message = "the name can't be null")
-    @NotEmpty(message = "the name can't be empty")
+    @NotBlank(message = "the image can't be blank")
+    @NotNull(message = "the image can't be null")
+    @NotEmpty(message = "the image can't be empty")
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "the image can't be blank")
     @NotNull(message = "the image can't be null")
     @NotEmpty(message = "the image can't be empty")
     private String image;
