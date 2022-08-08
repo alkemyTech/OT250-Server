@@ -28,7 +28,7 @@ public class NewsController {
     private CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<NewsResponse> createNews (@RequestBody NewsRequest newsRequest){
+    public ResponseEntity<NewsResponse> createNews (@Valid @RequestBody NewsRequest newsRequest){
 
         NewsResponse newsResponseCreate = this.newsService.create(newsRequest);
 
@@ -47,7 +47,7 @@ public class NewsController {
 
     @PutMapping("{id}")
     public ResponseEntity<NewsResponse> updateNews (@PathVariable Long id,
-                                                    @RequestBody NewsRequest newsRequest) {
+                                                    @Valid @RequestBody NewsRequest newsRequest) {
 
         NewsResponse newsResponse = this.newsService.update(id, newsRequest);
 

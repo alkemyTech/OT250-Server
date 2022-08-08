@@ -62,6 +62,7 @@ public class TestimonialServiceImpl implements TestimonialService {
     @Override
     public TestimonialResponse delete(Long id) {
 
+
         TestimonialEntity entity = testimonialRepository.findById(id).orElseThrow();
 
         if(!testimonialRepository.findById(id).isPresent()){
@@ -71,6 +72,7 @@ public class TestimonialServiceImpl implements TestimonialService {
         testimonialRepository.delete(entity);
 
         return null;
+
     }
 
     public boolean areNull(String request) {

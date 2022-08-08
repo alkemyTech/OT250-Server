@@ -22,5 +22,5 @@ public class NewsRequest {
     private String image;
 
     private Long idCategory;
-    //private CategoryRequest category;
+
 }
