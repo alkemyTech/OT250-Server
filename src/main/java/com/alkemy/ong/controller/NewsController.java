@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -37,7 +39,7 @@ public class NewsController {
 
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteNews (@PathVariable Long id){
+    public ResponseEntity<Void> deleteNews (@PathVariable @Valid @NotNull @NotBlank Long id){
 
         this.newsService.delete(id);
 
@@ -46,7 +48,7 @@ public class NewsController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<NewsResponse> updateNews (@PathVariable Long id,
+    public ResponseEntity<NewsResponse> updateNews (@PathVariable @Valid @NotNull @NotBlank Long id,
                                                     @Valid @RequestBody NewsRequest newsRequest) {
 
         NewsResponse newsResponse = this.newsService.update(id, newsRequest);
@@ -56,7 +58,7 @@ public class NewsController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<NewsResponse> getById (@PathVariable Long id){
+    public ResponseEntity<NewsResponse> getById (@PathVariable @Valid @NotNull @NotBlank Long id){
 
         NewsResponse response = this.newsService.getById(id);
 
@@ -65,7 +67,8 @@ public class NewsController {
     }
 
     @GetMapping("{newsID}/comments")
-    public ResponseEntity<List<CommentsByNewsResponse>> commentsByNewsID(@PathVariable Long newsID) {
+    public ResponseEntity<List<CommentsByNewsResponse>> commentsByNewsID(
+                                                        @PathVariable @Valid @NotNull @NotBlank Long newsID) {
         List<CommentsByNewsResponse> response = commentService.readCommentsByNewsID(newsID);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
