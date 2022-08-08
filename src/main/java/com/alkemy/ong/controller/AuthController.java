@@ -3,13 +3,12 @@ package com.alkemy.ong.controller;
 
 import com.alkemy.ong.models.request.AuthRequest;
 import com.alkemy.ong.models.request.UserRequest;
+import com.alkemy.ong.models.response.ApiErrorResponse;
 import com.alkemy.ong.models.response.AuthResponse;
 import com.alkemy.ong.models.response.UserDetailsResponse;
 import com.alkemy.ong.models.response.UserResponse;
 import com.alkemy.ong.service.AuthService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,16 +19,20 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/auth")
-@Api(value = "Auth Controller", description = "Operations pertaining to Auth")
+@Api(value = "Auth Controller")
 public class AuthController {
 
     @Autowired
     private AuthService authService;
 
     @PostMapping("/register")
-    @ApiOperation(value = "Register a new user",
-            response = UserResponse.class)
-    @ApiResponse(code = 201, message = "CREATED")
+    @ApiOperation(value = "Register a new User", code = 201, response = UserResponse.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Created", response = UserResponse.class),
+            @ApiResponse(code = 400, message = "Bad Request", response = ApiErrorResponse.class),
+            @ApiResponse(code = 404, message = "Not Found", response = ApiErrorResponse.class)
+    }
+    )
     public ResponseEntity<UserResponse> register(@Valid @RequestBody UserRequest userRequest) throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED).body(authService.register(userRequest));
     }
@@ -44,7 +47,10 @@ public class AuthController {
     @GetMapping("/me")
     @ApiOperation(value = "Get user details",
             response = UserDetailsResponse.class)
-    @ApiResponse(code = 200, message = "OK")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK", response = UserDetailsResponse.class),
+            @ApiResponse(code = 404, message = "Not Found", response = ApiErrorResponse.class)
+    })
     public ResponseEntity<UserDetailsResponse> getPersonalInformation(@RequestHeader(name = "Authorization") String token) {
         return ResponseEntity.status(HttpStatus.OK).body(authService.getPersonalInformation(token));
     }
