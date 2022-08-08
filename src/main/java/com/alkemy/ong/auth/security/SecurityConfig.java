@@ -67,15 +67,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PATCH,"/users/**").hasAuthority(RoleEnum.ADMIN.getSimpleRoleName())
                 .antMatchers(HttpMethod.DELETE,"/users/**").hasAuthority(RoleEnum.ADMIN.getSimpleRoleName())
                 // Activity
-                .antMatchers(HttpMethod.PUT, "/activities/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
-                .antMatchers(HttpMethod.POST, "/activities").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
+                .antMatchers(HttpMethod.PUT, "/activities/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
+                .antMatchers(HttpMethod.POST, "/activities").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
                 // Categories
                 .antMatchers(HttpMethod.GET, "/categories", "/categories/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
-                .antMatchers(HttpMethod.PUT, "/categories/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
-                .antMatchers(HttpMethod.POST, "/categories").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
-                .antMatchers(HttpMethod.DELETE, "/categories/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
+                .antMatchers(HttpMethod.PUT, "/categories/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
+                .antMatchers(HttpMethod.POST, "/categories").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
+                .antMatchers(HttpMethod.DELETE, "/categories/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
                 // Comments
-                .antMatchers(HttpMethod.GET,"/comments").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
+                .antMatchers(HttpMethod.GET,"/comments").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
                 .antMatchers(HttpMethod.GET,"/posts/*/comments").hasAuthority(RoleEnum.USER.getSimpleRoleName())
                 .antMatchers(HttpMethod.PUT,"/comments/**").hasAuthority(RoleEnum.USER.getSimpleRoleName())
                 .antMatchers(HttpMethod.POST,"/comments").hasAuthority(RoleEnum.USER.getSimpleRoleName())
@@ -87,12 +87,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/members").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
                 .antMatchers(HttpMethod.PUT, "/members/**").hasAuthority(RoleEnum.USER.getSimpleRoleName())
                 .antMatchers(HttpMethod.POST, "/members").hasAuthority(RoleEnum.USER.getSimpleRoleName())
-                .antMatchers(HttpMethod.DELETE, "/members/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
+                .antMatchers(HttpMethod.DELETE, "/members/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
                 // News
                 .antMatchers(HttpMethod.GET, "/news/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
-                .antMatchers(HttpMethod.PUT, "/news/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
-                .antMatchers(HttpMethod.POST, "/news").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
-                .antMatchers(HttpMethod.DELETE, "/news/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
+                .antMatchers(HttpMethod.PUT, "/news/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
+                .antMatchers(HttpMethod.POST, "/news").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
+                .antMatchers(HttpMethod.DELETE, "/news/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
 
                 // Organization
                 .antMatchers(HttpMethod.GET, "/organization/public").permitAll()//hasAuthority(RoleEnum.USER.getSimpleRoleName())
@@ -103,11 +103,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/slides").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
                 .antMatchers(HttpMethod.DELETE, "/slides/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
                 // Testimonials
+
                 .antMatchers(HttpMethod.POST, "/testimonials").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
                 .antMatchers(HttpMethod.PUT, "/testimonials/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
                 .antMatchers(HttpMethod.DELETE, "/testimonials/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
                 //Swagger
                 .antMatchers(publicEndpoint).permitAll()
+
 
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
