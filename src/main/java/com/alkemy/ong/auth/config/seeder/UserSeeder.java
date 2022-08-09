@@ -6,10 +6,9 @@ import com.alkemy.ong.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
 import java.io.IOException;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
 
 @Component
 public class UserSeeder implements CommandLineRunner {
@@ -27,19 +26,16 @@ public class UserSeeder implements CommandLineRunner {
         }
     }
 
-    private void createUsers(int users, String userType) throws IOException {
-            createUsersAux(users, userType);
-    }
-
-    private void createUsersAux(int users, String userType) {
+    private void createUsers(int users, String userType) {
         final String PASSWORD = "1234";
-        Stream.iterate(0, n -> n + 1).limit(users)
-                .forEach(userNumber -> {
-                    if (userType.equalsIgnoreCase("admin"))
-                        createAdmin(userType, PASSWORD, userNumber);
-                    else
-                        createNormalUser(userType, PASSWORD, userNumber);
-                });
+        if (userType.equalsIgnoreCase("admin")){
+            IntStream.range(0, users).forEach(userNumber ->
+                createAdmin(userType, PASSWORD, userNumber));
+        }
+        else{
+            IntStream.range(0, users).forEach(userNumber ->
+                createNormalUser(userType, PASSWORD, userNumber));
+        }
     }
 
     private void createNormalUser(String userType, String PASSWORD, Integer userNumber) {
