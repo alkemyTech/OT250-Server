@@ -92,10 +92,12 @@ public class AuthServiceImpl implements AuthService {
         if (userRepository.findByEmail(userRequest.getEmail()).isPresent())
             throw new UsernameNotFoundException("User already exists");
         Set<RoleEntity> roles = roleRepository.findByName(RoleEnum.ADMIN.getSimpleRoleName());
-        RoleEntity rol = new RoleEntity();
-        rol.setName(RoleEnum.ADMIN.getSimpleRoleName());
-        rol = roleRepository.save(rol);
-        roles.add(rol);
+        if (roles.isEmpty()){
+            RoleEntity rol = new RoleEntity();
+            rol.setName(RoleEnum.ADMIN.getSimpleRoleName());
+            rol = roleRepository.save(rol);
+            roles.add(rol);
+        }
         userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         UserEntity userEntity = userMapper.toUserEntity(userRequest, roles);
         userRepository.save(userEntity);
