@@ -1,22 +1,26 @@
 package com.alkemy.ong.auth.config.seeder;
 
+import com.alkemy.ong.models.entity.CategoryEntity;
 import com.alkemy.ong.models.request.UserRequest;
+import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.repository.UserRepository;
 import com.alkemy.ong.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @Component
-public class UserSeeder implements CommandLineRunner {
+public class InitializerSeeder implements CommandLineRunner {
 
     @Autowired
     private AuthService authService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -24,6 +28,14 @@ public class UserSeeder implements CommandLineRunner {
             this.createUsers(10, "admin");
             this.createUsers(10, "user");
         }
+        if (categoryRepository.findAll().isEmpty())
+            createCategory();
+
+    }
+
+    private void createCategory() {
+        categoryRepository.save(new CategoryEntity( "CategoryTest", "seeder category",
+                "img", new Timestamp(System.currentTimeMillis() ), false));
     }
 
     private void createUsers(int users, String userType) {
