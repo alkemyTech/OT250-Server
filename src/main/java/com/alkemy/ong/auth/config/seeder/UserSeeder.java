@@ -20,7 +20,6 @@ public class UserSeeder implements CommandLineRunner {
     private UserRepository userRepository;
 
     @Override
-
     public void run(String... args) throws Exception {
         if (userRepository.findAll().isEmpty()) {
             this.createUsers(10, "admin");
