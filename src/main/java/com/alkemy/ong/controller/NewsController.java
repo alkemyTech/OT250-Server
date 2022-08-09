@@ -9,10 +9,7 @@ import com.alkemy.ong.models.response.NewsResponse;
 import com.alkemy.ong.repository.NewsRepository;
 import com.alkemy.ong.service.CommentService;
 import com.alkemy.ong.service.NewsService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("news")
+@Api(description ="News CRUD" , tags = "News")
 public class NewsController {
 
     @Autowired
