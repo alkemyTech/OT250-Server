@@ -2,10 +2,10 @@ package com.alkemy.ong.auth.config.seeder;
 
 import com.alkemy.ong.models.entity.CategoryEntity;
 import com.alkemy.ong.models.entity.NewsEntity;
+import com.alkemy.ong.models.entity.OrganizationEntity;
+import com.alkemy.ong.models.entity.SlideEntity;
 import com.alkemy.ong.models.request.UserRequest;
-import com.alkemy.ong.repository.CategoryRepository;
-import com.alkemy.ong.repository.NewsRepository;
-import com.alkemy.ong.repository.UserRepository;
+import com.alkemy.ong.repository.*;
 import com.alkemy.ong.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -25,6 +25,10 @@ public class InitializerSeeder implements CommandLineRunner {
     private CategoryRepository categoryRepository;
     @Autowired
     private NewsRepository newsRepository;
+    @Autowired
+    private ISlideRepository slideRepository;
+    @Autowired
+    private OrganizationRepository organizationRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -36,6 +40,19 @@ public class InitializerSeeder implements CommandLineRunner {
             createCategory();
         if (newsRepository.findAll().isEmpty())
             createNews();
+        if (slideRepository.findAll().isEmpty())
+            createSlide();
+    }
+
+    private void createSlide() {
+        if (organizationRepository.findAll().isEmpty())
+            createOrganization();
+        slideRepository.save(new SlideEntity("imageUlr", "textTest", 1, 1L));
+    }
+
+    private void createOrganization() {
+        organizationRepository.save(new OrganizationEntity("OrganizationTest", "image.jpg",
+                "orgEmail@mail.com", "welcomeText", new Timestamp(System.currentTimeMillis())));
     }
 
     private void createNews() {
