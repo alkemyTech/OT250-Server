@@ -7,7 +7,7 @@
 * **Francisco Mastucci** - [LinkedIn](https://www.linkedin.com/in/franmastucci/) - [GitHub](https://github.com/franmastucci)
 
 **MEMBERS:**
-* **Jose Luis Panero** - [LinkedIn](https://www.linkedin.com/in/josepanero/ ) - [GitHub]()
+* **Jose Luis Panero** - [LinkedIn](https://www.linkedin.com/in/josepanero/ ) - [GitHub](https://github.com/junx2000)
 * **José Ignacio Ibarrondo Pelaez** - [LinkedIn](https://www.linkedin.com/in/joséignacioibarrondopelaez/) - [GitHub](https://github.com/ibarrondojosei)
 * **Alejandro Moll** - [LinkedIn](https://www.linkedin.com/in/alejandro-moll/) - [GitHub](https://github.com/Alex-Moll)
 * **Martin Gutierrez** - [LinkedIn](https://www.linkedin.com/in/martgutierrez/) - [GitHub](https://github.com/gutierrezMartinIvan)
