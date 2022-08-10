@@ -9,6 +9,7 @@ import com.alkemy.ong.models.response.UserDetailsResponse;
 import com.alkemy.ong.models.response.UserResponse;
 import com.alkemy.ong.service.AuthService;
 import io.swagger.annotations.*;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +20,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/auth")
-@Api(value = "Auth Controller")
+@Api(value = "Operations related to Authentication", tags = "Authentication")
 public class AuthController {
 
     @Autowired
