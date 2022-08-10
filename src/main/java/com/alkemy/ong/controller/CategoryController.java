@@ -4,10 +4,7 @@ import com.alkemy.ong.models.request.CategoryRequest;
 import com.alkemy.ong.models.response.CategoryNameResponse;
 import com.alkemy.ong.models.response.CategoryResponse;
 import com.alkemy.ong.service.ICategoryService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
+@Api(description = "This API has a CRUD for Category", tags = "Category")
 public class CategoryController {
 
     @Autowired

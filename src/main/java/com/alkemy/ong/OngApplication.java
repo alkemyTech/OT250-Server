@@ -10,6 +10,7 @@ public class OngApplication {
 		SpringApplication.run(OngApplication.class, args);
 
 	}
+
 }
 
 
