@@ -33,6 +33,7 @@ public class NewsEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
     @NotNull(message = "The image can´t be null")
+    @Column(length = 65535)
     private String image;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")

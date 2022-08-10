@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -35,7 +36,7 @@ public class NewsController {
     @PostMapping
     @ApiOperation(value = "Create News", notes = "Allows Admin to insert news")
     @ApiResponses({@ApiResponse(code = 201, message = "News created!")})
-    public ResponseEntity<NewsResponse> createNews (@Valid @RequestBody  NewsRequest newsRequest){
+    public ResponseEntity<NewsResponse> createNews (@Valid @RequestBody  NewsRequest newsRequest) throws IOException {
 
         NewsResponse newsResponseCreate = this.newsService.create(newsRequest);
 
@@ -74,7 +75,7 @@ public class NewsController {
                                                     @Valid @RequestBody @ApiParam(
                                                     name = "New News",
                                                     value = "News to save",
-                                                    required = true) NewsRequest newsRequest) {
+                                                    required = true) NewsRequest newsRequest) throws IOException {
 
         NewsResponse newsResponse = this.newsService.update(id, newsRequest);
 

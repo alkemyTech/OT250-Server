@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -24,7 +25,7 @@ public class NewsServiceImp implements NewsService {
 
     @Override
     @Transactional
-    public NewsResponse create(NewsRequest newsRequest) {
+    public NewsResponse create(NewsRequest newsRequest) throws IOException {
         NewsEntity entity = this.newsMapper.Request2EntityCreatedNews(newsRequest);
         NewsEntity entitySave = this.newsRepository.save(entity);
         NewsResponse newsResponseCreated = this.newsMapper.Entity2Response(entitySave);
@@ -50,7 +51,7 @@ public class NewsServiceImp implements NewsService {
 
     @Override
     @Transactional
-    public NewsResponse update(Long id, NewsRequest newsRequest) {
+    public NewsResponse update(Long id, NewsRequest newsRequest) throws IOException {
 
         Optional<NewsEntity> entity = this.newsRepository.findById(id);
 
