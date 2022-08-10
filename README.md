@@ -8,8 +8,8 @@
 
 **MEMBERS:**
 * **Jose Luis Panero** - [LinkedIn](https://www.linkedin.com/in/josepanero/ ) - [GitHub]()
-* **José Ignacio Ibarrondo Pelaez** - [LinkedIn](https://www.linkedin.com/in/joséignacioibarrondopelaez/) - [GitHub]()
-* **Alejandro Moll** - [LinkedIn](https://www.linkedin.com/in/alejandro-moll/) - [GitHub]()
+* **José Ignacio Ibarrondo Pelaez** - [LinkedIn](https://www.linkedin.com/in/joséignacioibarrondopelaez/) - [GitHub](https://github.com/ibarrondojosei)
+* **Alejandro Moll** - [LinkedIn](https://www.linkedin.com/in/alejandro-moll/) - [GitHub](https://github.com/Alex-Moll)
 * **Martin Gutierrez** - [LinkedIn](https://www.linkedin.com/in/martgutierrez/) - [GitHub](https://github.com/gutierrezMartinIvan)
 * **Larry Aguilera** - [LinkedIn](https://www.linkedin.com/in/larry-aguilera-081340b1/) - [GitHub](https://github.com/larrydaguilera)
 
