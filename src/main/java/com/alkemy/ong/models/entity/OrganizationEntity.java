@@ -40,6 +40,7 @@ public class OrganizationEntity {
     private String image;
 
     private String address;
+
     private Integer phone;
 
     @NonNull
@@ -64,6 +65,16 @@ public class OrganizationEntity {
     private Timestamp timestamp;
 
     private String urlFacebook;
+
     private String urlInstagram;
+
     private String urlLinkedin;
+
+    public OrganizationEntity(String name, String image, String email, String welcomeText, Timestamp timestamp) {
+        this.name = name;
+        this.image = image;
+        this.email = email;
+        this.welcomeText = welcomeText;
+        this.timestamp = timestamp;
+    }
 }

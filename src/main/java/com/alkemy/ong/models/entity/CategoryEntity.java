@@ -50,5 +50,11 @@ public class CategoryEntity implements Serializable {
     private boolean softDelete = false;
 
 
-
+    public CategoryEntity(String name, String description, String img, Timestamp timestamp, boolean softDelete) {
+        this.name = name;
+        this.description = description;
+        this.image = img;
+        this.timestamp = timestamp;
+        this.softDelete = softDelete;
+    }
 }

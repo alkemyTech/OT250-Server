@@ -7,9 +7,9 @@
 * **Francisco Mastucci** - [LinkedIn](https://www.linkedin.com/in/franmastucci/) - [GitHub](https://github.com/franmastucci)
 
 **MEMBERS:**
-* **Jose Luis Panero** - [LinkedIn](https://www.linkedin.com/in/josepanero/ ) - [GitHub]()
-* **José Ignacio Ibarrondo Pelaez** - [LinkedIn](https://www.linkedin.com/in/joséignacioibarrondopelaez/) - [GitHub]()
-* **Alejandro Moll** - [LinkedIn](https://www.linkedin.com/in/alejandro-moll/) - [GitHub]()
+* **Jose Luis Panero** - [LinkedIn](https://www.linkedin.com/in/josepanero/ ) - [GitHub](https://github.com/junx2000)
+* **José Ignacio Ibarrondo Pelaez** - [LinkedIn](https://www.linkedin.com/in/joséignacioibarrondopelaez/) - [GitHub](https://github.com/ibarrondojosei)
+* **Alejandro Moll** - [LinkedIn](https://www.linkedin.com/in/alejandro-moll/) - [GitHub](https://github.com/Alex-Moll)
 * **Martin Gutierrez** - [LinkedIn](https://www.linkedin.com/in/martgutierrez/) - [GitHub](https://github.com/gutierrezMartinIvan)
 * **Larry Aguilera** - [LinkedIn](https://www.linkedin.com/in/larry-aguilera-081340b1/) - [GitHub](https://github.com/larrydaguilera)
 
@@ -58,18 +58,18 @@ USERS SEED
 </thead>
 <tbody>
 <tr>
-<td>admin{id}@test.com</td>
+<td>emailadmin{X}@mail.com</td>
 <td>admin</td>
 </tr>
 <tr>
-<td>user{id}@test.com</td>
+<td>emailuser{X}@mail.com</td>
 <td>user</td>
 </tr> 
 </tbody>
 </table>
 
 
-#### *By default, 8 users with admin role and 8 users with user role will be created where the {id} in the email is a number from 1 to 2 per role. All the users have "12345678" as password.*
+#### *By default, 10 users with admin role and 10 users with user role will be created where the {X} in the email is a number from 0 to 9 per admin user, with normal user the {X} is a number from 11 to 20. All users have "1234" as password.*
 
 
 ROLES SEED
@@ -94,5 +94,3 @@ ROLES SEED
 </tr> 
 </tbody>
 </table>
-
-**Lista usuarios con ROLE_USER:**
