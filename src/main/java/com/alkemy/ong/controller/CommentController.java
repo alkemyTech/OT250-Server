@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
-@Api(description = "CRUD Comments", tags = "Comment")
+@Api(description = "This API has a CRUD for Comments", tags = "Comment")
 public class CommentController {
     @Autowired
     private CommentService commentService;

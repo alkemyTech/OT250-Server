@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/categories")
-@Api(description = "CRUD Category", tags = "Category")
+@Api(description = "This API has a CRUD for Category", tags = "Category")
 public class CategoryController {
 
     @Autowired
