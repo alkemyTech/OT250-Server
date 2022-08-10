@@ -58,18 +58,18 @@ USERS SEED
 </thead>
 <tbody>
 <tr>
-<td>admin{id}@test.com</td>
+<td>emailadmin{X}@mail.com</td>
 <td>admin</td>
 </tr>
 <tr>
-<td>user{id}@test.com</td>
+<td>emailuser{X}@mail.com</td>
 <td>user</td>
 </tr> 
 </tbody>
 </table>
 
 
-#### *By default, 8 users with admin role and 8 users with user role will be created where the {id} in the email is a number from 1 to 2 per role. All the users have "12345678" as password.*
+#### *By default, 10 users with admin role and 10 users with user role will be created where the {X} in the email is a number from 0 to 9 per admin user, with normal user the {X} is a number from 11 to 20. All users have "1234" as password.*
 
 
 ROLES SEED
@@ -94,5 +94,3 @@ ROLES SEED
 </tr> 
 </tbody>
 </table>
-
-**Lista usuarios con ROLE_USER:**
