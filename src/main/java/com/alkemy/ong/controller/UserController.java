@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -30,20 +31,20 @@ public class UserController {
             @ApiResponse( code = 201, message = "Testimonial created"),
             @ApiResponse( code = 403, message = "forbidden")
     })
-    public ResponseEntity<List<UserDetailsResponse>> getAll(){
+    public ResponseEntity<List<UserDetailsResponse>> getAll() throws IOException {
         List<UserDetailsResponse> users = userService.getUsers();
         return ResponseEntity.ok().body(users);
 
     }
 
     @PatchMapping("/me")
-    @ApiOperation(value = "Delete an User", notes = "Allows an User to delete itself")
+    @ApiOperation(value = "Update an User", notes = "Allows an User to update itself")
     @ApiResponses(value = {
             @ApiResponse( code = 201, message = "User deleted"),
             @ApiResponse( code = 403, message = "forbidden")
     })
     public ResponseEntity<UserDetailsResponse> updateUser(@RequestHeader(name = "Authorization") String token,
-                                                          @RequestBody @Valid UserUpdateRequest request){
+                                                          @RequestBody @Valid UserUpdateRequest request) throws IOException {
        UserDetailsResponse update = userService.updateBasicUser(request, token);
         return ResponseEntity.ok().body(update);
 
@@ -57,7 +58,7 @@ public class UserController {
     })
     public ResponseEntity<UserDetailsResponse> updateUserForAdmin(
                                                           @PathVariable("id") @Valid @NotNull Long id,
-                                                          @RequestBody @Valid UserUpdateRequest request){
+                                                          @RequestBody @Valid UserUpdateRequest request) throws IOException {
         UserDetailsResponse update = userService.updateUserForAdmin(id, request);
         return ResponseEntity.ok().body(update);
 
@@ -75,7 +76,7 @@ public class UserController {
     }
 
     @DeleteMapping("/me")
-    @ApiOperation(value = "Update an User", notes = "Allows an User to delete itself")
+    @ApiOperation(value = "Delete an User", notes = "Allows an User to delete itself")
     @ApiResponses(value = {
             @ApiResponse( code = 201, message = "User deleted"),
             @ApiResponse( code = 403, message = "forbidden")

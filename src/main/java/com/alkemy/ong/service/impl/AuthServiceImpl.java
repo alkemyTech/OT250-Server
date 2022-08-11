@@ -82,7 +82,7 @@ public class AuthServiceImpl implements AuthService {
         return jwtUtils.generateToken(userDetailsCustomService.loadUserByUsername(userRequest));
     }
 
-    public UserDetailsResponse getPersonalInformation(String token) {
+    public UserDetailsResponse getPersonalInformation(String token) throws IOException {
         String email = jwtUtils.extractUsername(token.substring(7));
         UserEntity user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with the email: " + email));

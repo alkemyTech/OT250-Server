@@ -12,6 +12,6 @@ import java.io.IOException;
 public interface AuthService {
     UserResponse register(UserRequest userRequest) throws UsernameNotFoundException, IOException;
     AuthResponse login(AuthRequest authRequest);
-    UserDetailsResponse getPersonalInformation(String token);
+    UserDetailsResponse getPersonalInformation(String token) throws IOException;
     void registerAdmin(UserRequest userRequest) throws IOException;
 }

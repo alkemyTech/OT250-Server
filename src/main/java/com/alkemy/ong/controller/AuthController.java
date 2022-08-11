@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/auth")
@@ -52,7 +53,7 @@ public class AuthController {
             @ApiResponse(code = 200, message = "OK", response = UserDetailsResponse.class),
             @ApiResponse(code = 404, message = "Not Found", response = ApiErrorResponse.class)
     })
-    public ResponseEntity<UserDetailsResponse> getPersonalInformation(@RequestHeader(name = "Authorization") String token) {
+    public ResponseEntity<UserDetailsResponse> getPersonalInformation(@RequestHeader(name = "Authorization") String token) throws IOException {
         return ResponseEntity.status(HttpStatus.OK).body(authService.getPersonalInformation(token));
     }
 
