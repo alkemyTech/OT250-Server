@@ -32,7 +32,7 @@ public class MemberController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteNews(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteNews(@Valid @PathVariable Long id) {
 
         this.memberService.delete(id);
 
@@ -47,7 +47,7 @@ public class MemberController {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<MemberResponse> updateMember(@PathVariable Long id,
+    public ResponseEntity<MemberResponse> updateMember(@Valid @PathVariable Long id,
                                                        @RequestBody MemberRequest memberRequest) throws IOException {
 
         MemberResponse memberResponse = this.memberService.update(id, memberRequest);
