@@ -7,6 +7,7 @@ import com.alkemy.ong.models.response.CategoryNameResponse;
 import com.alkemy.ong.models.response.MemberResponse;
 import com.alkemy.ong.models.response.NewsResponse;
 import com.alkemy.ong.service.MemberService;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +19,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("members")
+@Api(description = "Member Crud", tags = "Members")
 public class MemberController {
 
     @Autowired
     MemberService memberService;
 
     @PostMapping
+    @ApiOperation(value = "Create Member", notes = "Allows an user to insert a member")
+    @ApiResponses({@ApiResponse(code = 201, message = "Member created!")})
     public ResponseEntity<MemberResponse> createMember(@Valid @RequestBody MemberRequest memberRequest) throws IOException {
 
         MemberResponse memberResponseCreate = memberService.create(memberRequest);
@@ -32,23 +36,41 @@ public class MemberController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Void> deleteNews(@PathVariable Long id) {
+    @ApiOperation(value = "Soft Delete Member By ID", notes = "Allows Admin to delete news by ID")
+    @ApiResponses({@ApiResponse(code = 204, message = "Member soft deleted!"),
+            @ApiResponse(code = 404, message = "The inserted ID does not belong to a member"),})
+    public ResponseEntity<Void> deleteMember(@Valid @PathVariable @ApiParam(name = "id",
+                                            type = "Long",
+                                            value = "ID of the member requested",
+                                            example = "1",
+                                            required = true) Long id) {
 
         this.memberService.delete(id);
-
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-
     }
 
     @GetMapping
+    @ApiOperation(value = "Get all Members", notes = "Allows Admin to get all the existing members")
     public ResponseEntity<List<MemberResponse>> getAllMembers() {
         List<MemberResponse> memberList = memberService.getAllMember();
         return ResponseEntity.ok().body(memberList);
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<MemberResponse> updateMember(@PathVariable Long id,
-                                                       @RequestBody MemberRequest memberRequest) throws IOException {
+    @ApiOperation(value = "Update Member By ID", notes = "Allows Admin to update an existing member by ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Member updated!"),
+            @ApiResponse(code = 404, message = "The inserted ID does not belong to a member"),})
+    public ResponseEntity<MemberResponse> updateMember(@Valid @PathVariable @ApiParam(
+                                            name = "id",
+                                            type = "Long",
+                                            value = "ID of the news requested",
+                                            example = "1",
+                                            required = true) Long id,
+                                            @RequestBody @ApiParam(
+                                                    name = "New Member",
+                                                    value = "Member to save",
+                                                    required = true) MemberRequest memberRequest) throws IOException {
 
         MemberResponse memberResponse = this.memberService.update(id, memberRequest);
 
