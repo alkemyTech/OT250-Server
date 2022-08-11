@@ -39,9 +39,9 @@ public class TestimonialServiceImpl implements TestimonialService {
 
         TestimonialEntity entityFound = testimonialRepository.findById(id).orElseThrow();
 
-        if(request.getTimestamp() != null){
+       /* if(request.getTimestamp() != null){
             entityFound.setTimestamp(request.getTimestamp());
-        }
+        } */
         if(!request.getImage().isBlank() || !request.getImage().isEmpty() || request.getImage() !=null){
             entityFound.setImage(request.getImage());
         }
