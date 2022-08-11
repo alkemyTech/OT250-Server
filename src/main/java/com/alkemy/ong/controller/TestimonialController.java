@@ -67,7 +67,6 @@ public class TestimonialController {
     @ApiOperation(value = "Delete Testimonial", notes = "Allow Users and Admin to delete an existing testimonial using its id")
     @ApiResponses(value = {
             @ApiResponse( code = 201, message = "Testimonial deleted"),
-            @ApiResponse( code = 400, message = "bad request"),
             @ApiResponse( code = 403, message = "forbidden")
     })
     public ResponseEntity<TestimonialResponse> delete(@Valid @PathVariable Long id ){
