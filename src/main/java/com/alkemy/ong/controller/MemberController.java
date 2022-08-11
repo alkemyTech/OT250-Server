@@ -39,7 +39,7 @@ public class MemberController {
     @ApiOperation(value = "Soft Delete Member By ID", notes = "Allows Admin to delete news by ID")
     @ApiResponses({@ApiResponse(code = 204, message = "Member soft deleted!"),
             @ApiResponse(code = 404, message = "The inserted ID does not belong to a member"),})
-    public ResponseEntity<Void> deleteNews(@Valid @PathVariable @ApiParam(name = "id",
+    public ResponseEntity<Void> deleteMember(@Valid @PathVariable @ApiParam(name = "id",
                                             type = "Long",
                                             value = "ID of the member requested",
                                             example = "1",
