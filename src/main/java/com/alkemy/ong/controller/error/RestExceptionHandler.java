@@ -2,6 +2,10 @@ package com.alkemy.ong.controller.error;
 
 import com.alkemy.ong.exception.*;
 import com.alkemy.ong.models.response.ApiErrorResponse;
+import com.amazonaws.services.apigateway.model.BadRequestException;
+import com.amazonaws.services.codestar.model.UserProfileAlreadyExistsException;
+import com.amazonaws.services.pinpoint.model.ForbiddenException;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,6 +72,17 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                 Arrays.asList("Username Not Found")
         );
         return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+    
+    @ExceptionHandler(value = {UserProfileAlreadyExistsException.class})
+    protected ResponseEntity<Object> userProfileAreadyExists(RuntimeException ex, WebRequest request) {
+		ApiErrorResponse error = new ApiErrorResponse(
+				HttpStatus.CONFLICT,
+				ex.getMessage(),
+				Arrays.asList("Email Aready Exists")
+				);
+    	return handleExceptionInternal(ex, error, new HttpHeaders(), HttpStatus.CONFLICT, request);
+    	
     }
 
 

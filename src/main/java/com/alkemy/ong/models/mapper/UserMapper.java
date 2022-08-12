@@ -48,17 +48,17 @@ public class UserMapper {
                 .build();
     }
 
-    public UserDetailsResponse userToUserDetail(UserEntity update) {
+    public UserDetailsResponse userToUserDetail(UserEntity update) throws IOException {
         return UserDetailsResponse.builder()
                 .firstName(update.getFirstName())
                 .lastName(update.getLastName())
                 .email(update.getEmail())
-                .photo(update.getPhoto())
+                .photo(awsService.uploadFileFromBase64(update.getPhoto()))
                 .timestamp(update.getTimestamp())
                 .build();
     }
 
-    public List<UserDetailsResponse> usersToUserDetailsList(List<UserEntity> users) {
+    public List<UserDetailsResponse> usersToUserDetailsList(List<UserEntity> users) throws IOException {
         List<UserDetailsResponse> list = new ArrayList<>();
 
         for(UserEntity user : users) {
@@ -70,7 +70,13 @@ public class UserMapper {
 
     public UsersPaginationResponse toUsersPaginationResponse(List<UserEntity> userEntities, String prev, String nxt) {
         List<UserDetailsResponse> userList = userEntities.stream().map( c ->
-                userToUserDetail(c)).collect(Collectors.toList());
+        {
+            try {
+                return userToUserDetail(c);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }).collect(Collectors.toList());
         return UsersPaginationResponse.builder()
                 .users(userList)
                 .prev(prev)

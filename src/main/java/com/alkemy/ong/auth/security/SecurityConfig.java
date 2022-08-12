@@ -41,6 +41,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    private static final String[] publicEndpoint = {
+            "/swagger-resources/**",
+            "/swagger-ui/**", "/v2/api-docs",
+            "/v3/api-docs",
+            "/api/docs",
+            "/api/docs/**",
+            "/api/docs/swagger-ui",
+            "/swagger-ui.html",
+            "/**/swagger-ui/**",
+            "/swagger-ui"
+    };
+
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
@@ -91,13 +103,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/slides").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
                 .antMatchers(HttpMethod.DELETE, "/slides/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
                 // Testimonials
-                .antMatchers(HttpMethod.POST, "/testimonials").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
-                .antMatchers(HttpMethod.PUT, "/testimonials/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
-                .antMatchers(HttpMethod.DELETE, "/testimonials/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName())
+
+                .antMatchers(HttpMethod.POST, "/testimonials").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
+                .antMatchers(HttpMethod.PUT, "/testimonials/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
+                .antMatchers(HttpMethod.DELETE, "/testimonials/**").hasAnyAuthority(RoleEnum.ADMIN.getSimpleRoleName(), RoleEnum.USER.getSimpleRoleName())
+                //Swagger
+                .antMatchers(publicEndpoint).permitAll()
+
+
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
 
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }

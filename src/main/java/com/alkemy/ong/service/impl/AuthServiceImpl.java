@@ -14,6 +14,8 @@ import com.alkemy.ong.repository.RoleRepository;
 import com.alkemy.ong.repository.UserRepository;
 import com.alkemy.ong.service.AuthService;
 import com.alkemy.ong.service.IEmailService;
+import com.amazonaws.services.codestar.model.UserProfileAlreadyExistsException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -46,7 +48,7 @@ public class AuthServiceImpl implements AuthService {
 
     public UserResponse register(UserRequest userRequest) throws UsernameNotFoundException, IOException {
         if (userRepository.findByEmail(userRequest.getEmail()).isPresent())
-            throw new UsernameNotFoundException("User already exists");
+            throw new UserProfileAlreadyExistsException("Email already exists");
 
         Set<RoleEntity> roles = roleRepository.findByName(RoleEnum.USER.getSimpleRoleName());
         if (roles.isEmpty()) {
@@ -80,7 +82,7 @@ public class AuthServiceImpl implements AuthService {
         return jwtUtils.generateToken(userDetailsCustomService.loadUserByUsername(userRequest));
     }
 
-    public UserDetailsResponse getPersonalInformation(String token) {
+    public UserDetailsResponse getPersonalInformation(String token) throws IOException {
         String email = jwtUtils.extractUsername(token.substring(7));
         UserEntity user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with the email: " + email));

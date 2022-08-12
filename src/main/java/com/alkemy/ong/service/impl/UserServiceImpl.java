@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetailsResponse updateBasicUser(UserUpdateRequest request, String token) {
+    public UserDetailsResponse updateBasicUser(UserUpdateRequest request, String token) throws IOException {
         String userToken = rebuildToken(token);
         UserEntity user = userRepository.findByEmail( jwtUtils.extractUsername(userToken)).get();
 
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public UserDetailsResponse updateUserForAdmin(Long id, UserUpdateRequest request) {
+    public UserDetailsResponse updateUserForAdmin(Long id, UserUpdateRequest request) throws IOException {
 
         UserEntity user = getById(id);
 
@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
-    public List<UserDetailsResponse> getUsers(){
+    public List<UserDetailsResponse> getUsers() throws IOException {
         List<UserEntity> users = userRepository.findAll();
         List<UserDetailsResponse> Response = userMapper.usersToUserDetailsList(users);
         return Response;

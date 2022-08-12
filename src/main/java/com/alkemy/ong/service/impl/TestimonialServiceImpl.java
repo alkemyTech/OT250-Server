@@ -39,9 +39,9 @@ public class TestimonialServiceImpl implements TestimonialService {
 
         TestimonialEntity entityFound = testimonialRepository.findById(id).orElseThrow();
 
-        if(request.getTimestamp() != null){
+       /* if(request.getTimestamp() != null){
             entityFound.setTimestamp(request.getTimestamp());
-        }
+        } */
         if(!request.getImage().isBlank() || !request.getImage().isEmpty() || request.getImage() !=null){
             entityFound.setImage(request.getImage());
         }
@@ -62,6 +62,7 @@ public class TestimonialServiceImpl implements TestimonialService {
     @Override
     public TestimonialResponse delete(Long id) {
 
+
         TestimonialEntity entity = testimonialRepository.findById(id).orElseThrow();
 
         if(!testimonialRepository.findById(id).isPresent()){
@@ -71,6 +72,7 @@ public class TestimonialServiceImpl implements TestimonialService {
         testimonialRepository.delete(entity);
 
         return null;
+
     }
 
     public boolean areNull(String request) {
