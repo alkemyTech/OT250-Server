@@ -61,7 +61,7 @@ public class PaginationUtils {
      * @return a string value
      */
     public String getPrevious() {
-        if(page > 1){
+        if(pageObject.hasPrevious()){
             return String.format(path, page-1, size);
         }
         return null;
