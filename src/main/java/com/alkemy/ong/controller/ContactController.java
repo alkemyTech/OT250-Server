@@ -2,22 +2,23 @@ package com.alkemy.ong.controller;
 
 import com.alkemy.ong.models.entity.ContactEntity;
 import com.alkemy.ong.models.request.ContactRequest;
-import com.alkemy.ong.models.response.ApiErrorResponse;
-import com.alkemy.ong.models.response.ContactResponse;
-import com.alkemy.ong.models.response.UserDetailsResponse;
-import com.alkemy.ong.models.response.UserResponse;
+import com.alkemy.ong.models.response.*;
 import com.alkemy.ong.service.ContactService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import net.bytebuddy.pool.TypePool;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.io.IOException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("contacts")
@@ -52,11 +53,18 @@ public class ContactController {
     }
 
     @GetMapping
-    @ApiOperation(value = "Get all the contacts in database", code = 200, response = ContactResponse.class)
+    @ApiOperation(value = "Get all the contacts in database", code = 200)
     @ApiResponse(code = 400, message = "Bad Request", response = ApiErrorResponse.class)
-    public ResponseEntity<List<ContactResponse>> getAll(){
-        List<ContactResponse> contacts = contactService.getAll();
-        return ResponseEntity.ok().body(contacts);
+    public ResponseEntity<?> getAll(
+            @RequestParam(value = "page", required = false) Optional<Integer> page,
+            @RequestParam(value = "size", required = false) Optional<Integer> size) {
+        if (page.isEmpty() & size.isEmpty()) {
+            List<ContactResponse> contacts = contactService.getAll();
+            return new ResponseEntity<>(contacts, HttpStatus.OK);
+        }
+        else {
+            PaginationResponse contacts = contactService.getPage(page, size);
+            return new ResponseEntity<>(contacts, HttpStatus.OK);
+        }
     }
-
 }

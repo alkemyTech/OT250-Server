@@ -5,13 +5,21 @@ import com.alkemy.ong.models.entity.ContactEntity;
 import com.alkemy.ong.models.mapper.ContactMapper;
 import com.alkemy.ong.models.request.ContactRequest;
 import com.alkemy.ong.models.response.ContactResponse;
+import com.alkemy.ong.models.response.PaginationResponse;
 import com.alkemy.ong.repository.ContactRepository;
 import com.alkemy.ong.service.ContactService;
 import com.alkemy.ong.service.IEmailService;
+import com.alkemy.ong.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
+import java.util.Optional;
 
 
 @Service
@@ -59,5 +67,16 @@ public class ContactServiceImpl implements ContactService {
         return responses;
     }
 
-
+    @Override
+    public PaginationResponse getPage(Optional<Integer> pageNumber, Optional<Integer> size) {
+        PaginationUtils pagination = new PaginationUtils(contactRepository, pageNumber, size, "/contacts/page=%d&size=%d");
+        Page page = pagination.getPage();
+        List<ContactEntity> contacts = page.getContent();
+        List <ContactResponse> responses = contactMapper.entityList2Response(contacts);
+        return PaginationResponse.builder()
+                .entities(contacts)
+                .nextPageURI(pagination.getNext())
+                .prevPageURI(pagination.getPrevious())
+                .build();
+    }
 }
