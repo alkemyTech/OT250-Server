@@ -12,7 +12,7 @@ import java.util.Optional;
 @Setter
 public class PaginationUtils {
     private Integer page;
-    private static final Integer PAGE_NUMBER = 1;
+    private static final Integer PAGE_NUMBER = 0;
     private Integer size;
     private static final Integer PAGE_SIZE = 5;
     private String path;
@@ -61,7 +61,7 @@ public class PaginationUtils {
      * @return a string value
      */
     public String getPrevious() {
-        if(pageObject.hasPrevious()){
+        if(pageObject.hasPrevious() && pageObject.hasContent()){
             return String.format(path, page-1, size);
         }
         return null;
