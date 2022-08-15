@@ -128,6 +128,19 @@ public class CommentServiceImpl implements CommentService {
 
     }
 
+    @Override
+    public PaginationResponse getPageCommentsByNews(Optional<Integer> pageNumber, Optional<Integer> size) {
+        PaginationUtils pagination = new PaginationUtils(commentRepository, pageNumber, size,
+                "/news/{newsID}/comments/page=%d&size=%d");
+        Page page = pagination.getPage();
+        List<CommentEntity> comments = page.getContent();
+        List <CommentsByNewsResponse> responses =  commentMapper.toCommentsByNewsResponseList(comments);
+        return PaginationResponse.builder()
+                .entities(comments)
+                .nextPageURI(pagination.getNext())
+                .prevPageURI(pagination.getPrevious())
+                .build();
+    }
 
 
 }

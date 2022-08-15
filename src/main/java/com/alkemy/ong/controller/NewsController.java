@@ -105,16 +105,26 @@ public class NewsController {
     @GetMapping("{newsID}/comments")
     @ApiOperation(value = "Get Comments By News ID", notes = "Returns all the comments according to the News ID")
     @ApiResponses({@ApiResponse(code = 200, message = "Return the requested comments"),
-                   @ApiResponse(code = 404, message = "The inserted ID does not belong to a news"),})
-    public ResponseEntity<List<CommentsByNewsResponse>> commentsByNewsID(
-                                                        @PathVariable @Valid @NotNull @NotBlank @ApiParam(
-                                                                name = "id",
-                                                                type = "Long",
-                                                                value = "ID of the news requested",
-                                                                example = "1",
-                                                                required = true) Long newsID) {
-        List<CommentsByNewsResponse> response = commentService.readCommentsByNewsID(newsID);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+            @ApiResponse(code = 404, message = "The inserted ID does not belong to a news"),})
+    public ResponseEntity<?> commentsByNewsID(
+            @PathVariable @Valid @NotNull @NotBlank @ApiParam(
+                    name = "newsID",
+                    type = "Long",
+                    value = "ID of the news requested",
+                    example = "1",
+                    required = true) Long newsID,
+            @RequestParam(value = "page", required = false) Optional<Integer> page,
+            @RequestParam(value = "size", required = false) Optional<Integer> size) {
+
+        if (page.isEmpty() & size.isEmpty()) {
+            List<CommentsByNewsResponse> response = commentService.readCommentsByNewsID(newsID);
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } else {
+
+            PaginationResponse comments = commentService.getPageCommentsByNews(page, size);
+            return ResponseEntity.status(HttpStatus.OK).body(comments);
+
+        }
     }
 
         @GetMapping

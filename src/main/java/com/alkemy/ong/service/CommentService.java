@@ -22,6 +22,8 @@ public interface CommentService {
 
     CommentResponse upDate(Long id, String token, CommentRequestUpDate request) throws Exception;
 
+    PaginationResponse getPageCommentsByNews(Optional<Integer> page, Optional<Integer> size);
+
 
 
 }
