@@ -6,6 +6,7 @@ import com.alkemy.ong.models.request.NewsRequest;
 import com.alkemy.ong.models.response.CommentShortResponse;
 import com.alkemy.ong.models.response.CommentsByNewsResponse;
 import com.alkemy.ong.models.response.NewsResponse;
+import com.alkemy.ong.models.response.PaginationResponse;
 import com.alkemy.ong.repository.NewsRepository;
 import com.alkemy.ong.service.CommentService;
 import com.alkemy.ong.service.NewsService;
@@ -20,6 +21,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("news")
@@ -114,4 +116,24 @@ public class NewsController {
         List<CommentsByNewsResponse> response = commentService.readCommentsByNewsID(newsID);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+        @GetMapping
+        @ApiOperation(value = "Get  All News" , notes = "Returns All News ")
+        @ApiResponses({@ApiResponse(code = 200, message = "Return All news created"),
+                       @ApiResponse(code = 400, message = "Bad Request"),})
+        public ResponseEntity<?> getAllNews (@RequestParam(value = "page", required = false) Optional<Integer> page,
+                                             @RequestParam(value = "size", required = false) Optional<Integer> size) {
+            if (page.isEmpty() & size.isEmpty()) {
+
+                List<NewsResponse> response = this.newsService.getAll();
+
+                return new ResponseEntity<>(response, HttpStatus.OK);
+
+            } else{
+
+                PaginationResponse news = newsService.getPage(page, size);
+                return new ResponseEntity<>(news, HttpStatus.OK);
+            }
+
+        }
 }

@@ -1,17 +1,23 @@
 package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.exception.NotFoundException;
+import com.alkemy.ong.models.entity.ContactEntity;
 import com.alkemy.ong.models.entity.NewsEntity;
 import com.alkemy.ong.models.mapper.NewsMapper;
 import com.alkemy.ong.models.request.NewsRequest;
+import com.alkemy.ong.models.response.ContactResponse;
 import com.alkemy.ong.models.response.NewsResponse;
+import com.alkemy.ong.models.response.PaginationResponse;
 import com.alkemy.ong.repository.NewsRepository;
 import com.alkemy.ong.service.NewsService;
+import com.alkemy.ong.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -83,5 +89,25 @@ public class NewsServiceImp implements NewsService {
         NewsResponse response = this.newsMapper.Entity2Response(entity.get());
 
         return response;
+    }
+
+    @Override
+    public List<NewsResponse> getAll() {
+        List<NewsEntity> news = newsRepository.findAll();
+        List <NewsResponse> responses = newsMapper.EntityList2Response(news);
+        return responses;
+    }
+
+    @Override
+    public PaginationResponse getPage(Optional<Integer> pageNumber, Optional<Integer> size) {
+        PaginationUtils pagination = new PaginationUtils(newsRepository, pageNumber, size, "/contacts/page=%d&size=%d");
+        Page page = pagination.getPage();
+        List<NewsEntity> news = page.getContent();
+        List <NewsResponse> responses =     newsMapper.EntityList2Response(news);
+        return PaginationResponse.builder()
+                .entities(news)
+                .nextPageURI(pagination.getNext())
+                .prevPageURI(pagination.getPrevious())
+                .build();
     }
 }

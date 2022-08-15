@@ -1,7 +1,9 @@
 package com.alkemy.ong.models.mapper;
 
+import com.alkemy.ong.models.entity.ContactEntity;
 import com.alkemy.ong.models.entity.NewsEntity;
 import com.alkemy.ong.models.request.NewsRequest;
+import com.alkemy.ong.models.response.ContactResponse;
 import com.alkemy.ong.models.response.NewsResponse;
 import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.service.AwsService;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class NewsMapper {
@@ -63,6 +67,15 @@ public class NewsMapper {
         entity.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
       return entity;
+    }
+
+    public List<NewsResponse> EntityList2Response(List<NewsEntity> newsList){
+        List<NewsResponse> responses = new ArrayList<>();
+        for ( NewsEntity news: newsList){
+            responses.add(Entity2Response(news));
+        }
+
+        return responses;
     }
 
 }

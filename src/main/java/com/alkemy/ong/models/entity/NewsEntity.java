@@ -35,7 +35,7 @@ public class NewsEntity {
     private String content;
 
     @NotNull(message = "The image can´t be null")
-    @Column(length = 65535)
+   //@Column(length = 65535)
     private String image;
 
     @ManyToOne(fetch = FetchType.EAGER)
