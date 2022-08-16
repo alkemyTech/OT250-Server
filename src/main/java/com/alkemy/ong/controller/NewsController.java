@@ -49,7 +49,7 @@ public class NewsController {
     @DeleteMapping("{id}")
     @ApiOperation(value = "Soft Delete News By ID", notes = "Allows Admin to delete news by ID")
     @ApiResponses({@ApiResponse(code = 204, message = "News soft deleted!"),
-                   @ApiResponse(code = 404, message = "The inserted ID does not belong to a news"),})
+                   @ApiResponse(code = 404, message = "The inserted ID does not belong to a news")})
     public ResponseEntity<Void> deleteNews (@PathVariable @Valid @NotNull @NotBlank @ApiParam(
                                              name = "id",
                                              type = "Long",
@@ -67,7 +67,7 @@ public class NewsController {
     @ApiOperation(value = "Update News By ID", notes = "Allows Admin to update an existing news by ID")
     @ApiResponses({
             @ApiResponse(code = 200, message = "News updated!"),
-            @ApiResponse(code = 404, message = "The inserted ID does not belong to a news"),})
+            @ApiResponse(code = 404, message = "The inserted ID does not belong to a news")})
     public ResponseEntity<NewsResponse> updateNews (@PathVariable @Valid @NotNull @NotBlank  @ApiParam(
                                                     name = "id",
                                                     type = "Long",
@@ -88,7 +88,7 @@ public class NewsController {
     @GetMapping("{id}")
     @ApiOperation(value = "Get News By ID", notes = "Returns all details of news by ID")
     @ApiResponses({@ApiResponse(code = 200, message = "Return the requested news"),
-                   @ApiResponse(code = 404, message = "The inserted ID does not belong to a news"),})
+                   @ApiResponse(code = 404, message = "The inserted ID does not belong to a news")})
     public ResponseEntity<NewsResponse> getById (@PathVariable @Valid @NotNull @NotBlank @ApiParam(
                                                     name = "id",
                                                     type = "Long",
@@ -105,7 +105,7 @@ public class NewsController {
     @GetMapping("{newsID}/comments")
     @ApiOperation(value = "Get Comments By News ID", notes = "Returns all the comments according to the News ID")
     @ApiResponses({@ApiResponse(code = 200, message = "Return the requested comments"),
-            @ApiResponse(code = 404, message = "The inserted ID does not belong to a news"),})
+            @ApiResponse(code = 404, message = "The inserted ID does not belong to a news")})
     public ResponseEntity<?> commentsByNewsID(
             @PathVariable @Valid @NotNull @NotBlank @ApiParam(
                     name = "newsID",
@@ -130,7 +130,7 @@ public class NewsController {
         @GetMapping
         @ApiOperation(value = "Get  All News" , notes = "Returns All News ")
         @ApiResponses({@ApiResponse(code = 200, message = "Return All news created"),
-                       @ApiResponse(code = 400, message = "Bad Request"),})
+                       @ApiResponse(code = 400, message = "Bad Request")})
         public ResponseEntity<?> getAllNews (@RequestParam(value = "page", required = false) Optional<Integer> page,
                                              @RequestParam(value = "size", required = false) Optional<Integer> size) {
             if (page.isEmpty() & size.isEmpty()) {
