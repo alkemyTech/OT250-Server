@@ -3,15 +3,16 @@ package com.alkemy.ong.service.impl;
 import com.alkemy.ong.exception.CategoryNotFoundException;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.models.entity.CategoryEntity;
+import com.alkemy.ong.models.entity.ContactEntity;
 import com.alkemy.ong.models.entity.NewsEntity;
 import com.alkemy.ong.models.mapper.CategoryMapper;
 import com.alkemy.ong.models.request.CategoryRequest;
-import com.alkemy.ong.models.response.CategoryNameResponse;
-import com.alkemy.ong.models.response.CategoryResponse;
-import com.alkemy.ong.models.response.NewsResponse;
+import com.alkemy.ong.models.response.*;
 import com.alkemy.ong.repository.CategoryRepository;
 import com.alkemy.ong.service.ICategoryService;
+import com.alkemy.ong.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -62,4 +63,29 @@ public class CategoryServiceImpl implements ICategoryService {
         CategoryEntity updatedCategory = categoryMapper.updateCategoryEntityFromRequest(categoryEntity, category);
         return categoryMapper.categoryEntity2CategoryResponse(categoryRepository.save(updatedCategory));
     }
+
+    @Override
+    public PaginationResponse getCategoryPage(Optional<Integer> pageNumber, Optional<Integer> size) {
+        PaginationUtils pagination = new PaginationUtils(categoryRepository, pageNumber, size, "/categories/page=%d&size=%d");
+        Page page = pagination.getPage();
+
+        List<CategoryEntity> categories = page.getContent();
+        List <CategoryResponse> responses = categoryMapper.CategoryListToResponses(categories);
+
+        return PaginationResponse.builder()
+                .entities(categories)
+                .nextPageURI(pagination.getNext())
+                .prevPageURI(pagination.getPrevious())
+                .build();
+    }
+
+    @Override
+    public List<CategoryResponse> getAll() {
+        List<CategoryEntity> categories = categoryRepository.findAll();
+        List <CategoryResponse> responses = categoryMapper.CategoryListToResponses(categories);
+        return responses;
+    }
+
+
+
 }

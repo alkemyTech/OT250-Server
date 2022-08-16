@@ -1,8 +1,7 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.models.request.CategoryRequest;
-import com.alkemy.ong.models.response.CategoryNameResponse;
-import com.alkemy.ong.models.response.CategoryResponse;
+import com.alkemy.ong.models.response.*;
 import com.alkemy.ong.service.ICategoryService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/categories")
@@ -22,18 +22,6 @@ public class CategoryController {
 
     @Autowired
     private ICategoryService categoryService;
-
-    @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Get All by Category ", notes = "Get All a category")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Founds Categories"),
-            @ApiResponse(code = 400, message = "Bad Request"),
-            @ApiResponse(code = 404, message = "Category required by id Not Found"),})
-    @GetMapping
-    public ResponseEntity<List<CategoryNameResponse>> getAllCategories() {
-        List<CategoryNameResponse> categories = categoryService.getAllCategories();
-        return ResponseEntity.ok().body(categories);
-    }
 
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Get Details by Category ", notes = "Get Details a category by ID")
@@ -114,5 +102,26 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.updateCategory(id, category), HttpStatus.OK);
 
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Get All Categories by Page ", notes = "Get All a category")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Founds Categories"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 404, message = "Category required by id Not Found"),})
+    @GetMapping
+    public ResponseEntity<?> getCategoryAll(@RequestParam(value = "page", required = false) Optional<Integer> page,
+                                    @RequestParam(value = "size", required = false) Optional<Integer> size) {
+
+        if (page.isEmpty() & size.isEmpty()) {
+            List<CategoryResponse> responses = categoryService.getAll();
+            return new ResponseEntity<>(responses, HttpStatus.OK);
+        }
+        else {
+            PaginationResponse responses = categoryService.getCategoryPage(page, size);
+            return new ResponseEntity<>(responses, HttpStatus.OK);
+        }
+    }
+
 
 }
