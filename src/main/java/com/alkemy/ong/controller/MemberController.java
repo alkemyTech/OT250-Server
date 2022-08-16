@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("members")
@@ -51,7 +52,8 @@ public class MemberController {
 
     @GetMapping
     @ApiOperation(value = "Get all Members", notes = "Allows Admin to get all the existing members")
-    public ResponseEntity<List<MemberResponse>> getAllMembers() {
+    public ResponseEntity<List<MemberResponse>> getAllMembers(@RequestParam(value = "page", required = false) Optional<Integer> page,
+                                                              @RequestParam(value = "size", required = false) Optional<Integer> size) {
         List<MemberResponse> memberList = memberService.getAllMember();
         return ResponseEntity.ok().body(memberList);
     }
