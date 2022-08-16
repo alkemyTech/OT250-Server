@@ -100,7 +100,8 @@ public class NewsServiceImp implements NewsService {
 
     @Override
     public PaginationResponse getPage(Optional<Integer> pageNumber, Optional<Integer> size) {
-        PaginationUtils pagination = new PaginationUtils(newsRepository, pageNumber, size, "/contacts/page=%d&size=%d");
+        PaginationUtils pagination = new PaginationUtils(newsRepository, pageNumber, size,
+                                                        "/news/page=%d&size=%d");
         Page page = pagination.getPage();
         List<NewsEntity> news = page.getContent();
         List <NewsResponse> responses =     newsMapper.EntityList2Response(news);
