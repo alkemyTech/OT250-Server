@@ -13,9 +13,6 @@ public interface ICategoryService {
     CategoryResponse create (CategoryRequest categoryRequest);
     CategoryResponse updateCategory(Long id, CategoryRequest category);
     PaginationResponse getCategoryPage(Optional<Integer> pageNumber, Optional<Integer> size);
-    List<CategoryResponse> getAll();
-
-
 
 
 }
