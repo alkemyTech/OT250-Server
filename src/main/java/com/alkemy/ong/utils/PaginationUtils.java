@@ -26,7 +26,7 @@ public class PaginationUtils {
      * @param path receives a string value to indicate the path of the page
      */
     public PaginationUtils(JpaRepository repository, Optional<Integer> page, Optional<Integer> size, String path) {
-        Pageable getPageWithSizeElements = null;
+        Pageable getPageWithSizeElements = PageRequest.of(PAGE_NUMBER, PAGE_SIZE);
         this.path = path;
         if (page.isPresent() && size.isPresent()) {
             getPageWithSizeElements = PageRequest.of(page.get() - 1, size.get());
@@ -40,7 +40,11 @@ public class PaginationUtils {
         else if (size.isPresent()) {
             getPageWithSizeElements = PageRequest.of(PAGE_NUMBER, size.get());
             this.size = size.get();
-            this.page = PAGE_NUMBER;
+            this.page = PAGE_NUMBER+1;
+        }
+        else {
+            this.size = PAGE_SIZE;
+            this.page = PAGE_NUMBER+1;
         }
         this.pageObject = repository.findAll(getPageWithSizeElements);
     }
