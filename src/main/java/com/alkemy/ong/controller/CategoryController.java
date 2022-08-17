@@ -110,17 +110,12 @@ public class CategoryController {
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 404, message = "Category required by id Not Found"),})
     @GetMapping
-    public ResponseEntity<?> getCategoryAll(@RequestParam(value = "page", required = false) Optional<Integer> page,
+    public ResponseEntity<PaginationResponse> getCategoryAll(@RequestParam(value = "page", required = false) Optional<Integer> page,
                                     @RequestParam(value = "size", required = false) Optional<Integer> size) {
 
-        if (page.isEmpty() & size.isEmpty()) {
-            List<CategoryResponse> responses = categoryService.getAll();
-            return new ResponseEntity<>(responses, HttpStatus.OK);
-        }
-        else {
             PaginationResponse responses = categoryService.getCategoryPage(page, size);
             return new ResponseEntity<>(responses, HttpStatus.OK);
-        }
+
     }
 
 

@@ -79,13 +79,6 @@ public class CategoryServiceImpl implements ICategoryService {
                 .build();
     }
 
-    @Override
-    public List<CategoryResponse> getAll() {
-        List<CategoryEntity> categories = categoryRepository.findAll();
-        List <CategoryResponse> responses = categoryMapper.CategoryListToResponses(categories);
-        return responses;
-    }
-
 
 
 }
