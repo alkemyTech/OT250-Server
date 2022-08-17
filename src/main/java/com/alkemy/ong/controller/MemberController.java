@@ -6,6 +6,7 @@ import com.alkemy.ong.models.request.NewsRequest;
 import com.alkemy.ong.models.response.CategoryNameResponse;
 import com.alkemy.ong.models.response.MemberResponse;
 import com.alkemy.ong.models.response.NewsResponse;
+import com.alkemy.ong.models.response.PaginationResponse;
 import com.alkemy.ong.service.MemberService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,10 +53,9 @@ public class MemberController {
 
     @GetMapping
     @ApiOperation(value = "Get all Members", notes = "Allows Admin to get all the existing members")
-    public ResponseEntity<List<MemberResponse>> getAllMembers(@RequestParam(value = "page", required = false) Optional<Integer> page,
-                                                              @RequestParam(value = "size", required = false) Optional<Integer> size) {
-        List<MemberResponse> memberList = memberService.getAllMember();
-        return ResponseEntity.ok().body(memberList);
+    public ResponseEntity<PaginationResponse> getAllMembers(@RequestParam(value = "page", required = false) Optional<Integer> page,
+                                                            @RequestParam(value = "size", required = false) Optional<Integer> size) {
+        return new ResponseEntity<>(memberService.getMemberByPagesAndSize(page, size), HttpStatus.OK);
     }
 
     @PutMapping("{id}")
