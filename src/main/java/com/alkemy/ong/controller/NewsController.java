@@ -106,25 +106,16 @@ public class NewsController {
     @ApiOperation(value = "Get Comments By News ID", notes = "Returns all the comments according to the News ID")
     @ApiResponses({@ApiResponse(code = 200, message = "Return the requested comments"),
             @ApiResponse(code = 404, message = "The inserted ID does not belong to a news")})
-    public ResponseEntity<?> commentsByNewsID(
-            @PathVariable @Valid @NotNull @NotBlank @ApiParam(
-                    name = "newsID",
-                    type = "Long",
-                    value = "ID of the news requested",
-                    example = "1",
-                    required = true) Long newsID,
-            @RequestParam(value = "page", required = false) Optional<Integer> page,
-            @RequestParam(value = "size", required = false) Optional<Integer> size) {
+    public ResponseEntity<?> commentsByNewsID(@PathVariable @Valid @NotNull @NotBlank @ApiParam(
+                                                name = "newsID",
+                                                type = "Long",
+                                                value = "ID of the news requested",
+                                                example = "1",
+                                                required = true) Long newsID,
+                                              @RequestParam(value = "page", required = false) Optional<Integer> page,
+                                              @RequestParam(value = "size", required = false) Optional<Integer> size) {
 
-        if (page.isEmpty() & size.isEmpty()) {
-            List<CommentsByNewsResponse> response = commentService.readCommentsByNewsID(newsID);
-            return ResponseEntity.status(HttpStatus.OK).body(response);
-        } else {
-
-            PaginationResponse comments = commentService.getPageCommentsByNews(page, size);
-            return ResponseEntity.status(HttpStatus.OK).body(comments);
-
-        }
+       return new ResponseEntity<>(commentService.getPageCommentsByNews(page, size), HttpStatus.OK);
     }
 
         @GetMapping
@@ -133,17 +124,8 @@ public class NewsController {
                        @ApiResponse(code = 400, message = "Bad Request")})
         public ResponseEntity<?> getAllNews (@RequestParam(value = "page", required = false) Optional<Integer> page,
                                              @RequestParam(value = "size", required = false) Optional<Integer> size) {
-            if (page.isEmpty() & size.isEmpty()) {
 
-                List<NewsResponse> response = this.newsService.getAll();
-
-                return new ResponseEntity<>(response, HttpStatus.OK);
-
-            } else{
-
-                PaginationResponse news = newsService.getPage(page, size);
-                return new ResponseEntity<>(news, HttpStatus.OK);
-            }
+            return new ResponseEntity<>(newsService.getPage(page, size), HttpStatus.OK);
 
         }
 }
