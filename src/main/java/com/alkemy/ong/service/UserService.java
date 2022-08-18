@@ -1,10 +1,12 @@
 package com.alkemy.ong.service;
 
 import com.alkemy.ong.models.request.UserUpdateRequest;
+import com.alkemy.ong.models.response.PaginationResponse;
 import com.alkemy.ong.models.response.UserDetailsResponse;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -16,5 +18,7 @@ public interface UserService {
     void deleteUserForAdmin(Long id);
 
     void deleteBasicUser(String token);
+
+    PaginationResponse getUserPage(Optional<Integer> pageNumber, Optional<Integer> size);
 
 }

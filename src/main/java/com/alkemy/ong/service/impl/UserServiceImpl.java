@@ -1,7 +1,6 @@
 package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.auth.utility.JwtUtils;
-import com.alkemy.ong.models.entity.CategoryEntity;
 import com.alkemy.ong.models.entity.UserEntity;
 import com.alkemy.ong.models.mapper.UserMapper;
 import com.alkemy.ong.models.request.AuthRequest;
@@ -101,11 +100,11 @@ public class UserServiceImpl implements UserService {
         PaginationUtils pagination = new PaginationUtils(userRepository, pageNumber, size, "/categories/page=%d&size=%d");
         Page page = pagination.getPage();
 
-        List<CategoryEntity> categories = page.getContent();
-        List <CategoryResponse> responses = userMapper.CategoryListToResponses(categories);
+        List<UserEntity> users = page.getContent();
+        List <UserResponse> responses = userMapper.toUsersPaginationResponse(users);
 
         return PaginationResponse.builder()
-                .entities(categories)
+                .entities(users)
                 .nextPageURI(pagination.getNext())
                 .prevPageURI(pagination.getPrevious())
                 .build();
@@ -121,6 +120,21 @@ public class UserServiceImpl implements UserService {
         String userToken = rebuildToken(token);
         UserEntity user = userRepository.findByEmail( jwtUtils.extractUsername(userToken)).get();
         userRepository.deleteById(user.getId());
+    }
+
+    @Override
+    public PaginationResponse getUserPage(Optional<Integer> pageNumber, Optional<Integer> size) {
+        PaginationUtils pagination = new PaginationUtils(userRepository, pageNumber, size, "/categories/page=%d&size=%d");
+        Page page = pagination.getPage();
+
+        List<UserEntity> users = page.getContent();
+        List <UserResponse> responses = userMapper.toUsersPaginationResponse(users);
+
+        return PaginationResponse.builder()
+                .entities(users)
+                .nextPageURI(pagination.getNext())
+                .prevPageURI(pagination.getPrevious())
+                .build();
     }
 
     public String rebuildToken(String token){

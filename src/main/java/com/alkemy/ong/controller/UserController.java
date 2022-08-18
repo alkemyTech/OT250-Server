@@ -2,6 +2,7 @@ package com.alkemy.ong.controller;
 
 
 import com.alkemy.ong.models.request.UserUpdateRequest;
+import com.alkemy.ong.models.response.PaginationResponse;
 import com.alkemy.ong.models.response.UserDetailsResponse;
 import com.alkemy.ong.service.UserService;
 import io.swagger.annotations.Api;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -31,9 +33,12 @@ public class UserController {
             @ApiResponse( code = 201, message = "Testimonial created"),
             @ApiResponse( code = 403, message = "forbidden")
     })
-    public ResponseEntity<List<UserDetailsResponse>> getAll() throws IOException {
-        List<UserDetailsResponse> users = userService.getUsers();
-        return ResponseEntity.ok().body(users);
+    public ResponseEntity<PaginationResponse> getAll(
+                                        @RequestParam(value = "page", required = false) Optional<Integer> page,
+                                        @RequestParam(value = "size", required = false) Optional<Integer> size) {
+
+        PaginationResponse responses = userService.getUserPage(page, size);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
 
     }
 
