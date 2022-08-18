@@ -2,7 +2,9 @@ package com.alkemy.ong.controller;
 
 
 import com.alkemy.ong.models.request.UserUpdateRequest;
+import com.alkemy.ong.models.response.PaginationResponse;
 import com.alkemy.ong.models.response.UserDetailsResponse;
+import com.alkemy.ong.models.response.UsersPaginationResponse;
 import com.alkemy.ong.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,6 +19,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/users")
@@ -28,11 +31,12 @@ public class UserController {
     @GetMapping
     @ApiOperation(value = "List all the users", notes = "Allows an Admin to List all the registered users")
     @ApiResponses(value = {
-            @ApiResponse( code = 201, message = "Testimonial created"),
+            @ApiResponse( code = 201, message = "User's list"),
             @ApiResponse( code = 403, message = "forbidden")
     })
-    public ResponseEntity<List<UserDetailsResponse>> getAll() throws IOException {
-        List<UserDetailsResponse> users = userService.getUsers();
+    public ResponseEntity<?> getAll(@RequestParam(value = "page", required = false) Optional<Integer> page,
+                                                            @RequestParam(value = "size", required = false) Optional<Integer> size) throws IOException {
+        UsersPaginationResponse users = userService.getPage(page,size);
         return ResponseEntity.ok().body(users);
 
     }
@@ -40,7 +44,7 @@ public class UserController {
     @PatchMapping("/me")
     @ApiOperation(value = "Update an User", notes = "Allows an User to update itself")
     @ApiResponses(value = {
-            @ApiResponse( code = 201, message = "User deleted"),
+            @ApiResponse( code = 201, message = "User updated"),
             @ApiResponse( code = 403, message = "forbidden")
     })
     public ResponseEntity<UserDetailsResponse> updateUser(@RequestHeader(name = "Authorization") String token,

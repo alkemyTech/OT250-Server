@@ -1,23 +1,25 @@
 package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.auth.utility.JwtUtils;
+import com.alkemy.ong.models.entity.NewsEntity;
 import com.alkemy.ong.models.entity.UserEntity;
 import com.alkemy.ong.models.mapper.UserMapper;
 import com.alkemy.ong.models.request.AuthRequest;
 import com.alkemy.ong.models.request.UserRequest;
 import com.alkemy.ong.models.request.UserUpdateRequest;
-import com.alkemy.ong.models.response.AuthResponse;
-import com.alkemy.ong.models.response.UserDetailsResponse;
-import com.alkemy.ong.models.response.UserResponse;
+import com.alkemy.ong.models.response.*;
 import com.alkemy.ong.repository.UserRepository;
 import com.alkemy.ong.service.UserService;
+import com.alkemy.ong.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -110,6 +112,20 @@ public class UserServiceImpl implements UserService {
         String userToken = rebuildToken(token);
         UserEntity user = userRepository.findByEmail( jwtUtils.extractUsername(userToken)).get();
         userRepository.deleteById(user.getId());
+    }
+
+    @Override
+    public UsersPaginationResponse getPage(Optional<Integer> pageNumber, Optional<Integer> size) throws IOException {
+        PaginationUtils pagination = new PaginationUtils(userRepository, pageNumber, size,
+                "/users/page=%d&size=%d");
+        Page page = pagination.getPage();
+        List<UserEntity> users = page.getContent();
+        List <UserDetailsResponse> responses =  userMapper.usersToUserDetailsList(users);
+        return UsersPaginationResponse.builder()
+                .users(responses)
+                .nxt(pagination.getNext())
+                .prev(pagination.getPrevious())
+                .build();
     }
 
     public String rebuildToken(String token){

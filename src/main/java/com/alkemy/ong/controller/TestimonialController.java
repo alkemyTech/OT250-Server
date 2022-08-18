@@ -1,7 +1,9 @@
 package com.alkemy.ong.controller;
 
 import com.alkemy.ong.models.request.TestimonialRequest;
+import com.alkemy.ong.models.response.PaginationResponse;
 import com.alkemy.ong.models.response.TestimonialResponse;
+import com.alkemy.ong.models.response.UsersPaginationResponse;
 import com.alkemy.ong.service.TestimonialService;
 import com.alkemy.ong.service.impl.TestimonialServiceImpl;
 import io.swagger.annotations.Api;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/testimonials")
@@ -74,6 +77,19 @@ public class TestimonialController {
         TestimonialResponse response = testimonialService.delete(id);
 
         return ResponseEntity.ok(response);
+
+    }
+
+    @GetMapping
+    @ApiOperation(value = "List all the testimonials", notes = "Allows users and admins to List all the testimonials")
+    @ApiResponses(value = {
+            @ApiResponse( code = 201, message = "testimonial's list"),
+            @ApiResponse( code = 403, message = "forbidden")
+    })
+    public ResponseEntity<?> getAll(@RequestParam(value = "page", required = false) Optional<Integer> page,
+                                    @RequestParam(value = "size", required = false) Optional<Integer> size) throws IOException {
+        PaginationResponse response = testimonialService.getPage(page,size);
+        return ResponseEntity.ok().body(response);
 
     }
 
