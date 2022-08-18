@@ -5,20 +5,21 @@ import com.alkemy.ong.auth.utility.RoleEnum;
 import com.alkemy.ong.exception.BodyIsNullException;
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.models.entity.CommentEntity;
+import com.alkemy.ong.models.entity.ContactEntity;
 import com.alkemy.ong.models.entity.RoleEntity;
 import com.alkemy.ong.models.entity.UserEntity;
 import com.alkemy.ong.models.mapper.CommentMapper;
 import com.alkemy.ong.models.request.CommentRequest;
 import com.alkemy.ong.models.request.CommentRequestUpDate;
-import com.alkemy.ong.models.response.CommentResponse;
-import com.alkemy.ong.models.response.CommentShortResponse;
-import com.alkemy.ong.models.response.CommentsByNewsResponse;
+import com.alkemy.ong.models.response.*;
 import com.alkemy.ong.repository.CommentRepository;
 import com.alkemy.ong.repository.NewsRepository;
 import com.alkemy.ong.repository.UserRepository;
 import com.alkemy.ong.service.CommentService;
+import com.alkemy.ong.utils.PaginationUtils;
 import com.amazonaws.services.pinpoint.model.ForbiddenException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -126,5 +127,20 @@ public class CommentServiceImpl implements CommentService {
         return response;
 
     }
+
+    @Override
+    public PaginationResponse getPageCommentsByNews(Optional<Integer> pageNumber, Optional<Integer> size) {
+        PaginationUtils pagination = new PaginationUtils(commentRepository, pageNumber, size,
+                                                        "/news/{newsID}/comments/page=%d&size=%d");
+        Page page = pagination.getPage();
+        List<CommentEntity> comments = page.getContent();
+        List <CommentsByNewsResponse> responses =  commentMapper.toCommentsByNewsResponseList(comments);
+        return PaginationResponse.builder()
+                .entities(comments)
+                .nextPageURI(pagination.getNext())
+                .prevPageURI(pagination.getPrevious())
+                .build();
+    }
+
 
 }

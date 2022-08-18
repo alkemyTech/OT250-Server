@@ -9,9 +9,12 @@ import com.alkemy.ong.models.request.MemberRequest;
 import com.alkemy.ong.models.response.CategoryNameResponse;
 import com.alkemy.ong.models.response.MemberResponse;
 import com.alkemy.ong.models.response.NewsResponse;
+import com.alkemy.ong.models.response.PaginationResponse;
 import com.alkemy.ong.repository.MemberRepository;
 import com.alkemy.ong.service.MemberService;
+import com.alkemy.ong.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -53,10 +56,13 @@ public class MemberServiceImpl implements MemberService {
 
     }
     @Override
-    public List<MemberResponse> getAllMember() {
-        List<MemberEntity> memberList = memberRepository.findAll();// categoryRepository.findAll();
-        List<MemberResponse> responseList = memberMapper.entityList2ResponseList(memberList);
-        return responseList;
+    public PaginationResponse getMemberByPagesAndSize(Optional<Integer> pageNumber, Optional<Integer> size) {
+        PaginationUtils pagination = new PaginationUtils(memberRepository, pageNumber, size, "/members/page=%d&size=%d");
+        Page page = pagination.getPage();
+        List<MemberEntity> members = page.getContent();
+        //List<MemberResponse> responses = memberMapper.entityList2ResponseList(members);
+
+        return PaginationResponse.builder().entities(members).nextPageURI(pagination.getNext()).prevPageURI(pagination.getPrevious()).build();
     }
 
     @Override

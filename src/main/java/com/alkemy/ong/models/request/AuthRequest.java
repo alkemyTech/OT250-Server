@@ -19,13 +19,13 @@ import javax.validation.constraints.NotNull;
         @NotBlank(message = "the email can't be blank")
         @Email(message = "the email is not valid")
         @ApiModelProperty(notes = "Email of the User.",
-                example = "jessica.abigail@email.com", required = true)
+                example = "martin192012@gmail.com", required = true)
         private String email;
         @NotNull(message = "the password can't be null")
         @NotBlank(message = "the password can't be blank")
         @NotEmpty(message = "the password can't be empty")
         @ApiModelProperty(notes = "Password of the User.",
-                example = "jessica.abigail", required = true)
+                example = "1234", required = true)
         private String password;
     }
 

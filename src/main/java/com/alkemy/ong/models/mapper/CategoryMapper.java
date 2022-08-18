@@ -6,6 +6,7 @@ import com.alkemy.ong.models.response.CategoryNameResponse;
 import com.alkemy.ong.models.response.CategoryResponse;
 import org.springframework.stereotype.Component;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,4 +50,15 @@ public class CategoryMapper {
         updatedCategory.setTimestamp(new Timestamp(System.currentTimeMillis()));
         return updatedCategory;
     }
+
+    public List<CategoryResponse> CategoryListToResponses(List<CategoryEntity> categories){
+        List<CategoryResponse> responses = new ArrayList<>();
+
+        for ( CategoryEntity category: categories){
+            responses.add(categoryEntity2CategoryResponse(category));
+        }
+
+        return responses;
+    }
+
 }
