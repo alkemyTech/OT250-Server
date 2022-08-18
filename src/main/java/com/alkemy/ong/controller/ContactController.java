@@ -55,16 +55,10 @@ public class ContactController {
     @GetMapping
     @ApiOperation(value = "Get all the contacts in database", code = 200)
     @ApiResponse(code = 400, message = "Bad Request", response = ApiErrorResponse.class)
-    public ResponseEntity<?> getAll(
+    public ResponseEntity<PaginationResponse> getPage(
             @RequestParam(value = "page", required = false) Optional<Integer> page,
             @RequestParam(value = "size", required = false) Optional<Integer> size) {
-        if (page.isEmpty() & size.isEmpty()) {
-            List<ContactResponse> contacts = contactService.getAll();
-            return new ResponseEntity<>(contacts, HttpStatus.OK);
-        }
-        else {
             PaginationResponse contacts = contactService.getPage(page, size);
-            return new ResponseEntity<>(contacts, HttpStatus.OK);
-        }
+            return ResponseEntity.status(HttpStatus.OK).body(contacts);
     }
 }
