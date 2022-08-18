@@ -53,7 +53,7 @@ public class ContactController {
     }
 
     @GetMapping
-    @ApiOperation(value = "Get all the contacts in database", code = 200)
+    @ApiOperation(value = "Get the Page number @page of contacts with Size @size from database", code = 200)
     @ApiResponse(code = 400, message = "Bad Request", response = ApiErrorResponse.class)
     public ResponseEntity<PaginationResponse> getPage(
             @RequestParam(value = "page", required = false) Optional<Integer> page,

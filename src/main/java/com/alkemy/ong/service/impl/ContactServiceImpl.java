@@ -70,12 +70,12 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public PaginationResponse getPage(Optional<Integer> pageNumber, Optional<Integer> size) {
         PaginationUtils pagination = new PaginationUtils(contactRepository, pageNumber, size,
-                "/contacts/page=%d&size=%d");
+                "/contacts?page=%d&size=%d");
         Page page = pagination.getPage();
         List<ContactEntity> contacts = page.getContent();
         List <ContactResponse> responses = contactMapper.entityList2Response(contacts);
         return PaginationResponse.builder()
-                .entities(contacts)
+                .entities(responses)
                 .nextPageURI(pagination.getNext())
                 .prevPageURI(pagination.getPrevious())
                 .build();
