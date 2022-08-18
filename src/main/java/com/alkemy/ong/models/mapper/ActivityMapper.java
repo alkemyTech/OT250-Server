@@ -1,12 +1,17 @@
 package com.alkemy.ong.models.mapper;
 
 import com.alkemy.ong.models.entity.ActivityEntity;
+import com.alkemy.ong.models.entity.ContactEntity;
 import com.alkemy.ong.models.request.ActivityRequest;
 import com.alkemy.ong.models.request.ActivityRequestUpDate;
 import com.alkemy.ong.models.response.ActivityResponse;
+import com.alkemy.ong.models.response.ContactResponse;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class ActivityMapper {
 
@@ -50,6 +55,14 @@ public class ActivityMapper {
 
         return entityFound;
 
+    }
+
+    public List<ActivityResponse> toResponseList(List<ActivityEntity> activities){
+        List<ActivityResponse> responses = new ArrayList<>();
+        for ( ActivityEntity activity: activities){
+            responses.add(entity2Response(activity));
+        }
+        return responses;
     }
 
 }
