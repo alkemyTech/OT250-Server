@@ -1,23 +1,25 @@
 package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.auth.utility.JwtUtils;
+import com.alkemy.ong.models.entity.CategoryEntity;
 import com.alkemy.ong.models.entity.UserEntity;
 import com.alkemy.ong.models.mapper.UserMapper;
 import com.alkemy.ong.models.request.AuthRequest;
 import com.alkemy.ong.models.request.UserRequest;
 import com.alkemy.ong.models.request.UserUpdateRequest;
-import com.alkemy.ong.models.response.AuthResponse;
-import com.alkemy.ong.models.response.UserDetailsResponse;
-import com.alkemy.ong.models.response.UserResponse;
+import com.alkemy.ong.models.response.*;
 import com.alkemy.ong.repository.UserRepository;
 import com.alkemy.ong.service.UserService;
+import com.alkemy.ong.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -95,10 +97,19 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    /*@Override
-    public UsersPaginationResponse getPaginationUsers(Integer page) {
-        return null;
-    }*/
+    public PaginationResponse getAllPage(Optional<Integer> pageNumber, Optional<Integer> size) {
+        PaginationUtils pagination = new PaginationUtils(userRepository, pageNumber, size, "/categories/page=%d&size=%d");
+        Page page = pagination.getPage();
+
+        List<CategoryEntity> categories = page.getContent();
+        List <CategoryResponse> responses = userMapper.CategoryListToResponses(categories);
+
+        return PaginationResponse.builder()
+                .entities(categories)
+                .nextPageURI(pagination.getNext())
+                .prevPageURI(pagination.getPrevious())
+                .build();
+    }
 
     @Override
     public void deleteUserForAdmin(Long id) {
