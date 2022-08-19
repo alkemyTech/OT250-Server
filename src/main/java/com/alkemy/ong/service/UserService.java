@@ -3,6 +3,7 @@ package com.alkemy.ong.service;
 import com.alkemy.ong.models.request.UserUpdateRequest;
 import com.alkemy.ong.models.response.PaginationResponse;
 import com.alkemy.ong.models.response.UserDetailsResponse;
+import com.alkemy.ong.models.response.UsersPaginationResponse;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,5 +21,6 @@ public interface UserService {
     void deleteBasicUser(String token);
 
     PaginationResponse getUserPage(Optional<Integer> pageNumber, Optional<Integer> size);
+
 
 }

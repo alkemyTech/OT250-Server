@@ -1,6 +1,7 @@
 package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.auth.utility.JwtUtils;
+import com.alkemy.ong.models.entity.NewsEntity;
 import com.alkemy.ong.models.entity.UserEntity;
 import com.alkemy.ong.models.mapper.UserMapper;
 import com.alkemy.ong.models.request.AuthRequest;
@@ -123,6 +124,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+
     public PaginationResponse getUserPage(Optional<Integer> pageNumber, Optional<Integer> size) {
         PaginationUtils pagination = new PaginationUtils(userRepository, pageNumber, size, "/categories/page=%d&size=%d");
         Page page = pagination.getPage();

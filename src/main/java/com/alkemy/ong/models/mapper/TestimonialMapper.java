@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class TestimonialMapper {
@@ -42,6 +44,16 @@ public class TestimonialMapper {
 
         return response;
 
+    }
+
+    public List<TestimonialResponse> entity2ResponseList(List<TestimonialEntity> entities){
+
+        List<TestimonialResponse> responses = new ArrayList<>();
+        for ( TestimonialEntity entity:entities){
+            responses.add(entity2Response(entity));
+        }
+
+        return responses;
     }
 
 

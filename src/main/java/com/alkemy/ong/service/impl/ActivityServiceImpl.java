@@ -3,14 +3,22 @@ package com.alkemy.ong.service.impl;
 import com.alkemy.ong.exception.ActivityNotFoundException;
 import com.alkemy.ong.exception.NameOrContentAreNull;
 import com.alkemy.ong.models.entity.ActivityEntity;
+import com.alkemy.ong.models.entity.ContactEntity;
 import com.alkemy.ong.models.mapper.ActivityMapper;
 import com.alkemy.ong.models.request.ActivityRequest;
 import com.alkemy.ong.models.request.ActivityRequestUpDate;
 import com.alkemy.ong.models.response.ActivityResponse;
+import com.alkemy.ong.models.response.ContactResponse;
+import com.alkemy.ong.models.response.PaginationResponse;
 import com.alkemy.ong.repository.ActivityRepository;
 import com.alkemy.ong.service.ActivityService;
+import com.alkemy.ong.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ActivityServiceImpl implements ActivityService {
@@ -82,5 +90,17 @@ public class ActivityServiceImpl implements ActivityService {
 
     }
 
-
+    @Override
+    public PaginationResponse getPage(Optional<Integer> pageNumber, Optional<Integer> size) {
+        PaginationUtils pagination = new PaginationUtils(activityRepository, pageNumber, size,
+                "/contacts?page=%d&size=%d");
+        Page page = pagination.getPage();
+        List<ActivityEntity> activities = page.getContent();
+        List<ActivityResponse> responses = activityMapper.toResponseList(activities);
+        return PaginationResponse.builder()
+                .entities(responses)
+                .nextPageURI(pagination.getNext())
+                .prevPageURI(pagination.getPrevious())
+                .build();
+    }
 }

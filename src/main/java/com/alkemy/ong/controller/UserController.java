@@ -4,6 +4,7 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.models.request.UserUpdateRequest;
 import com.alkemy.ong.models.response.PaginationResponse;
 import com.alkemy.ong.models.response.UserDetailsResponse;
+import com.alkemy.ong.models.response.UsersPaginationResponse;
 import com.alkemy.ong.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,9 +31,10 @@ public class UserController {
     @GetMapping
     @ApiOperation(value = "List all the users", notes = "Allows an Admin to List all the registered users")
     @ApiResponses(value = {
-            @ApiResponse( code = 201, message = "Testimonial created"),
+            @ApiResponse( code = 201, message = "User's list"),
             @ApiResponse( code = 403, message = "forbidden")
     })
+
     public ResponseEntity<PaginationResponse> getAll(
                                         @RequestParam(value = "page", required = false) Optional<Integer> page,
                                         @RequestParam(value = "size", required = false) Optional<Integer> size) {
@@ -40,12 +42,13 @@ public class UserController {
         PaginationResponse responses = userService.getUserPage(page, size);
         return new ResponseEntity<>(responses, HttpStatus.OK);
 
+
     }
 
     @PatchMapping("/me")
     @ApiOperation(value = "Update an User", notes = "Allows an User to update itself")
     @ApiResponses(value = {
-            @ApiResponse( code = 201, message = "User deleted"),
+            @ApiResponse( code = 201, message = "User updated"),
             @ApiResponse( code = 403, message = "forbidden")
     })
     public ResponseEntity<UserDetailsResponse> updateUser(@RequestHeader(name = "Authorization") String token,

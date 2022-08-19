@@ -2,15 +2,23 @@ package com.alkemy.ong.service.impl;
 
 import com.alkemy.ong.exception.NotFoundException;
 import com.alkemy.ong.models.entity.TestimonialEntity;
+import com.alkemy.ong.models.entity.UserEntity;
 import com.alkemy.ong.models.mapper.TestimonialMapper;
 import com.alkemy.ong.models.request.TestimonialRequest;
+import com.alkemy.ong.models.response.PaginationResponse;
 import com.alkemy.ong.models.response.TestimonialResponse;
+import com.alkemy.ong.models.response.UserDetailsResponse;
+import com.alkemy.ong.models.response.UsersPaginationResponse;
 import com.alkemy.ong.repository.TestimonialRepository;
 import com.alkemy.ong.service.TestimonialService;
+import com.alkemy.ong.utils.PaginationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TestimonialServiceImpl implements TestimonialService {
@@ -73,6 +81,20 @@ public class TestimonialServiceImpl implements TestimonialService {
 
         return null;
 
+    }
+
+    @Override
+    public PaginationResponse getPage(Optional<Integer> pageNumber, Optional<Integer> size) {
+        PaginationUtils pagination = new PaginationUtils(testimonialRepository, pageNumber, size,
+                "/testimonials/page=%d&size=%d");
+        Page page = pagination.getPage();
+        List<TestimonialEntity> testimonials = page.getContent();
+        List <TestimonialResponse> responses =  testimonialMapper.entity2ResponseList(testimonials);
+        return PaginationResponse.builder()
+                .entities(testimonials)
+                .nextPageURI(pagination.getNext())
+                .prevPageURI(pagination.getPrevious())
+                .build();
     }
 
     public boolean areNull(String request) {
