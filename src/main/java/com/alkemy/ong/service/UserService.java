@@ -20,6 +20,7 @@ public interface UserService {
 
     void deleteBasicUser(String token);
 
-    UsersPaginationResponse getPage(Optional<Integer> page, Optional<Integer> size) throws IOException;
+    PaginationResponse getUserPage(Optional<Integer> pageNumber, Optional<Integer> size);
+
 
 }

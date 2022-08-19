@@ -68,21 +68,14 @@ public class UserMapper {
         return list;
     }
 
-    public UsersPaginationResponse toUsersPaginationResponse(List<UserEntity> userEntities, String prev, String nxt) {
-        List<UserDetailsResponse> userList = userEntities.stream().map( c ->
-        {
-            try {
-                return userToUserDetail(c);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }).collect(Collectors.toList());
-        return UsersPaginationResponse.builder()
-                .users(userList)
-                .prev(prev)
-                .nxt(nxt)
-                .build();
+    public List<UserResponse> toUsersPaginationResponse(List<UserEntity> users){
+        List<UserResponse> responses = new ArrayList<>();
 
+        for ( UserEntity  user: users){
+            responses.add(toUserResponse(user));
+        }
+
+        return responses;
     }
 
 }

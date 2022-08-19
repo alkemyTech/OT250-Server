@@ -3,6 +3,7 @@ package com.alkemy.ong.controller;
 import com.alkemy.ong.models.request.SlideRequest;
 import com.alkemy.ong.models.response.SlideResponse;
 import com.alkemy.ong.service.ISlideService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/slides")
+@Api(description = "Slide CRUD", tags = "Slide")
 public class SlideController {
 
     @Autowired

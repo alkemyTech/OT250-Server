@@ -34,10 +34,14 @@ public class UserController {
             @ApiResponse( code = 201, message = "User's list"),
             @ApiResponse( code = 403, message = "forbidden")
     })
-    public ResponseEntity<?> getAll(@RequestParam(value = "page", required = false) Optional<Integer> page,
-                                                            @RequestParam(value = "size", required = false) Optional<Integer> size) throws IOException {
-        UsersPaginationResponse users = userService.getPage(page,size);
-        return ResponseEntity.ok().body(users);
+
+    public ResponseEntity<PaginationResponse> getAll(
+                                        @RequestParam(value = "page", required = false) Optional<Integer> page,
+                                        @RequestParam(value = "size", required = false) Optional<Integer> size) {
+
+        PaginationResponse responses = userService.getUserPage(page, size);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+
 
     }
 

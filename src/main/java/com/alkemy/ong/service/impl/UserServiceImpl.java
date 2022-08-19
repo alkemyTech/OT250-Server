@@ -97,10 +97,19 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    /*@Override
-    public UsersPaginationResponse getPaginationUsers(Integer page) {
-        return null;
-    }*/
+    public PaginationResponse getAllPage(Optional<Integer> pageNumber, Optional<Integer> size) {
+        PaginationUtils pagination = new PaginationUtils(userRepository, pageNumber, size, "/categories/page=%d&size=%d");
+        Page page = pagination.getPage();
+
+        List<UserEntity> users = page.getContent();
+        List <UserResponse> responses = userMapper.toUsersPaginationResponse(users);
+
+        return PaginationResponse.builder()
+                .entities(users)
+                .nextPageURI(pagination.getNext())
+                .prevPageURI(pagination.getPrevious())
+                .build();
+    }
 
     @Override
     public void deleteUserForAdmin(Long id) {
@@ -115,16 +124,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UsersPaginationResponse getPage(Optional<Integer> pageNumber, Optional<Integer> size) throws IOException {
-        PaginationUtils pagination = new PaginationUtils(userRepository, pageNumber, size,
-                "/users/page=%d&size=%d");
+
+    public PaginationResponse getUserPage(Optional<Integer> pageNumber, Optional<Integer> size) {
+        PaginationUtils pagination = new PaginationUtils(userRepository, pageNumber, size, "/categories/page=%d&size=%d");
         Page page = pagination.getPage();
+
         List<UserEntity> users = page.getContent();
-        List <UserDetailsResponse> responses =  userMapper.usersToUserDetailsList(users);
-        return UsersPaginationResponse.builder()
-                .users(responses)
-                .nxt(pagination.getNext())
-                .prev(pagination.getPrevious())
+        List <UserResponse> responses = userMapper.toUsersPaginationResponse(users);
+
+        return PaginationResponse.builder()
+                .entities(users)
+                .nextPageURI(pagination.getNext())
+                .prevPageURI(pagination.getPrevious())
                 .build();
     }
 

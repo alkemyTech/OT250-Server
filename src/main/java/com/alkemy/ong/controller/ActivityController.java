@@ -6,6 +6,7 @@ import com.alkemy.ong.models.response.ActivityResponse;
 import com.alkemy.ong.models.response.ApiErrorResponse;
 import com.alkemy.ong.models.response.PaginationResponse;
 import com.alkemy.ong.service.ActivityService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 
@@ -23,6 +24,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/activities")
+@Api(description = "Activity CRUD", tags = "Activity")
 public class ActivityController {
 
     @Autowired
